@@ -1,4 +1,4 @@
-package episode2.dev.apauley.platforming101;
+package episode1.platforming101;
 
 public class Launcher {
 

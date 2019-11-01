@@ -1,6 +1,6 @@
-package episode2.platforming101;
+package episode2;
 
-import episode2.platforming101.display.Display;
+import episode2.display.Display;
 
 public class Launcher {
 

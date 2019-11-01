@@ -1,4 +1,4 @@
-package episode2.platforming101.display;
+package episode2.display;
 
 import javax.swing.JFrame;
 

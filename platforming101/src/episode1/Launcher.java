@@ -1,4 +1,4 @@
-package episode1.platforming101;
+package episode1;
 
 public class Launcher {
 

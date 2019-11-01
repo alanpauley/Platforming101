@@ -1,6 +1,6 @@
-package episode2;
+package dev.apauley;
 
-import episode2.display.Display;
+import dev.apauley.display.Display;
 
 public class Launcher {
 

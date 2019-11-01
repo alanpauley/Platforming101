@@ -1,4 +1,4 @@
-package episode2.display;
+package dev.apauley.display;
 
 import javax.swing.JFrame;
 

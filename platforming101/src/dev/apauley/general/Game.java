@@ -1,5 +1,8 @@
 package dev.apauley.general;
 
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 import dev.apauley.display.Display;
 
 /*
@@ -24,6 +27,15 @@ public class Game implements Runnable {
 	//Thread via Runnable
 	private Thread thread;
 	
+	/*
+	 * A way for computer to draw things to screen, using buffers
+	 *    - Buffer is like a hidden computer screen, drawing behind the scenes
+	 *    - Draw to first buffer, then push this to 2nd buffer, THEN push to actual screen
+	 *    - Prevents flickering in game, of drawing to screen in real time
+	 */
+	private BufferStrategy bs;
+	private Graphics g;
+
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;		
@@ -43,6 +55,38 @@ public class Game implements Runnable {
 
 	//Render everything for game
 	private void render() {
+		
+		/*************** INITIAL SETUP (e.g. clear screen) ***************/
+		
+		//Get current buffer strategy of display
+		bs = display.getCanvas().getBufferStrategy();
+		
+		//If bs doesn't exist, create one!
+		//3 should be max number of buffers we ever need (may not work with >3)
+		if(bs == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		
+		//Graphics object is like our (magical) paint brush, way of drawing
+		g = bs.getDrawGraphics();
+		
+		//Clear screen
+		g.clearRect(0, 0, width, height);
+
+		/*************** END INITIAL SETUP ***************/
+
+		/*************** DRAW HERE ***************/
+
+		g.fillRect(50, 0, width, height);
+		
+		/*************** END DRAWING ***************/
+		
+		//Work buffer magic (presumably to transfer between buffers, ending at screen
+		bs.show();
+		
+		//Discard graphics object properly
+		g.dispose();
 		
 	}
 	

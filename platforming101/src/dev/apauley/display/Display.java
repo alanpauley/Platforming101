@@ -48,4 +48,11 @@ public class Display {
 		frame.pack(); //Resize window so we can fully see canvas
 	}
 	
+	/***************** GETTERS AND SETTERS *****************/
+	
+	//Gets Canvas (Where we draw graphics on the frame)
+	public Canvas getCanvas() {
+		return canvas;
+	}
+	
 }

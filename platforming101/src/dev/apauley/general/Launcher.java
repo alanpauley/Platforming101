@@ -15,7 +15,11 @@ public class Launcher {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy @ hh:mm:ss a");  
 		Date date = new Date();
 			    
-		new Game(formatter.format(date) + " - Platforming 101", 600, 500);
+	    //Starts new game with underlying display built in 
+		Game game = new Game(formatter.format(date) + " - Platforming 101", 600, 500);
+
+		//Start game! Run, initialize, game loop
+		game.start();
 	}
 	
 }

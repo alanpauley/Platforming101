@@ -1,5 +1,6 @@
 package dev.apauley.general;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -78,7 +79,12 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
-		g.fillRect(50, 0, width, height);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, width, height);
+		g.setColor(Color.red);
+		g.fillRect(50, 50, 50, 50);
+		g.setColor(Color.green);
+		g.fillRect(45, 100, 60, 2);
 		
 		/*************** END DRAWING ***************/
 		

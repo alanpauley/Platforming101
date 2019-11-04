@@ -3,8 +3,10 @@ package dev.apauley.general;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import dev.apauley.display.Display;
+import dev.apauley.gfx.ImageLoader;
 
 /*
  * Main class for game - holds all base code: 
@@ -36,6 +38,8 @@ public class Game implements Runnable {
 	 */
 	private BufferStrategy bs;
 	private Graphics g;
+	
+	private BufferedImage testImage;
 
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -47,6 +51,8 @@ public class Game implements Runnable {
 		
 		//Sets display for Game instance
 		display = new Display(title, width, height);
+		
+		testImage = ImageLoader.loadImage("/textures/test.jpg");
 	}
 
 	//Update everything for game
@@ -79,12 +85,7 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, width, height);
-		g.setColor(Color.red);
-		g.fillRect(50, 50, 50, 50);
-		g.setColor(Color.green);
-		g.fillRect(45, 100, 60, 2);
+		g.drawImage(testImage, 50, 50, null); //Null = image observer
 		
 		/*************** END DRAWING ***************/
 		

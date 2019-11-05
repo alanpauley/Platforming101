@@ -5,6 +5,9 @@ import java.awt.image.BufferStrategy;
 
 import dev.apauley.display.Display;
 import dev.apauley.gfx.Assets;
+import dev.apauley.states.GameState;
+import dev.apauley.states.MenuState;
+import dev.apauley.states.State;
 
 /*
  * Main class for game - holds all base code: 
@@ -37,6 +40,9 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	
+	//State objects
+	private State gameState, menuState;
+	
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -51,13 +57,20 @@ public class Game implements Runnable {
 		
 		//Loads all SpriteSheets to objects
 		Assets.init();
+		
+		gameState = new GameState();
+		menuState = new MenuState();
+		State.setState(gameState);
 	}
 	
-	int x = 0;
-
 	//Update everything for game
 	private void tick(){
-		x++;
+		if(State.getState() != null)
+			State.getState().tick();
+		if(State.getState() == gameState)
+			State.setState(menuState);
+		else
+			State.setState(gameState);
 	}
 
 	//Render everything for game
@@ -85,8 +98,9 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
-		g.drawImage(Assets.grass, x, 0, null);
-		
+		if(State.getState() != null)
+			State.getState().render(g);
+
 		/*************** END DRAWING ***************/
 		
 		//Work buffer magic (presumably to transfer between buffers, ending at screen

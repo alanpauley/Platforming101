@@ -1,12 +1,12 @@
 package dev.apauley.general;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import dev.apauley.display.Display;
 import dev.apauley.gfx.ImageLoader;
+import dev.apauley.gfx.SpriteSheet;
 
 /*
  * Main class for game - holds all base code: 
@@ -40,7 +40,8 @@ public class Game implements Runnable {
 	private Graphics g;
 	
 	private BufferedImage testImage;
-
+	private SpriteSheet sheet;
+	
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;		
@@ -52,7 +53,9 @@ public class Game implements Runnable {
 		//Sets display for Game instance
 		display = new Display(title, width, height);
 		
-		testImage = ImageLoader.loadImage("/textures/test.jpg");
+		testImage = ImageLoader.loadImage("/textures/sheet.png");
+		
+		sheet = new SpriteSheet(testImage);
 	}
 
 	//Update everything for game
@@ -85,7 +88,7 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
-		g.drawImage(testImage, 50, 50, null); //Null = image observer
+		g.drawImage(sheet.crop(32, 0, 32, 32), width/2 - 32/2, height/2 - 32/2, null); //Null = image observer
 		
 		/*************** END DRAWING ***************/
 		

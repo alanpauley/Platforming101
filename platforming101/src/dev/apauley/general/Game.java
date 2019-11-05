@@ -52,10 +52,12 @@ public class Game implements Runnable {
 		//Loads all SpriteSheets to objects
 		Assets.init();
 	}
+	
+	int x = 0;
 
 	//Update everything for game
 	private void tick(){
-
+		x++;
 	}
 
 	//Render everything for game
@@ -83,7 +85,7 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
-		g.drawImage(Assets.grass, 15, 15, null);
+		g.drawImage(Assets.grass, x, 0, null);
 		
 		/*************** END DRAWING ***************/
 		
@@ -103,13 +105,54 @@ public class Game implements Runnable {
 		//initialize all of the graphics and get everything ready for game
 		init();
 		
+		int fps = 60;
+		
+		//1 billion nanoseconds within a second
+		long nanoSeconds = 1000000000;
+		
+		//Below translates to 1 per second, but nanoseconds is more exact so allows for more flexibility.
+		double timePerTick = nanoSeconds/fps;
+
+		double delta = 0;
+		long now;
+		
+		//Returns current time of computer in nanoseconds.
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
+
 		//Game Loop:
 		// 1.) Update all variables, positions of objects, etc.
 		// 2.) Render (draw) everything to the screen
 		// 3.) Repeat
 		while(running){
-			tick();
-			render();
+			//Below will do how much time we have before we can call tick() and render() again.
+			/*
+			 * Delta is difference of now/last in nano seconds, divided by time per tick
+			 * This is essentially the percentage of time per tick that has passed
+			 * So delta reaching 1 or more is 100% of time per tick, thus time to tick
+			 * 
+			 * Not sure why doing it this way instead of just doing (now - last),
+			 * and then checking if delta is >= timePerTick?
+			 */
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+
+			//If enough time has elapsed, can run tick() and render().
+			if(delta >= 1) {
+				tick();
+				render();
+				ticks++;
+				delta--;
+			}
+			
+			if(timer >= nanoSeconds) {
+				System.out.println("FPS: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 		}
 		
 		//Just an extra check in case the above doesn't stop it from running.

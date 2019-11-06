@@ -70,11 +70,6 @@ public class Game implements Runnable {
 		if(State.getState() != null)
 			State.getState().tick();
 		
-		//Toggle States quickly to test they are working
-		if(State.getState() == gameState)
-			State.setState(menuState);
-		else
-			State.setState(gameState);
 	}
 
 	//Render everything for game

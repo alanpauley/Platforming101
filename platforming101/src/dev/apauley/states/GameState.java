@@ -2,6 +2,7 @@ package dev.apauley.states;
 
 import java.awt.Graphics;
 
+import dev.apauley.entities.creatures.Player;
 import dev.apauley.gfx.Assets;
 
 /*
@@ -10,20 +11,27 @@ import dev.apauley.gfx.Assets;
 
 public class GameState extends State {
 
+	//Holds current Player and Level
+	private Player player;
+
 	//Game Constructor
 	public GameState() {
 		
+		//Creates new Player
+		player = new Player(100,100);		
 	}
 	
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		player.tick();
 		
 	}
 
 	@Override
 	public void render(Graphics g) {		
-		g.drawImage(Assets.dirt,0,0,null);
+
+		//Shows Player
+		player.render(g);
 	}
 
 }

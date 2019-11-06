@@ -2,6 +2,7 @@ package dev.apauley.states;
 
 import java.awt.Graphics;
 
+import dev.apauley.general.Game;
 import dev.apauley.gfx.Assets;
 
 /*
@@ -11,8 +12,11 @@ import dev.apauley.gfx.Assets;
 public class MenuState extends State {
 
 	//Game Constructor
-	public MenuState() {
-		
+	public MenuState(Game game) {
+
+		//Calls the constructor of the State class and supplies game as the input parameter to THIS constructor
+		super(game);
+
 	}
 	
 	@Override

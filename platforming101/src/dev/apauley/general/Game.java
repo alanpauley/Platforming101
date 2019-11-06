@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import dev.apauley.display.Display;
 import dev.apauley.gfx.Assets;
+import dev.apauley.input.KeyManager;
 import dev.apauley.states.GameState;
 import dev.apauley.states.MenuState;
 import dev.apauley.states.State;
@@ -43,10 +44,15 @@ public class Game implements Runnable {
 	//State objects
 	private State gameState, menuState;
 	
+	//Used to access all keyboard controls
+	public KeyManager keyManager;
+
+	
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
-		this.height = height;		
+		this.height = height;	
+		keyManager = new KeyManager();
 	}
 	
 	//Called only once to initialize all of the graphics and get everything ready for game
@@ -55,17 +61,23 @@ public class Game implements Runnable {
 		//Sets display for Game instance
 		display = new Display(title, width, height);
 		
+		//Needed just so we can manage keys
+		display.getFrame().addKeyListener(keyManager);
+				
 		//Loads all SpriteSheets to objects
 		Assets.init();
 		
-		gameState = new GameState();
-		menuState = new MenuState();
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
 		State.setState(gameState);
 	}
 	
 	//Update everything for game
 	private void tick(){
 
+		//Update keys
+		keyManager.tick();
+				
 		//Only tick if state is populated 
 		if(State.getState() != null)
 			State.getState().tick();
@@ -212,4 +224,12 @@ public class Game implements Runnable {
 			}
 		}
 	}
+	
+	/*************** GETTERS and SETTERS ***************/
+
+	//Gets Key Manager
+	public KeyManager getKeyManager() {
+		return keyManager;
+	}
+
 }

@@ -54,5 +54,9 @@ public class Display {
 	public Canvas getCanvas() {
 		return canvas;
 	}
-	
+
+	//Gets JFrame (window display)
+	public JFrame getFrame() {
+		return frame;
+	}
 }

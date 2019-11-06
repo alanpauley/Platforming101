@@ -65,8 +65,12 @@ public class Game implements Runnable {
 	
 	//Update everything for game
 	private void tick(){
+
+		//Only tick if state is populated 
 		if(State.getState() != null)
 			State.getState().tick();
+		
+		//Toggle States quickly to test they are working
 		if(State.getState() == gameState)
 			State.setState(menuState);
 		else
@@ -98,6 +102,7 @@ public class Game implements Runnable {
 
 		/*************** DRAW HERE ***************/
 
+		//Only render if state is populated 
 		if(State.getState() != null)
 			State.getState().render(g);
 

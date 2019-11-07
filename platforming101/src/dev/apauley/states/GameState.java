@@ -24,7 +24,7 @@ public class GameState extends State {
 		super(game);
 		//Creates new Player
 		player = new Player(game,100,100);	
-		world = new World("");
+		world = new World("res/worlds/world1.txt");
 	}
 	
 	//Updates Player and Level

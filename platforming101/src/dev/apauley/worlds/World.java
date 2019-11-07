@@ -3,6 +3,7 @@ package dev.apauley.worlds;
 import java.awt.Graphics;
 
 import dev.apauley.tiles.Tile;
+import dev.apauley.utilities.Utilities;
 
 /*
  * Loads levels from text files and renders them to the screen
@@ -13,6 +14,9 @@ public class World {
 	//Width and Height of level
 	private int width, height;
 	
+	//X and Y Position the player will spawn at
+	private int spawnX, spawnY;
+
 	//will store tile id's in a x by y multidimensional array
 	private int[][] tiles;
 	
@@ -35,13 +39,34 @@ public class World {
 
 	//Gets data from txt file and stores in tiles multidimensional array
 	public void loadWorld(String path) {
-		width = 5;
-		height = 5;
+		
+		//Holds txt level path
+		String file = Utilities.loadFileAsString(path);
+		
+		//Split all characters from input file using spaces/new line character ("\\s+")
+		String[] tokens = file.split("\\s+");
+		
+		//Width of Level
+		width = Utilities.parseInt(tokens[0]);
+
+		//Height of Level
+		height = Utilities.parseInt(tokens[1]);
+		
+		//Player Spawn X Position
+		spawnX = Utilities.parseInt(tokens[2]);
+
+		//Player Spawn X Position
+		spawnY = Utilities.parseInt(tokens[3]);
+		
+		//Creates tiles multidimensional array based on width and height
 		tiles = new int[width][height];
 		
-		for(int x = 0; x < width; x++) {
-			for(int y = 0; y < height; y++) {
-				tiles[x][y] = 1;
+		//Loops through width and height and adds tiles to multidimensional array
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+
+				//Need to do +4 because we are setting first 4 variables above from level file, so skip those when doing tiles
+				tiles[x][y] = Utilities.parseInt(tokens[(x + y * width) + 4]);
 			}
 		}
 	}

@@ -12,10 +12,15 @@ public abstract class Entity {
 	//X and Y coordinates of entity
 	protected float x, y;
 
+	//Size of entity
+	protected int width, height;
+	
 	//Constructor to set Defaults
-	public Entity(float x, float y) {
+	public Entity(float x, float y, int width, int height) {
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.height = height;
 				
 	}
 	
@@ -27,4 +32,43 @@ public abstract class Entity {
 
 	/*************** GETTERS and SETTERS ***************/
 
+	//Gets x Position
+	public float getX() {
+		return x;
+	}
+
+	//Sets x Position
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	//Gets y Position
+	public float getY() {
+		return y;
+	}
+
+	//Sets y Position
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	//Gets entity width
+	public int getWidth() {
+		return width;
+	}
+
+	//Sets entity width
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	//Gets entity height
+	public int getHeight() {
+		return height;
+	}
+
+	//Sets entity height
+	public void setHeight(int height) {
+		this.height = height;
+	}
 }

@@ -1,13 +1,16 @@
 package dev.apauley.entities;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
+
+import dev.apauley.general.Game;
 
 /*
  * The base shell for all Entities in game
  */
 public abstract class Entity {
 
+	protected Game game;
+	
 	//Float = smoother movement using decimals for calculations
 	//X and Y coordinates of entity
 	protected float x, y;
@@ -16,7 +19,8 @@ public abstract class Entity {
 	protected int width, height;
 	
 	//Constructor to set Defaults
-	public Entity(float x, float y, int width, int height) {
+	public Entity(Game game, float x, float y, int width, int height) {
+		this.game = game;
 		this.x = x;
 		this.y = y;
 		this.width = width;

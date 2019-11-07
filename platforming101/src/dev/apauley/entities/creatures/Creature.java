@@ -1,6 +1,7 @@
 package dev.apauley.entities.creatures;
 
 import dev.apauley.entities.Entity;
+import dev.apauley.general.Game;
 
 /*
  * The base shell for all Creatures in game
@@ -9,7 +10,7 @@ public abstract class Creature extends Entity {
 
 	//Default Creature Values
 	public static final int DEFAULT_HEALTH = 10;
-	public static final float DEFAULT_SPEED = 1.6f;	
+	public static final float DEFAULT_SPEED = 3.6f;	
 	public static final int DEFAULT_CREATURE_WIDTH = 64
 			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
 
@@ -21,8 +22,8 @@ public abstract class Creature extends Entity {
 	protected float xMove, yMove;	
 	
 	//Creature Constructor. Establishes some defaults
-	public Creature(float x, float y, int width, int height) {
-		super(x,y, width, height);
+	public Creature(Game game, float x, float y, int width, int height) {
+		super(game, x,y, width, height);
 		health = 10;
 		speed = DEFAULT_SPEED;
 		xMove = 0;

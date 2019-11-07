@@ -24,7 +24,7 @@ public class GameState extends State {
 		super(game);
 		//Creates new Player
 		player = new Player(game,100,100);	
-		world = new World("res/worlds/world1.txt");
+		world = new World(game, "res/worlds/world1.txt");
 	}
 	
 	//Updates Player and Level
@@ -32,7 +32,6 @@ public class GameState extends State {
 	public void tick() {
 		world.tick();
 		player.tick();
-		
 	}
 
 	//Draws Level and player to screen

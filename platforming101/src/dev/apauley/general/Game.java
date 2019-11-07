@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import dev.apauley.display.Display;
 import dev.apauley.gfx.Assets;
+import dev.apauley.gfx.GameCamera;
 import dev.apauley.input.KeyManager;
 import dev.apauley.states.GameState;
 import dev.apauley.states.MenuState;
@@ -24,7 +25,7 @@ public class Game implements Runnable {
 	//Tracks General variables
 	private Display display;	
 	public String title;
-	public int width, height;
+	private int width, height;
 	
 	//While Running = true, game will loop
 	private boolean running = false;
@@ -47,7 +48,9 @@ public class Game implements Runnable {
 	//Used to access all keyboard controls
 	public KeyManager keyManager;
 
-	
+	//Used to access Game Camera	
+	private GameCamera gameCamera;
+		
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -67,6 +70,9 @@ public class Game implements Runnable {
 		//Loads all SpriteSheets to objects
 		Assets.init();
 		
+		//initializes the gameCamera at 0,0
+		gameCamera = new GameCamera(this,0,0);
+				
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
 		State.setState(gameState);
@@ -232,4 +238,19 @@ public class Game implements Runnable {
 		return keyManager;
 	}
 
+	//Gets Game Camera
+	public GameCamera getGameCamera() {
+		return gameCamera;
+	}
+	
+	//Gets Width of window
+	public int getWidth() {
+		return width;
+	}
+	
+	//Gets Height of window
+	public int getHeight() {
+		return height;
+	}
+	
 }

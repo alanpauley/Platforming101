@@ -2,6 +2,7 @@ package dev.apauley.worlds;
 
 import java.awt.Graphics;
 
+import dev.apauley.general.Game;
 import dev.apauley.tiles.Tile;
 import dev.apauley.utilities.Utilities;
 
@@ -11,6 +12,8 @@ import dev.apauley.utilities.Utilities;
 
 public class World {
 
+	private Game game;
+	
 	//Width and Height of level
 	private int width, height;
 	
@@ -21,7 +24,8 @@ public class World {
 	private int[][] tiles;
 	
 	//Constructor
-	public World(String path) {
+	public World(Game game, String path) {
+		this.game = game;
 		loadWorld(path);
 	}
 
@@ -32,7 +36,7 @@ public class World {
 	public void render(Graphics g) {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				getTile(x,y).render(g, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+				getTile(x,y).render(g, (int) (x * Tile.TILEWIDTH - game.getGameCamera().getxOffset()), (int) (y * Tile.TILEHEIGHT - game.getGameCamera().getyOffset()));
 			}
 		}		
 	}

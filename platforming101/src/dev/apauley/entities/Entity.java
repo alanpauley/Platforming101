@@ -2,14 +2,15 @@ package dev.apauley.entities;
 
 import java.awt.Graphics;
 
-import dev.apauley.general.Game;
+import dev.apauley.general.Handler;
 
 /*
  * The base shell for all Entities in game
  */
 public abstract class Entity {
 
-	protected Game game;
+	//Main Handler object (can reference game or anything from here)
+	protected Handler handler;
 	
 	//Float = smoother movement using decimals for calculations
 	//X and Y coordinates of entity
@@ -19,8 +20,8 @@ public abstract class Entity {
 	protected int width, height;
 	
 	//Constructor to set Defaults
-	public Entity(Game game, float x, float y, int width, int height) {
-		this.game = game;
+	public Entity(Handler handler, float x, float y, int width, int height) {
+		this.handler = handler;
 		this.x = x;
 		this.y = y;
 		this.width = width;

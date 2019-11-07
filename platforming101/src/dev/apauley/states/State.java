@@ -2,7 +2,7 @@ package dev.apauley.states;
 
 import java.awt.Graphics;
 
-import dev.apauley.general.Game;
+import dev.apauley.general.Handler;
 
 /*
  * Base class to handle all game states
@@ -13,10 +13,12 @@ public abstract class State {
 	
 	private static State currentState = null;
 	
-	protected Game game;
-	
-	public State(Game game) {
-		this.game = game;
+	//We want an instance of our game class in all our state classes
+	//But now going to reference game class via handler
+	protected Handler handler;
+
+	public State(Handler handler) {
+		this.handler = handler;
 	}
 	
 	//Unused here (abstract)

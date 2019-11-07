@@ -21,8 +21,8 @@ public class Tile {
 
 	//Initializes Tiles with id values
 	public static Tile grass 	= new Grass(0);
-	public static Tile rock 	= new Rock(1);
-	public static Tile dirt 	= new Dirt(2);
+	public static Tile dirt 	= new Dirt(1);
+	public static Tile rock 	= new Rock(2);
 	public static Tile tree 	= new Tree(3);
 
 	/*************CLASS VARIABLES*****************/	

@@ -50,7 +50,10 @@ public class Game implements Runnable {
 
 	//Used to access Game Camera	
 	private GameCamera gameCamera;
-		
+
+	//Used to access Handler
+	private Handler handler;
+	
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -72,9 +75,12 @@ public class Game implements Runnable {
 		
 		//initializes the gameCamera at 0,0
 		gameCamera = new GameCamera(this,0,0);
+		
+		//initializes the Handler
+		handler = new Handler(this);
 				
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
 		State.setState(gameState);
 	}
 	

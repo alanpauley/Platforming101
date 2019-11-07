@@ -20,12 +20,11 @@ public class Assets {
 		//Title Screen sprites, namely the big "Super Mario Brothers" menu
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 	
-		player 	= sheet.crop(width * 0, height * 0, width, height);
-		grass 	= sheet.crop(width * 1, height * 0, width, height);
-		rock 	= sheet.crop(width * 2, height * 0, width, height);
-		dirt 	= sheet.crop(width * 3, height * 0, width, height);
 		tree 	= sheet.crop(width * 0, height * 1, width, height);
-		
+		dirt 	= sheet.crop(width * 1, height * 0, width, height);
+		grass 	= sheet.crop(width * 2, height * 0, width, height);
+		rock 	= sheet.crop(width * 3, height * 0, width, height);
+		player 	= sheet.crop(width * 4, height * 0, width, height);		
 	}
 
 }

@@ -14,17 +14,36 @@ public class Assets {
 	//Holds all tiles/items/etc.
 	public static BufferedImage player, dirt, grass, rock, tree; 		
 
+	//player Animations
+	public static BufferedImage[] player_down, player_up, player_right, player_left; 		
+
 	//Initializes Assets
 	public static void init() {
 		
 		//Title Screen sprites, namely the big "Super Mario Brothers" menu
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 	
+		//Player Down
+		player_down = new BufferedImage[2];
+			player_down[0] = sheet.crop(width * 4, height * 0, width, height);
+			player_down[1] = sheet.crop(width * 5, height * 0, width, height);
+		//Player Up
+		player_up = new BufferedImage[2];
+			player_up[0] = sheet.crop(width * 6, height * 0, width, height);
+			player_up[1] = sheet.crop(width * 7, height * 0, width, height);
+		//Player Right
+		player_right = new BufferedImage[2];
+			player_right[0] = sheet.crop(width * 4, height * 1, width, height);
+			player_right[1] = sheet.crop(width * 5, height * 1, width, height);
+		//Player Left
+		player_left = new BufferedImage[2];
+			player_left[0] = sheet.crop(width * 6, height * 1, width, height);
+			player_left[1] = sheet.crop(width * 7, height * 1, width, height);
+		
 		tree 	= sheet.crop(width * 0, height * 1, width, height);
 		dirt 	= sheet.crop(width * 1, height * 0, width, height);
 		grass 	= sheet.crop(width * 2, height * 0, width, height);
 		rock 	= sheet.crop(width * 3, height * 0, width, height);
-		player 	= sheet.crop(width * 4, height * 0, width, height);		
 	}
 
 }

@@ -2,8 +2,10 @@ package dev.apauley.entities.creatures;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import dev.apauley.general.Handler;
+import dev.apauley.gfx.Animation;
 import dev.apauley.gfx.Assets;
 
 /*
@@ -12,6 +14,10 @@ import dev.apauley.gfx.Assets;
 
 public class Player extends Creature{
 
+	//Animations
+	private Animation animDown, animUp, animRight, animLeft;
+	private int animSpeed = 180;
+
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
@@ -19,12 +25,24 @@ public class Player extends Creature{
 		bounds.x = 64;
 		bounds.y = 128;
 		bounds.width = 128;
-		bounds.height = 128;				
+		bounds.height = 128;	
+		
+		//Animations
+		animDown 	= new Animation(500, Assets.player_down);
+		animUp 		= new Animation(500, Assets.player_up);
+		animRight 	= new Animation(500, Assets.player_right);
+		animLeft 	= new Animation(500, Assets.player_left);
 	}
 
 	@Override
 	public void tick() {
 		
+		//Animations
+		animDown.tick();
+		animUp.tick();
+		animRight.tick();
+		animLeft.tick();
+
 		//Gets movement using speed
 		getInput();		
 
@@ -58,11 +76,27 @@ public class Player extends Creature{
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
-		g.setColor(Color.red);
-		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
-				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
-				 , bounds.width, bounds.height);
+		g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+
+//Debug Bounding Box:
+//		g.setColor(Color.red);
+//		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
+//				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
+//				 , bounds.width, bounds.height);
 	}
 
+	/*************** GETTERS and SETTERS ***************/
+
+	//Gets current animation frame depending on movement/other
+	private BufferedImage getCurrentAnimationFrame() {
+		if(xMove < 0) {
+			return animLeft.getCurrentFrame();
+		} else  if (xMove > 0) {
+			return animRight.getCurrentFrame();
+		} else  if (yMove < 0) {
+			return animUp.getCurrentFrame();
+		} else 
+			return animDown.getCurrentFrame();
+	}
+	
 }

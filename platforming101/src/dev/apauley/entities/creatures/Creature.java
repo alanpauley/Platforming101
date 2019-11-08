@@ -44,11 +44,6 @@ public abstract class Creature extends Entity {
 		//Moving right
 		if(xMove > 0) {
 			
-			/*Temp objects to hold what tile position would be if moved.. x, y upper, and y lower
-			 * For example, starts as x coordinate then divide by tile width to determine Tile number/coordinate
-			 * of tile we're trying to move in to
-			 */
-			
 			/*X coordinate of creature, + where you want to move to, + x bound offset, 
 			 * + bounds width since moving right and checking right side
 			 */
@@ -61,7 +56,12 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) &&
 					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
 				x += xMove;
-			} 
+			} else {
+				//move player as close to the tile as possible without being inside of it
+				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries
+				x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
+			}
+			
 		//Moving left
 		}else if(xMove < 0) {
 
@@ -72,7 +72,11 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) &&
 					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
 				x += xMove;
-			} 
+			} else {
+				//move player as close to the tile as possible without being inside of it
+				//Note: We weirdly don't have to add a 1-pixel gap for "sliding" to not get stuck along the boundaries. Don't ask me why...
+				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
+			}
 		}
 	}
 	
@@ -86,7 +90,11 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) &&
 					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
 				y += yMove;
-			} 
+			} else {
+				//move player as close to the tile as possible without being inside of it
+				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
+			}
+			
 		//Moving down
 		}else if(yMove > 0) {
 			
@@ -95,6 +103,10 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) &&
 					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
 				y += yMove;
+			} else {
+				//move player as close to the tile as possible without being inside of it
+				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries
+				y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
 			}
 		}
 	}

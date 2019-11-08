@@ -61,7 +61,7 @@ public class Tile {
 	}
 	
 	//Gets whether tile is Solid or not
-	public boolean getIsSolid() {
+	public boolean isSolid() {
 		return false;
 	}
 	

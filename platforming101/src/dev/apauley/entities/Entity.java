@@ -1,6 +1,7 @@
 package dev.apauley.entities;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import dev.apauley.general.Handler;
 
@@ -19,6 +20,9 @@ public abstract class Entity {
 	//Size of entity
 	protected int width, height;
 	
+	//Boundary box for collision detection
+	protected Rectangle bounds;
+
 	//Constructor to set Defaults
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;
@@ -27,6 +31,9 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 				
+		//By default, set boundary box to be exact size of entity
+		//So 0,0 to start top left of entity, then same width/height
+		bounds = new Rectangle(0, 0, width, height);			
 	}
 	
 	//Updates Entity

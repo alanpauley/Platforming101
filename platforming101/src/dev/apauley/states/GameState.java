@@ -27,7 +27,7 @@ public class GameState extends State {
 		world = new World(handler, "res/worlds/world1.txt");
 		handler.setWorld(world);
 		//Creates new Player
-		player = new Player(handler,100,100);	
+		player = new Player(handler,300,300);	
 		
 	}
 	
@@ -49,10 +49,6 @@ public class GameState extends State {
 		//Shows Player
 		player.render(g);
 		
-		Tile.tiles[0].render(g, 64 * 9, 64 * 4);
-		Tile.tiles[1].render(g, 64 * 9, 64 * 5);
-		Tile.tiles[2].render(g, 64 * 9, 64 * 6);
-		Tile.tiles[3].render(g, 64 * 9, 64 * 7);
 	}
 
 }

@@ -17,7 +17,7 @@ public class Launcher {
 			    
 	    //Starts new game with underlying display built in 
 		//Game game = new Game(formatter.format(date) + " - Platforming 101", 600, 500);
-		Game game = new Game(formatter.format(date) + " - Platforming 101", 600, 500);
+		Game game = new Game(formatter.format(date) + " - Platforming 101", 1900, 1000);
 		//Start game! Run, initialize, game loop
 		game.start();
 	}

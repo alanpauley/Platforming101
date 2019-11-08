@@ -28,7 +28,7 @@ public class Tile {
 	/*************CLASS VARIABLES*****************/	
 
 	//Default Tile size
-	public static final int TILEWIDTH = 64
+	public static final int TILEWIDTH = 256
 			              , TILEHEIGHT = TILEWIDTH;
 
 	protected BufferedImage texture;

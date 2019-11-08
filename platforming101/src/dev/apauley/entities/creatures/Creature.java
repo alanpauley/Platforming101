@@ -11,8 +11,8 @@ public abstract class Creature extends Entity {
 
 	//Default Creature Values
 	public static final int DEFAULT_HEALTH = 10;
-	public static final float DEFAULT_SPEED = 3.6f;	
-	public static final int DEFAULT_CREATURE_WIDTH = 64
+	public static final float DEFAULT_SPEED = 8.0f;	
+	public static final int DEFAULT_CREATURE_WIDTH = 256
 			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
 
 	//Tracks how much HP and speed creature has

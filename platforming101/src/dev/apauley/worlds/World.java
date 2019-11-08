@@ -111,4 +111,14 @@ public class World {
 		//Returns tile as x|y index
 		return t;
 	}
+
+	//Gets Level Width
+	public int getWidth() {
+		return width;
+	}
+	
+	//Gets Level Height
+	public int getHeight() {
+		return height;
+	}
 }

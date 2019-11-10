@@ -2,6 +2,9 @@ package dev.apauley.worlds;
 
 import java.awt.Graphics;
 
+import dev.apauley.entities.EntityManager;
+import dev.apauley.entities.creatures.Player;
+import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.tiles.Tile;
 import dev.apauley.utilities.Utilities;
@@ -24,14 +27,29 @@ public class World {
 	//will store tile id's in a x by y multidimensional array
 	private int[][] tiles;
 	
+	//stores Entities
+	private EntityManager entityManager;
+	
 	//Constructor
 	public World(Handler handler, String path) {
 		this.handler = handler;
+		entityManager = new EntityManager(handler, new Player(handler, 300, 400));
+		
+		//Adds entites to the Entity list
+		entityManager.addEntity(new Tree(handler, 500,600));
+		
+		//Loads world via file
 		loadWorld(path);
+		
+		//Sets the player spawn position based on the spawn position from the world.txt file
+		entityManager.getPlayer().setX(spawnX);
+		entityManager.getPlayer().setY(spawnY);
 	}
 
 	public void tick() {
-
+		
+		//Entities
+		entityManager.tick();
 	}
 	
 	public void render(Graphics g) {
@@ -57,6 +75,9 @@ public class World {
 				getTile(x,y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()), (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
 			}
 		}		
+
+		//Entities
+		entityManager.render(g);
 	}
 
 	//Gets data from txt file and stores in tiles multidimensional array

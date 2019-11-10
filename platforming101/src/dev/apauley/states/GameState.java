@@ -3,8 +3,8 @@ package dev.apauley.states;
 import java.awt.Graphics;
 
 import dev.apauley.entities.creatures.Player;
+import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
-import dev.apauley.tiles.Tile;
 import dev.apauley.worlds.World;
 
 /*
@@ -27,15 +27,12 @@ public class GameState extends State {
 		world = new World(handler, "res/worlds/world1.txt");
 		handler.setWorld(world);
 		//Creates new Player
-		player = new Player(handler,300,300);	
-		
 	}
 	
 	//Updates Player and Level
 	@Override
 	public void tick() {
 		world.tick();
-		player.tick();
 	}
 
 	//Draws Level and player to screen
@@ -46,9 +43,6 @@ public class GameState extends State {
 		//Note: Must render level before player do to proper layer positioning
 		world.render(g);
 
-		//Shows Player
-		player.render(g);
-		
 	}
 
 }

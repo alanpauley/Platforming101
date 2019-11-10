@@ -22,9 +22,9 @@ public class Player extends Creature{
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
 		//Boundary box for player
-		bounds.x = 64;
+		bounds.x = 64 + (int) (64/2.5);
 		bounds.y = 128;
-		bounds.width = 128;
+		bounds.width = 64 + (int) (64/4.5);
 		bounds.height = 128;	
 		
 		//Animations
@@ -76,9 +76,11 @@ public class Player extends Creature{
 
 	@Override
 	public void render(Graphics g) {
+
+		//Draw Player to screen
 		g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
 
-//Debug Bounding Box:
+		//Debug Bounding Box:
 //		g.setColor(Color.red);
 //		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
 //				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())

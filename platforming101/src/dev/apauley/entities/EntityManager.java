@@ -2,6 +2,7 @@ package dev.apauley.entities;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import dev.apauley.entities.creatures.Player;
 import dev.apauley.general.Handler;
@@ -18,6 +19,20 @@ public class EntityManager {
 	//An ArrayList of Entities that holds all entities. 
 	//- like Entity[] but has no size (can add/subtract at will)
 	private ArrayList<Entity> entities;
+	
+	//Used to compare entities (namely the order which we render them)
+	//Return -1 if A should be rendered BEFORE B
+	//Return +1 if A should be rendered AFTER  B
+	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+
+		@Override
+		public int compare(Entity a, Entity b) {
+			if(a.getY() + a.getHeight() < b.getY() + b.getHeight())
+				return -1;
+			return 1;
+		}	
+		
+	};
 	
 	public EntityManager(Handler handler, Player player) {
 		this.handler = handler;
@@ -36,6 +51,9 @@ public class EntityManager {
 			Entity e = entities.get(i); //The same as saying entities[i] but for lists
 			e.tick();
 		}
+		
+		//Resort entities based on renderSorter
+		entities.sort(renderSorter);
 	}
 	
 	public void render(Graphics g) {

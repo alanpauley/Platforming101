@@ -2,7 +2,6 @@ package dev.apauley.gfx;
 
 import dev.apauley.entities.Entity;
 import dev.apauley.general.Handler;
-import dev.apauley.states.GameState;
 import dev.apauley.tiles.Tile;
 
 /*

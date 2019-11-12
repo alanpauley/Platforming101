@@ -1,6 +1,5 @@
 package dev.apauley.entities.creatures;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -16,7 +15,7 @@ public class Player extends Creature{
 
 	//Animations
 	private Animation animDown, animUp, animRight, animLeft;
-	private int animSpeed = 180;
+	private int animSpeed = 500;
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -28,10 +27,10 @@ public class Player extends Creature{
 		bounds.height = Creature.DEFAULT_CREATURE_WIDTH / 2;	
 		
 		//Animations
-		animDown 	= new Animation(500, Assets.player_down);
-		animUp 		= new Animation(500, Assets.player_up);
-		animRight 	= new Animation(500, Assets.player_right);
-		animLeft 	= new Animation(500, Assets.player_left);
+		animDown 	= new Animation(animSpeed, Assets.player_down);
+		animUp 		= new Animation(animSpeed, Assets.player_up);
+		animRight 	= new Animation(animSpeed, Assets.player_right);
+		animLeft 	= new Animation(animSpeed, Assets.player_left);
 	}
 
 	@Override

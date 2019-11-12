@@ -2,8 +2,6 @@ package dev.apauley.states;
 
 import java.awt.Graphics;
 
-import dev.apauley.entities.creatures.Player;
-import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.worlds.World;
 
@@ -13,8 +11,7 @@ import dev.apauley.worlds.World;
 
 public class GameState extends State {
 
-	//Holds current Player and Level
-	private Player player;
+	//Holds current world
 	private World world;
 
 	//Game Constructor
@@ -26,10 +23,9 @@ public class GameState extends State {
 		//Creates world
 		world = new World(handler, "res/worlds/world1.txt");
 		handler.setWorld(world);
-		//Creates new Player
 	}
 	
-	//Updates Player and Level
+	//Updates World
 	@Override
 	public void tick() {
 		world.tick();

@@ -4,6 +4,9 @@ import java.awt.Graphics;
 
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
+import dev.apauley.ui.ClickListener;
+import dev.apauley.ui.UIImageButton;
+import dev.apauley.ui.UIManager;
 
 /*
  * Where menu is at
@@ -14,8 +17,14 @@ public class MenuState extends State {
 	//Temp track positions
 	private int x, y;
 	
+	//Handles UI elements
+	//Whenever UIManager receives an event (mouse released, mouse moved, etc.),
+	// It will take the current UIManager that is set (in this case the one created in menuState)
+	// and it will pass along to it the events for these objects
+	private UIManager uiManager;
+	
 	//Game Constructor
-	public MenuState(Handler handler) {
+	public MenuState(final Handler handler) {
 
 		//Calls the constructor of the State class and supplies game as the input parameter to THIS constructor
 		super(handler);
@@ -24,6 +33,27 @@ public class MenuState extends State {
 		x = handler.getGame().getMouseManager().getMouseX();
 		y = handler.getGame().getMouseManager().getMouseY();
 
+		//Manages the UI elements
+		uiManager = new UIManager(handler);
+		
+		//Set the UIManager to the handler
+		handler.getMouseManager().setUIManager(uiManager);
+		
+		uiManager.addObject(new UIImageButton(200,200,128,64, Assets.btn_start, new ClickListener() {
+
+			//When we click the start Button, what do we want to happen?
+			@Override
+			public void onClick() {
+				
+				//We set to null so that user cannot continue to click where the start button would be when in other states
+				handler.getMouseManager().setUIManager(null);
+				
+				//Switches game to gameState
+				State.setState(handler.getGame().gameState);
+				
+			}
+		}));
+		
 	}
 	
 	@Override
@@ -35,14 +65,16 @@ public class MenuState extends State {
 			y = handler.getMouseManager().getMouseY();
 			System.out.println("(" + handler.getMouseManager().getMouseX() + ", " + handler.getMouseManager().getMouseY() + ")");
 		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed())
-			State.setState(handler.getGame().gameState);		
+		
+		uiManager.tick();
 	}
 
 	@Override
 	public void render(Graphics g) {		
 		g.drawImage(Assets.grass,5,0,null);
 		g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);
+
+		uiManager.render(g);
 	}
 
 }

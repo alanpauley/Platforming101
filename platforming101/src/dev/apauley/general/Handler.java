@@ -2,6 +2,7 @@ package dev.apauley.general;
 
 import dev.apauley.gfx.GameCamera;
 import dev.apauley.input.KeyManager;
+import dev.apauley.input.MouseManager;
 import dev.apauley.worlds.World;
 
 public class Handler {
@@ -24,6 +25,11 @@ public class Handler {
 	public KeyManager getKeyManager() {
 		return game.getKeyManager();
 	}
+
+	public MouseManager getMouseManager() {
+		return game.getMouseManager();
+	}
+
 	public int getWidth() {
 		return game.getWidth();
 	}

@@ -7,6 +7,7 @@ import dev.apauley.display.Display;
 import dev.apauley.gfx.Assets;
 import dev.apauley.gfx.GameCamera;
 import dev.apauley.input.KeyManager;
+import dev.apauley.input.MouseManager;
 import dev.apauley.states.GameState;
 import dev.apauley.states.MenuState;
 import dev.apauley.states.State;
@@ -43,10 +44,13 @@ public class Game implements Runnable {
 	private Graphics g;
 	
 	//State objects
-	private State gameState, menuState;
+	public State gameState, menuState;
 	
 	//Used to access all keyboard controls
-	public KeyManager keyManager;
+	private KeyManager keyManager;
+
+	//Used to access all mouse controls
+	private MouseManager mouseManager;
 
 	//Used to access Game Camera	
 	private GameCamera gameCamera;
@@ -59,6 +63,7 @@ public class Game implements Runnable {
 		this.width = width;
 		this.height = height;	
 		keyManager = new KeyManager();
+		mouseManager = new MouseManager(width, height);
 	}
 	
 	//Called only once to initialize all of the graphics and get everything ready for game
@@ -69,6 +74,13 @@ public class Game implements Runnable {
 		
 		//Needed just so we can manage keys
 		display.getFrame().addKeyListener(keyManager);
+				
+		//Needed just so we can manage mouse
+		//We add to both the frame AND the canvas, so that way whichever is focused on will respond (otherwise glitchy)
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
 				
 		//Loads all SpriteSheets to objects
 		Assets.init();
@@ -81,7 +93,7 @@ public class Game implements Runnable {
 		
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
-		State.setState(gameState);
+		State.setState(menuState);
 	}
 	
 	//Update everything for game
@@ -242,6 +254,11 @@ public class Game implements Runnable {
 	//Gets Key Manager
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+
+	//Gets Mouse Manager
+	public MouseManager getMouseManager() {
+		return mouseManager;
 	}
 
 	//Gets Game Camera

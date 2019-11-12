@@ -22,10 +22,10 @@ public class Player extends Creature{
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
 		//Boundary box for player
-		bounds.x = 64 + (int) (64/2.5);
-		bounds.y = 128;
-		bounds.width = 64 + (int) (64/4.5);
-		bounds.height = 128;	
+		bounds.x = Creature.DEFAULT_CREATURE_WIDTH / 4 + (int) (Creature.DEFAULT_CREATURE_WIDTH / 4 /2.5);
+		bounds.y = Creature.DEFAULT_CREATURE_WIDTH / 2;
+		bounds.width = Creature.DEFAULT_CREATURE_WIDTH / 4 + (int) (Creature.DEFAULT_CREATURE_WIDTH / 4 /4.5);
+		bounds.height = Creature.DEFAULT_CREATURE_WIDTH / 2;	
 		
 		//Animations
 		animDown 	= new Animation(500, Assets.player_down);

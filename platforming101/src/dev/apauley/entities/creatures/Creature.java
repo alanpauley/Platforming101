@@ -36,8 +36,12 @@ public abstract class Creature extends Entity {
 
 	//Moves creature using helpers
 	public void move() {
-		moveX();
-		moveY();		
+		
+		//If no collision, movement is allowed, otherwise stop
+		if(!checkEntityCollisions(xMove, 0f))
+			moveX();
+		if(!checkEntityCollisions(0f, yMove))
+			moveY();		
 	}
 
 	//Instead of moving both x and y in same move method, creating separate

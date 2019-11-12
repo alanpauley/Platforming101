@@ -138,6 +138,11 @@ public class World {
 		return width;
 	}
 	
+	//Gets the EntityManager
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
 	//Gets Level Height
 	public int getHeight() {
 		return height;

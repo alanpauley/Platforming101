@@ -41,6 +41,31 @@ public abstract class Entity {
 	
 	//Draws Entity
 	public abstract void render(Graphics g);
+	
+	/*************** HELPER METHODS ***************/
+	
+	//Checks all collisions in game
+	public boolean checkEntityCollisions(float xOffset, float yOffset) {
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+
+			//We don't want to check against ourself
+			if(e.equals(this))
+				continue;
+			
+			//if intersects, collision = detected
+			if(e.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+				return true;
+			}
+		}
+		
+		//Otherwise, no collision
+		return false;
+	}
+	
+	//Gets the bounds (collision) around entity
+	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+	}
 
 	/*************** GETTERS and SETTERS ***************/
 

@@ -23,6 +23,9 @@ public class EntityManager {
 		this.handler = handler;
 		this.player = player;
 		entities = new ArrayList<Entity>();
+		
+		//Puts player into the array list of entities
+		addEntity(player);
 	}
 	
 	public void tick() {
@@ -33,9 +36,6 @@ public class EntityManager {
 			Entity e = entities.get(i); //The same as saying entities[i] but for lists
 			e.tick();
 		}
-		
-		//Keeping Player separate because it's special and will have unique properties/circumstances
-		player.tick();
 	}
 	
 	public void render(Graphics g) {
@@ -46,9 +46,6 @@ public class EntityManager {
 		for(Entity e : entities) { 
 			e.render(g);
 		}
-		
-		//Draws player to the screen
-		player.render(g);
 	}
 
 	//Take an entity and add to the Entity Array List (so it can be ticked and rendered)

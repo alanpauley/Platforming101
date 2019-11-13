@@ -23,10 +23,7 @@ public class Tree extends StaticEntity {
 	}
 
 	@Override
-	public void tick() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void tick() {}
 
 	//The process that occurs when an entity dies
 	@Override
@@ -34,7 +31,11 @@ public class Tree extends StaticEntity {
 	
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.tree,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+		
+		if(flash > 0)
+			g.drawImage(Assets.ftree,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+		else 
+			g.drawImage(Assets.tree,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 	}
 
 }

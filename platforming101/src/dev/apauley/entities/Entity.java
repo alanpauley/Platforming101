@@ -12,6 +12,7 @@ public abstract class Entity {
 
 	//Default Creature Values
 	public static final int DEFAULT_HEALTH = 10;
+	public static final int DEFAULT_FLASH = 7;
 
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
@@ -25,6 +26,9 @@ public abstract class Entity {
 	
 	//Tracks how much HP creature has
 	protected int health;
+
+	//Tracks whether target is hit
+	protected int flash;
 	
 	//Tracks whether entity is still alive/active
 	protected boolean active = true;
@@ -40,6 +44,7 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		health = DEFAULT_HEALTH;
+		flash = 0;
 				
 		//By default, set boundary box to be exact size of entity
 		//So 0,0 to start top left of entity, then same width/height
@@ -55,9 +60,11 @@ public abstract class Entity {
 	//The process that occurs when an entity dies
 	public abstract void die();
 	
-	//subtract health from entity
+	//subtract health from entity and flash them
 	public void hurt(int amt) {
 		health -= amt;
+		
+		flash = DEFAULT_FLASH;
 		
 		//If entity loses all health, set active to false to remove from game
 		if(health <= 0) {
@@ -65,7 +72,13 @@ public abstract class Entity {
 			die();
 		}
 	}
-	
+
+	//if entity is flashing, decrement
+	public void flash() {
+		
+		if(flash > 0)
+			flash--;
+	}
 	/*************** HELPER METHODS ***************/
 	
 	//Checks all collisions in game

@@ -17,6 +17,9 @@ public class Assets {
 	//Holds all static entities
 	public static BufferedImage tree, rock;
 
+	//Holds all static flash entities
+	public static BufferedImage ftree, frock;
+
 	//player Animations
 	public static BufferedImage[] player_down, player_up, player_right, player_left; 		
 
@@ -55,9 +58,13 @@ public class Assets {
 		grass 	= sheet.crop(width * 2, height * 0, width, height);
 		stone 	= sheet.crop(width * 3, height * 0, width, height);
 
-	//Static Entities
+		//Static Entities
 		tree 	= sheet.crop(width * 0, height * 0, width, height * 2);
 		rock 	= sheet.crop(width * 0, height * 2, width, height);
+
+		//Static Flash Entities
+		ftree 	= sheet.crop(width * 0, height * 3, width, height * 2);
+		frock 	= sheet.crop(width * 0, height * 5, width, height);
 	}
 
 }

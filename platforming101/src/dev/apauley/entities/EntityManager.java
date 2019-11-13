@@ -49,8 +49,8 @@ public class EntityManager {
 		//we didn't use the list for loop like in render() below, because it will cause issues when you deal with collisions.
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i); //The same as saying entities[i] but for lists
-			e.tick();
-			
+			e.tick();			
+			e.flash(); //Decrements flash
 			//If e is no longer active, remove
 			if(!e.isActive())
 				entities.remove(e);

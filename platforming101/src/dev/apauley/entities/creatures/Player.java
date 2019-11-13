@@ -21,7 +21,7 @@ public class Player extends Creature{
 	
 	//Attack Timer
 	private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
-
+	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
@@ -100,9 +100,6 @@ public class Player extends Creature{
 		
 		//If Attacking, begin following code
 
-		//Reset attackTimer
-		attackTimer = 0;		
-		
 		//For every entity
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 			
@@ -113,12 +110,15 @@ public class Player extends Creature{
 			//If entity's collision bounds intersects with attack rectangle register a hit against entity
 			if(e.getCollisionBounds(0, 0).intersects(ar)) {
 				e.hurt(1);
+
+				//Reset attackTimer
+				attackTimer = 0;		
+			
 				return;
 			}
 		}
-
 	}
-	
+		
 	//The process that occurs when an entity dies
 	@Override	
 	public void die() {
@@ -172,5 +172,7 @@ public class Player extends Creature{
 		} else 
 			return animDown.getCurrentFrame();
 	}
+
+	//Checks if player is attacking
 	
 }

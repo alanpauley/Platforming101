@@ -199,7 +199,8 @@ public class Game implements Runnable {
 			}
 			
 			if(timer >= nanoSeconds) {
-				System.out.println("FPS: " + ticks);
+				
+				//System.out.println("FPS: " + ticks); //Debug
 				ticks = 0;
 				timer = 0;
 			}

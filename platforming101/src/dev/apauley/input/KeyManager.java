@@ -51,7 +51,7 @@ public class KeyManager implements KeyListener {
 
 		// Whenever key is pressed
 		keys[e.getKeyCode()] = true;
-		System.out.println("Pressed: " + e.getKeyChar()); //Debug
+		//System.out.println("Pressed: " + e.getKeyChar()); //Debug
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class KeyManager implements KeyListener {
 
 		// Whenever key is released
 		keys[e.getKeyCode()] = false;		
-		System.out.println("Released: " + e.getKeyChar()); //Debug
+		//System.out.println("Released: " + e.getKeyChar()); //Debug
 	}
 
 }

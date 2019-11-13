@@ -29,7 +29,7 @@ public class Rock extends StaticEntity {
 	//The process that occurs when an entity dies
 	@Override
 	public void die() {
-		handler.getWorld().getItemManager().addItem(Item.rock.createNew((int) (x + Tile.TILEWIDTH / 2), (int) (y + Tile.TILEHEIGHT / 2)));
+		handler.getWorld().getItemManager().addItem(Item.rock.createNew((int) (x + Item.ITEM_WIDTH / 2), (int) (y + Item.ITEM_HEIGHT / 2)));
 	}
 	
 	@Override

@@ -63,7 +63,7 @@ public class MenuState extends State {
 		if(handler.getMouseManager().getMouseX() != x || handler.getMouseManager().getMouseY() != y) {
 			x = handler.getMouseManager().getMouseX();
 			y = handler.getMouseManager().getMouseY();
-			System.out.println("(" + handler.getMouseManager().getMouseX() + ", " + handler.getMouseManager().getMouseY() + ")");
+			//System.out.println("(" + handler.getMouseManager().getMouseX() + ", " + handler.getMouseManager().getMouseY() + ")"); //Debug
 		}
 		
 		uiManager.tick();

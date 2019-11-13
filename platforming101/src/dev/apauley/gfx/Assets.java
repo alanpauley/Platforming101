@@ -20,7 +20,10 @@ public class Assets {
 	//Holds all static flash entities
 	public static BufferedImage ftree, frock;
 
-	//player Animations
+	//Holds all item drops
+	public static BufferedImage wood;
+
+//player Animations
 	public static BufferedImage[] player_down, player_up, player_right, player_left; 		
 
 	//start game button
@@ -65,6 +68,9 @@ public class Assets {
 		//Static Flash Entities
 		ftree 	= sheet.crop(width * 0, height * 3, width, height * 2);
 		frock 	= sheet.crop(width * 0, height * 5, width, height);
+
+		//Item Drop Entities
+		wood 	= sheet.crop(width * 1, height * 1, width, height);
 	}
 
 }

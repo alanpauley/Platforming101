@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
+import dev.apauley.items.Item;
 import dev.apauley.tiles.Tile;
 
 /*
@@ -27,7 +28,9 @@ public class Tree extends StaticEntity {
 
 	//The process that occurs when an entity dies
 	@Override
-	public void die() {}
+	public void die() {
+		handler.getWorld().getItemManager().addItem(Item.wood.createNew((int) (x + Tile.TILEWIDTH / 2), (int) (y + Tile.TILEHEIGHT / 2)));
+	}
 	
 	@Override
 	public void render(Graphics g) {

@@ -7,6 +7,7 @@ import dev.apauley.entities.creatures.Player;
 import dev.apauley.entities.statics.Rock;
 import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
+import dev.apauley.items.ItemManager;
 import dev.apauley.tiles.Tile;
 import dev.apauley.utilities.Utilities;
 
@@ -31,11 +32,15 @@ public class World {
 	//stores Entities
 	private EntityManager entityManager;
 	
+	//stores Items
+	private ItemManager itemManager;
+	
 	//Constructor
 	public World(Handler handler, String path) {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 300, 400));
-		
+		itemManager = new ItemManager(handler);
+
 		//Adds entities to the Entity list
 		entityManager.addEntity(new Tree(handler, 200,200));
 		entityManager.addEntity(new Rock(handler, 180,350));
@@ -50,8 +55,12 @@ public class World {
 
 	public void tick() {
 		
+		//Items
+		itemManager.tick();
+
 		//Entities
 		entityManager.tick();
+
 	}
 	
 	public void render(Graphics g) {
@@ -77,6 +86,9 @@ public class World {
 				getTile(x,y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()), (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
 			}
 		}		
+		
+		//Items
+		itemManager.render(g);
 
 		//Entities
 		entityManager.render(g);
@@ -149,4 +161,21 @@ public class World {
 	public int getHeight() {
 		return height;
 	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	public ItemManager getItemManager() {
+		return itemManager;
+	}
+
+	public void setItemManager(ItemManager itemManager) {
+		this.itemManager = itemManager;
+	}
+
 }

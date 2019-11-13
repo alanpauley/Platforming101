@@ -3,6 +3,7 @@ package dev.apauley.entities;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import dev.apauley.entities.creatures.Player;
 import dev.apauley.general.Handler;
@@ -45,15 +46,20 @@ public class EntityManager {
 	
 	public void tick() {
 		
-		//Loop through entities to tick them all
+		//Loop through entities to tick them all using an iterator
+		Iterator<Entity> it = entities.iterator();
+		
 		//we didn't use the list for loop like in render() below, because it will cause issues when you deal with collisions.
-		for(int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i); //The same as saying entities[i] but for lists
+		//As long as the iterator object has items, it will continue, even if we remove some entities mid-way
+		//This is important so that we don't just exit the loop and ignore any objects getting their updated tick()
+		while(it.hasNext()) {
+			Entity e = it.next(); //The same as saying entities[i] or entities.get(i), but for an iterator
 			e.tick();			
 			e.flash(); //Decrements flash
 			//If e is no longer active, remove
 			if(!e.isActive())
-				entities.remove(e);
+				//it.remove() will safely and properly remove entity from the list, opposed to e.remove() which would cause issues just yanking it out midway, skipping over entities. 
+				it.remove();
 		}
 		
 		//Resort entities based on renderSorter

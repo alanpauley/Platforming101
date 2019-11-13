@@ -39,7 +39,7 @@ public class MenuState extends State {
 		//Set the UIManager to the handler
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIImageButton(200,200,128,64, Assets.btn_start, new ClickListener() {
+		uiManager.addObject(new UIImageButton(handler.getGame().getWidth()/2 - 64,handler.getGame().getHeight()/2 - 32,128,64, Assets.btn_start, new ClickListener() {
 
 			//When we click the start Button, what do we want to happen?
 			@Override

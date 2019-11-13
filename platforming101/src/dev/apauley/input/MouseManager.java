@@ -70,13 +70,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 			
 		//For whatever reason, moving left (slowly) still seems to break and not work
 		//The mouse image will stop then JUMP back to the right a few pixels and settle down at about 3 pixels (and down for whatever reason)
-		if(mouseX < 0 ) //Left Frame Wall
+		if(mouseX <= 0 ) //Left Frame Wall
 			mouseX = 0;
-		if(mouseX > width) //Right Frame Wall
+		if(mouseX >= width) //Right Frame Wall
 			mouseX = width;
-		if(mouseY < 0) //Top Frame Wall
+		if(mouseY <= 0) //Top Frame Wall
 			mouseY = 0;
-		if(mouseY > height) //Bottom Frame Wall
+		if(mouseY >= height) //Bottom Frame Wall
 			mouseY = height;
 		
 		//if uiManager exists, pass it through the uiManager to run that specific code

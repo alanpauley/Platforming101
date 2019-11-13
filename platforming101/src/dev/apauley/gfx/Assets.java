@@ -12,7 +12,10 @@ public class Assets {
 	private static final int width = 32, height = width;
 
 	//Holds all tiles/items/etc.
-	public static BufferedImage player, dirt, grass, rock, tree; 		
+	public static BufferedImage player, dirt, grass, stone;
+	
+	//Holds all static entities
+	public static BufferedImage tree, rock;
 
 	//player Animations
 	public static BufferedImage[] player_down, player_up, player_right, player_left; 		
@@ -48,10 +51,13 @@ public class Assets {
 			player_left[0] = sheet.crop(width * 6, height * 1, width, height);
 			player_left[1] = sheet.crop(width * 7, height * 1, width, height);
 		
-		tree 	= sheet.crop(width * 0, height * 0, width, height * 2);
 		dirt 	= sheet.crop(width * 1, height * 0, width, height);
 		grass 	= sheet.crop(width * 2, height * 0, width, height);
-		rock 	= sheet.crop(width * 3, height * 0, width, height);
+		stone 	= sheet.crop(width * 3, height * 0, width, height);
+
+	//Static Entities
+		tree 	= sheet.crop(width * 0, height * 0, width, height * 2);
+		rock 	= sheet.crop(width * 0, height * 2, width, height);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import dev.apauley.entities.EntityManager;
 import dev.apauley.entities.creatures.Player;
+import dev.apauley.entities.statics.Rock;
 import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.tiles.Tile;
@@ -35,8 +36,9 @@ public class World {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 300, 400));
 		
-		//Adds entites to the Entity list
-		entityManager.addEntity(new Tree(handler, 500,600));
+		//Adds entities to the Entity list
+		entityManager.addEntity(new Tree(handler, 200,200));
+		entityManager.addEntity(new Rock(handler, 180,350));
 		
 		//Loads world via file
 		loadWorld(path);

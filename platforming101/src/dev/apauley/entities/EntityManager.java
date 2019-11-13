@@ -50,6 +50,10 @@ public class EntityManager {
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i); //The same as saying entities[i] but for lists
 			e.tick();
+			
+			//If e is no longer active, remove
+			if(!e.isActive())
+				entities.remove(e);
 		}
 		
 		//Resort entities based on renderSorter

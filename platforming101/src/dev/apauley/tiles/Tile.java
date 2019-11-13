@@ -5,8 +5,7 @@ import java.awt.image.BufferedImage;
 
 import dev.apauley.tiles.tileAssets.Dirt;
 import dev.apauley.tiles.tileAssets.Grass;
-import dev.apauley.tiles.tileAssets.Rock;
-import dev.apauley.tiles.tileAssets.Tree;
+import dev.apauley.tiles.tileAssets.Stone;
 
 /*
  * Contains Everything that every tile must have
@@ -22,8 +21,7 @@ public class Tile {
 	//Initializes Tiles with id values
 	public static Tile grass 	= new Grass(0);
 	public static Tile dirt 	= new Dirt(1);
-	public static Tile rock 	= new Rock(2);
-	public static Tile tree 	= new Tree(3);
+	public static Tile rock 	= new Stone(2);
 
 	/*************CLASS VARIABLES*****************/	
 

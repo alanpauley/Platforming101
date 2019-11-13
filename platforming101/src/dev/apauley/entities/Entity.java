@@ -10,6 +10,9 @@ import dev.apauley.general.Handler;
  */
 public abstract class Entity {
 
+	//Default Creature Values
+	public static final int DEFAULT_HEALTH = 10;
+
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
 	
@@ -20,6 +23,12 @@ public abstract class Entity {
 	//Size of entity
 	protected int width, height;
 	
+	//Tracks how much HP creature has
+	protected int health;
+	
+	//Tracks whether entity is still alive/active
+	protected boolean active = true;
+
 	//Boundary box for collision detection
 	protected Rectangle bounds;
 
@@ -30,6 +39,7 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		health = DEFAULT_HEALTH;
 				
 		//By default, set boundary box to be exact size of entity
 		//So 0,0 to start top left of entity, then same width/height
@@ -41,6 +51,20 @@ public abstract class Entity {
 	
 	//Draws Entity
 	public abstract void render(Graphics g);
+	
+	//The process that occurs when an entity dies
+	public abstract void die();
+	
+	//subtract health from entity
+	public void hurt(int amt) {
+		health -= amt;
+		
+		//If entity loses all health, set active to false to remove from game
+		if(health <= 0) {
+			active = false;
+			die();
+		}
+	}
 	
 	/*************** HELPER METHODS ***************/
 	
@@ -108,4 +132,25 @@ public abstract class Entity {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
+	//Gets entity health
+	public int getHealth() {
+		return health;
+	}
+
+	//Sets entity health
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	//Gets whether entity is active or not
+	public boolean isActive() {
+		return active;
+	}
+
+	//Sets whether entity is active or not
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 }

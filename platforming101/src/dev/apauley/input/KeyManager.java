@@ -15,7 +15,9 @@ public class KeyManager implements KeyListener {
 	
 	//Specific keys we're using
 	public boolean /*DIRECTIONS*/ 
-						up, down, left, right;
+						up, down, left, right,
+				   /*ATTACKS WITH ARROW KEYS*/
+						aUp, aDown, aLeft, aRight;
 
 	//Constructor that creates base key array
 	//And other arrays of same length, for controlling key press timing
@@ -32,6 +34,11 @@ public class KeyManager implements KeyListener {
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_D];
+		//*ATTACKS*/
+		aUp = keys[KeyEvent.VK_UP];
+		aDown = keys[KeyEvent.VK_DOWN];
+		aLeft = keys[KeyEvent.VK_LEFT];
+		aRight = keys[KeyEvent.VK_RIGHT];
 	}
 	
 	@Override

@@ -10,15 +10,13 @@ import dev.apauley.tiles.Tile;
 public abstract class Creature extends Entity {
 
 	//Default Creature Values
-	public static final int DEFAULT_HEALTH = 10;
 	public static final int DEFAULT_CREATURE_WIDTH = 64
 			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
 	
 	//Refactored speed to account for different sizes
 	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f); 
 
-	//Tracks how much HP and speed creature has
-	protected int health;
+	//Tracks how much speed creature has
 	protected float speed;
 
 	//Helper for moving creatures on x and y plane
@@ -27,7 +25,6 @@ public abstract class Creature extends Entity {
 	//Creature Constructor. Establishes some defaults
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x,y, width, height);
-		health = 10;
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;

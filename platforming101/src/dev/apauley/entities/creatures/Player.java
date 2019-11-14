@@ -49,9 +49,8 @@ public class Player extends Creature{
 	@Override
 	public void tick() {
 		
-		//only allow movement on Phase > x
-		if(handler.getPhaseManager().getCurrentPhase() < 5)
-			return;		
+		//Gravity's effect on the player
+		gravity();
 		
 		//Animations
 //		animJump.tick();
@@ -151,6 +150,10 @@ public class Player extends Creature{
 	//Takes user input and performs various actions
 	private void getInput() {
 
+		//only allow movement on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 5)
+			return;		
+		
 		//Very important that every time we call this method we set xMove and yMove to 0
 		xMove = 0;
 		yMove = 0;

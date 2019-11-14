@@ -16,6 +16,9 @@ public abstract class Creature extends Entity {
 	//Refactored speed to account for different sizes
 	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f); 
 
+	//Gravity on creatures
+	protected final float DEFAULT_GRAVITY = 9.8f;
+	
 	//Tracks how much speed creature has
 	protected float speed;
 
@@ -31,6 +34,18 @@ public abstract class Creature extends Entity {
 
 	}
 
+	//Gravity on creatures
+	public void gravity() {
+		
+		//only allow gravity on Phase >= 3
+		if(handler.getPhaseManager().getCurrentPhase() < 3) {
+			yMove = 0;
+			return;		
+		}
+								
+		yMove = DEFAULT_GRAVITY;
+	}
+	
 	//Moves creature using helpers
 	public void move() {
 		
@@ -116,6 +131,11 @@ public abstract class Creature extends Entity {
 	
 	//Takes in a tile array coordinate x/y and returns if that tile is solid
 	protected boolean collisionWithTile(int x, int y) {
+
+		//only allow collisions on Phase >= 4
+		if(handler.getPhaseManager().getCurrentPhase() < 4)
+			return false;
+								
 		return handler.getWorld().getTile(x,y).isSolid();
 	}
 

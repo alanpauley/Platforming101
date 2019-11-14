@@ -13,6 +13,12 @@ public class KeyManager implements KeyListener {
 	//Location in array determined by key code of key (see getKeyCode method calls)
 	private boolean[] keys;
 	
+	//Tracks whether key was JUST pressed
+	private boolean[] justPressed;
+	
+	//Tracks whether user can press the key or not
+	private boolean[] cantPress;
+	
 	//Specific keys we're using
 	public boolean /*DIRECTIONS*/ 
 						up, down, left, right,
@@ -23,11 +29,32 @@ public class KeyManager implements KeyListener {
 	//And other arrays of same length, for controlling key press timing
 	public KeyManager() {
 		keys = new boolean[256];
+		justPressed = new boolean[keys.length];
+		cantPress = new boolean[keys.length];
 	}
 
 	//Updates and gets key presses
 	public void tick() {
+		
+		//Loop through keys
+		for(int i = 0; i < keys.length; i++) {
+			
+			//If cannot press particular key and key is no longer being pressed, key has been released and user should be able to press again
+			if(cantPress[i] && !keys[i]) {
+				cantPress[i] = false;
 
+			//Else if key was just pressed, set just pressed to be false and cantpress to be true
+			} else if(justPressed[i]) {
+				cantPress[i] = true;
+				justPressed[i] = false;
+			}
+			
+			//If you CAN press the key and it's currently being pressed, set justpressed = true
+			if(!cantPress[i] && keys[i]) {
+				justPressed[i] = true;
+			}
+		}
+		
 		//*DIRECTION*/
 		//move player
 		up = keys[KeyEvent.VK_W];
@@ -41,6 +68,17 @@ public class KeyManager implements KeyListener {
 		aRight = keys[KeyEvent.VK_RIGHT];
 	}
 	
+	//Checks whether a key was just pressed
+	public boolean keyJustPressed(int keyCode){
+
+		//This exits before starting code if we ever have a bad key entered by player
+		if(keyCode < 0 || keyCode >= keys.length)
+			return false;
+
+		// Key that was just pressed
+		return justPressed[keyCode];
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -49,6 +87,10 @@ public class KeyManager implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 
+		//This exits before starting code if we ever have a bad key entered by player
+		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+			return;
+		
 		// Whenever key is pressed
 		keys[e.getKeyCode()] = true;
 		//System.out.println("Pressed: " + e.getKeyChar()); //Debug

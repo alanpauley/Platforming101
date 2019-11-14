@@ -28,7 +28,7 @@ public class ItemManager {
 			i.tick();
 			
 			//If count of item equals -1, item is picked up and we should remove it from the game world and add to player's inventory
-			if(i.getCount() == Item.PICKED_UP)
+			if(i.isPickedUp())
 				it.remove();
 		}
 	}

@@ -1,6 +1,7 @@
 package dev.apauley.items;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import dev.apauley.general.Handler;
@@ -20,7 +21,7 @@ public class Item {
 	
 	/*************** CLASS ***************/
 	
-	public static final int ITEM_WIDTH = 32, ITEM_HEIGHT = ITEM_WIDTH, PICKED_UP = -1;
+	public static final int ITEM_WIDTH = 32, ITEM_HEIGHT = ITEM_WIDTH;
 	
 	protected Handler handler;
 	
@@ -33,22 +34,40 @@ public class Item {
 	//unique item id
 	protected final int id;
 	
+	//Bounding rectangle for the item on the ground
+	protected Rectangle bounds; 
+	
 	//Item position
 	protected int x, y;
 	
 	//count stores amount of items
 	protected int count;
 	
+	//tracks whether item is picked up or not
+	protected boolean pickedUp = false;
+	
 	public Item(BufferedImage texture, String name, int id) {
 		this.texture = texture;
 		this.name = name;
 		this.id = id;
 		count = 1;
+
+		bounds = new Rectangle(x, y, ITEM_WIDTH, ITEM_HEIGHT);
 		
 		items[id] = this;
 	}
 	
-	public void tick() {}
+	public void tick() {
+		
+		//If player collides with item on ground, pick it up
+		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)) {
+			pickedUp = true;
+			
+			//add item to inventory
+			handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+		}
+		
+	}
 	
 	//Used to display items on the ground in the game world
 	public void render(Graphics g) {
@@ -72,10 +91,14 @@ public class Item {
 		return i;
 	}
 	
-	//Sets an items position
+	//Sets an items position AND sets bounding box for item drop
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		//Sets bounding box for item drop
+		bounds.x = x;
+		bounds.y = y;
 	}
 	
 	/*************** GETTERS and SETTERS ***************/
@@ -131,4 +154,9 @@ public class Item {
 	public int getId() {
 		return id;
 	}
+
+	public boolean isPickedUp() {
+		return pickedUp;
+	}
+
 }

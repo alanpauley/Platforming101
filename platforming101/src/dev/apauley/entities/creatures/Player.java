@@ -8,6 +8,7 @@ import dev.apauley.entities.Entity;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Animation;
 import dev.apauley.gfx.Assets;
+import dev.apauley.inventory.Inventory;
 
 /*
  * The player that our users will control.
@@ -21,6 +22,9 @@ public class Player extends Creature{
 	
 	//Attack Timer
 	private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+	
+	//Player Inventory
+	private Inventory inventory;
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -36,6 +40,9 @@ public class Player extends Creature{
 		animUp 		= new Animation(animSpeed, Assets.player_up);
 		animRight 	= new Animation(animSpeed, Assets.player_right);
 		animLeft 	= new Animation(animSpeed, Assets.player_left);
+		
+		//Inventory
+		inventory = new Inventory(handler);
 	}
 
 	@Override
@@ -58,6 +65,9 @@ public class Player extends Creature{
 		
 		//Attack
 		checkAttacks();
+		
+		//Inventory
+		inventory.tick();
 	}
 	
 	//Check is user is pressing attacking key. If so, generate attack
@@ -157,6 +167,9 @@ public class Player extends Creature{
 //		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
 //				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
 //				 , bounds.width, bounds.height);
+		
+		//Inventory
+		inventory.render(g);
 	}
 
 	/*************** GETTERS and SETTERS ***************/
@@ -173,6 +186,12 @@ public class Player extends Creature{
 			return animDown.getCurrentFrame();
 	}
 
-	//Checks if player is attacking
-	
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
 }

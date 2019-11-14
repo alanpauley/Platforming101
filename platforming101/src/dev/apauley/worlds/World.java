@@ -44,6 +44,10 @@ public class World {
 		//Adds entities to the Entity list
 		entityManager.addEntity(new Tree(handler, 200,200));
 		entityManager.addEntity(new Rock(handler, 180,350));
+		entityManager.addEntity(new Tree(handler, 400,210));
+		entityManager.addEntity(new Rock(handler, 380,360));
+		entityManager.addEntity(new Tree(handler, 600,210));
+		entityManager.addEntity(new Rock(handler, 580,370));
 		
 		//Loads world via file
 		loadWorld(path);

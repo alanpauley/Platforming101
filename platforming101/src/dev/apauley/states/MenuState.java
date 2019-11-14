@@ -71,8 +71,7 @@ public class MenuState extends State {
 
 	@Override
 	public void render(Graphics g) {		
-		g.drawImage(Assets.grass,5,0,null);
-		g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);
+		g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 4, 4);
 
 		uiManager.render(g);
 	}

@@ -36,9 +36,9 @@ public class Tree extends StaticEntity {
 	public void render(Graphics g) {
 		
 		if(flash > 0)
-			g.drawImage(Assets.ftree,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			g.drawImage(Assets.fobj1,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		else 
-			g.drawImage(Assets.tree,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			g.drawImage(Assets.obj1,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 	}
 
 }

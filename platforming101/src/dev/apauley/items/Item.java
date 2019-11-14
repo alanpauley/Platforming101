@@ -16,8 +16,8 @@ public class Item {
 	/*************** HANDLER ***************/
 
 	public static Item[] items = new Item[256];
-	public static Item wood = new Item(Assets.wood, "Wood", 0);
-	public static Item rock = new Item(Assets.rock, "Rock", 1);
+	public static Item wood = new Item(Assets.item1, "Wood", 0);
+	public static Item rock = new Item(Assets.obj2, "Rock", 1);
 	
 	/*************** CLASS ***************/
 	

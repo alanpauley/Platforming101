@@ -30,6 +30,10 @@ public class Handler {
 		return game.getMouseManager();
 	}
 
+	public PhaseManager getPhaseManager() {
+		return game.getPhaseManager();
+	}
+	
 	public int getWidth() {
 		return game.getWidth();
 	}

@@ -16,19 +16,20 @@ public class Assets {
 	public static Font font28;
 
 	//Holds all tiles/items/etc.
-	public static BufferedImage player, dirt, grass, stone;
+	public static BufferedImage player, ground, sky
+	                          , notFound; //Handles when a tile cannot be found
 	
 	//Holds all static entities
-	public static BufferedImage tree, rock;
+	public static BufferedImage obj1, obj2;
 
 	//Holds all static flash entities
-	public static BufferedImage ftree, frock;
+	public static BufferedImage fobj1, fobj2;
 
 	//Holds all item drops
-	public static BufferedImage wood;
+	public static BufferedImage item1, item2;
 
 //player Animations
-	public static BufferedImage[] player_down, player_up, player_right, player_left; 		
+	public static BufferedImage[] player_right, player_left, player_jump, player_crouch; 		
 
 	//start game button
 	public static BufferedImage[] btn_start;
@@ -54,37 +55,41 @@ public class Assets {
 			btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
 			btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
 		
-		//Player Down
-		player_down = new BufferedImage[2];
-			player_down[0] = sheet.crop(width * 4, height * 0, width, height);
-			player_down[1] = sheet.crop(width * 5, height * 0, width, height);
-		//Player Up
-		player_up = new BufferedImage[2];
-			player_up[0] = sheet.crop(width * 6, height * 0, width, height);
-			player_up[1] = sheet.crop(width * 7, height * 0, width, height);
-		//Player Right
-		player_right = new BufferedImage[2];
-			player_right[0] = sheet.crop(width * 4, height * 1, width, height);
-			player_right[1] = sheet.crop(width * 5, height * 1, width, height);
-		//Player Left
-		player_left = new BufferedImage[2];
-			player_left[0] = sheet.crop(width * 6, height * 1, width, height);
-			player_left[1] = sheet.crop(width * 7, height * 1, width, height);
-		
-		dirt 	= sheet.crop(width * 1, height * 0, width, height);
-		grass 	= sheet.crop(width * 2, height * 0, width, height);
-		stone 	= sheet.crop(width * 3, height * 0, width, height);
+		//Static player
+		player		= sheet.crop(width * 1, height * 4, width, height);
 
+//		//Player Right
+//		player_right = new BufferedImage[2];
+//			player_right[0] = sheet.crop(width * 4, height * 1, width, height);
+//			player_right[1] = sheet.crop(width * 5, height * 1, width, height);
+//		//Player Left
+//		player_left = new BufferedImage[2];
+//			player_left[0] = sheet.crop(width * 6, height * 1, width, height);
+//			player_left[1] = sheet.crop(width * 7, height * 1, width, height);
+//		//Player Jump
+//		player_jump = new BufferedImage[2];
+//			player_jump[0] = sheet.crop(width * 4, height * 0, width, height);
+//			player_jump[1] = sheet.crop(width * 5, height * 0, width, height);
+//		//Player Crouch
+//		player_crouch = new BufferedImage[2];
+//			player_crouch[0] = sheet.crop(width * 6, height * 0, width, height);
+//			player_crouch[1] = sheet.crop(width * 7, height * 0, width, height);
+		
+		ground 	= sheet.crop(width * 2, height * 7, width, height);
+		sky 	= sheet.crop(width * 2, height * 5, width, height);
+		notFound= sheet.crop(width * 7, height * 7, width, height);
+		
 		//Static Entities
-		tree 	= sheet.crop(width * 0, height * 0, width, height * 2);
-		rock 	= sheet.crop(width * 0, height * 2, width, height);
+		obj1 	= sheet.crop(width * 2, height * 4, width, height);
+		obj2 	= sheet.crop(width * 4, height * 5, width, height);
 
 		//Static Flash Entities
-		ftree 	= sheet.crop(width * 0, height * 3, width, height * 2);
-		frock 	= sheet.crop(width * 0, height * 5, width, height);
+		fobj1 	= sheet.crop(width * 3, height * 4, width, height);
+		fobj2 	= sheet.crop(width * 3, height * 5, width, height);
 
 		//Item Drop Entities
-		wood 	= sheet.crop(width * 1, height * 1, width, height);
+		item1 	= sheet.crop(width * 4, height * 6, width, height);
+		item2 	= sheet.crop(width * 3, height * 6, width, height);
 	}
 
 }

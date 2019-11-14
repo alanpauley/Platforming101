@@ -20,6 +20,9 @@ public class World {
 	//Main Handler object (which can reference game)
 	private Handler handler;
 	
+	//Holds all world files
+	private String[] worldPaths = new String[5];
+	
 	//Width and Height of level
 	private int width, height;
 	
@@ -35,22 +38,25 @@ public class World {
 	//stores Items
 	private ItemManager itemManager;
 	
+	//stores currentWorld
+	private int currentWorld;
+	
 	//Constructor
-	public World(Handler handler, String path) {
+	public World(Handler handler) {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 300, 400));
 		itemManager = new ItemManager(handler);
-
-		//Adds entities to the Entity list
-		entityManager.addEntity(new Tree(handler, 200,200));
-		entityManager.addEntity(new Rock(handler, 180,350));
-		entityManager.addEntity(new Tree(handler, 400,210));
-		entityManager.addEntity(new Rock(handler, 380,360));
-		entityManager.addEntity(new Tree(handler, 600,210));
-		entityManager.addEntity(new Rock(handler, 580,370));
 		
+		worldPaths[0] = "res/worlds/world0.txt";
+		worldPaths[1] = "res/worlds/world1.txt";
+		worldPaths[2] = "res/worlds/world2.txt";
+		worldPaths[3] = "res/worlds/world3.txt";
+		worldPaths[4] = "res/worlds/world4.txt";
+		
+		currentWorld = 1;
+
 		//Loads world via file
-		loadWorld(path);
+		loadWorld(worldPaths[0]);
 		
 		//Sets the player spawn position based on the spawn position from the world.txt file
 		entityManager.getPlayer().setX(spawnX);
@@ -130,6 +136,16 @@ public class World {
 				tiles[x][y] = Utilities.parseInt(tokens[(x + y * width) + 4]);
 			}
 		}
+		
+		if(handler.getPhaseManager().getCurrentPhase() > 5) {
+			//Adds entities to the Entity list
+			entityManager.addEntity(new Tree(handler, 200,200));
+			entityManager.addEntity(new Rock(handler, 180,350));
+			entityManager.addEntity(new Tree(handler, 400,210));
+			entityManager.addEntity(new Rock(handler, 380,360));
+			entityManager.addEntity(new Tree(handler, 600,210));
+			entityManager.addEntity(new Rock(handler, 580,370));
+		}
 	}
 
 	/*************** GETTERS and SETTERS ***************/
@@ -139,16 +155,21 @@ public class World {
 		/*In case player somehow gets outside of game/level boundaries - i.e. a glitch - 
 			do this check and return a normal tile so game doesn't crash*/
 		if(x < 0 || y < 0 || x >= width || y >= height)
-			return Tile.grass;
+			return Tile.ground;
 		
 		Tile t = Tile.tiles[tiles[x][y]];
 		
 		//If cannot find a result, return missingTile to point out that there is an issue
 		if(t == null) 
-			return Tile.dirt;
+			return Tile.notFound;
 		
 		//Returns tile as x|y index
 		return t;
+	}
+
+	//Returns specific world from worldPaths array
+	public String getWorldPaths(int i) {
+		return worldPaths[i];
 	}
 
 	//Gets Level Width

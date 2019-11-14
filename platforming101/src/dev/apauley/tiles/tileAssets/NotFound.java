@@ -3,10 +3,10 @@ package dev.apauley.tiles.tileAssets;
 import dev.apauley.gfx.Assets;
 import dev.apauley.tiles.Tile;
 
-public class Dirt extends Tile {
+public class NotFound extends Tile {
 
-	public Dirt(int id) {
-		super(Assets.dirt, id);
+	public NotFound(int id) {
+		super(Assets.notFound, id);
 	}
 
 }

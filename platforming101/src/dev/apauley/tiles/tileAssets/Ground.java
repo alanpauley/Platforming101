@@ -3,15 +3,15 @@ package dev.apauley.tiles.tileAssets;
 import dev.apauley.gfx.Assets;
 import dev.apauley.tiles.Tile;
 
-public class Stone extends Tile {
+public class Ground extends Tile {
 
-	public Stone(int id) {
-		super(Assets.stone, id);
+	public Ground(int id) {
+		super(Assets.ground, id);
 	}
-
-	//Gets whether tile is Solid or not
+	
+	@Override
 	public boolean isSolid() {
 		return true;
 	}
-	
+
 }

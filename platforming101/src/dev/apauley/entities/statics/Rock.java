@@ -35,9 +35,9 @@ public class Rock extends StaticEntity {
 	@Override
 	public void render(Graphics g) {
 		if(flash > 0)
-			g.drawImage(Assets.frock,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			g.drawImage(Assets.fobj2,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		else 
-			g.drawImage(Assets.rock,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			g.drawImage(Assets.obj2,(int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 	}
 
 }

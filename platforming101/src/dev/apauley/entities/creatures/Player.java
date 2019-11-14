@@ -1,5 +1,6 @@
 package dev.apauley.entities.creatures;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -17,7 +18,7 @@ import dev.apauley.inventory.Inventory;
 public class Player extends Creature{
 
 	//Animations
-	private Animation animDown, animUp, animRight, animLeft;
+	private Animation animJump, animCrouch, animRight, animLeft;
 	private int animSpeed = 500;
 	
 	//Attack Timer
@@ -30,16 +31,16 @@ public class Player extends Creature{
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
 		//Boundary box for player
-		bounds.x = Creature.DEFAULT_CREATURE_WIDTH / 4 + (int) (Creature.DEFAULT_CREATURE_WIDTH / 4 /2.5);
-		bounds.y = Creature.DEFAULT_CREATURE_WIDTH / 2;
-		bounds.width = Creature.DEFAULT_CREATURE_WIDTH / 4 + (int) (Creature.DEFAULT_CREATURE_WIDTH / 4 /4.5);
-		bounds.height = Creature.DEFAULT_CREATURE_WIDTH / 2;	
+		bounds.x = 1;
+		bounds.y = 1;
+		bounds.width = Creature.DEFAULT_CREATURE_WIDTH - 2;
+		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT - 2;
 		
 		//Animations
-		animDown 	= new Animation(animSpeed, Assets.player_down);
-		animUp 		= new Animation(animSpeed, Assets.player_up);
-		animRight 	= new Animation(animSpeed, Assets.player_right);
-		animLeft 	= new Animation(animSpeed, Assets.player_left);
+//		animJump 	= new Animation(animSpeed, Assets.player_jump);
+//		animCrouch 	= new Animation(animSpeed, Assets.player_crouch);
+//		animRight 	= new Animation(animSpeed, Assets.player_right);
+//		animLeft 	= new Animation(animSpeed, Assets.player_left);
 		
 		//Inventory
 		inventory = new Inventory(handler);
@@ -48,11 +49,15 @@ public class Player extends Creature{
 	@Override
 	public void tick() {
 		
+		//only allow movement on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 5)
+			return;		
+		
 		//Animations
-		animDown.tick();
-		animUp.tick();
-		animRight.tick();
-		animLeft.tick();
+//		animJump.tick();
+//		animCrouch.tick();
+//		animRight.tick();
+//		animLeft.tick();
 
 		//Gets movement using speed
 		getInput();		
@@ -72,6 +77,10 @@ public class Player extends Creature{
 	
 	//Check is user is pressing attacking key. If so, generate attack
 	public void checkAttacks() {
+		
+		//only allow attacks on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 5)
+			return;		
 		
 		//Update AttackTimer
 		attackTimer += System.currentTimeMillis() - lastAttackTimer;
@@ -167,14 +176,27 @@ public class Player extends Creature{
 	@Override
 	public void render(Graphics g) {
 
-		//Draw Player to screen
-		g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+		if(handler.getPhaseManager().getCurrentPhase() > 5) {
+
+			//Temporarily doing no animation:
+			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+
+			//Draw Player to screen WITH animation
+			//g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+
+		} else {
+
+			//Draw Player to screen WITHOUT animation
+			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);			
+
+
+		}
 
 		//Debug Bounding Box:
-//		g.setColor(Color.red);
-//		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
-//				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
-//				 , bounds.width, bounds.height);
+		g.setColor(Color.YELLOW);
+		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
+				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
+				 , bounds.width, bounds.height);
 		
 	}
 	
@@ -194,9 +216,9 @@ public class Player extends Creature{
 		} else  if (xMove > 0) {
 			return animRight.getCurrentFrame();
 		} else  if (yMove < 0) {
-			return animUp.getCurrentFrame();
+			return animCrouch.getCurrentFrame();
 		} else 
-			return animDown.getCurrentFrame();
+			return animJump.getCurrentFrame();
 	}
 
 	public Inventory getInventory() {

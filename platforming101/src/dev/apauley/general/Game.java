@@ -52,6 +52,9 @@ public class Game implements Runnable {
 	//Used to access all mouse controls
 	private MouseManager mouseManager;
 
+	//Used to access phases
+	private PhaseManager phaseManager;	
+	
 	//Used to access Game Camera	
 	private GameCamera gameCamera;
 
@@ -91,9 +94,12 @@ public class Game implements Runnable {
 		//initializes the gameCamera at 0,0
 		gameCamera = new GameCamera(handler,0,0);
 		
+		phaseManager = new PhaseManager(handler);
+
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
-		State.setState(menuState);
+		State.setState(gameState);
+		
 	}
 	
 	//Update everything for game
@@ -260,6 +266,11 @@ public class Game implements Runnable {
 	//Gets Mouse Manager
 	public MouseManager getMouseManager() {
 		return mouseManager;
+	}
+
+	//Gets Phase Manager
+	public PhaseManager getPhaseManager() {
+		return phaseManager;
 	}
 
 	//Gets Game Camera

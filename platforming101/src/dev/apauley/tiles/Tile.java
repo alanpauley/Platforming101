@@ -3,9 +3,9 @@ package dev.apauley.tiles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import dev.apauley.tiles.tileAssets.Dirt;
-import dev.apauley.tiles.tileAssets.Grass;
-import dev.apauley.tiles.tileAssets.Stone;
+import dev.apauley.tiles.tileAssets.Ground;
+import dev.apauley.tiles.tileAssets.Sky;
+import dev.apauley.tiles.tileAssets.NotFound;
 
 /*
  * Contains Everything that every tile must have
@@ -19,10 +19,10 @@ public class Tile {
 	public static Tile[] tiles = new Tile[256];
 
 	//Initializes Tiles with id values
-	public static Tile grass 	= new Grass(0);
-	public static Tile dirt 	= new Dirt(1);
-	public static Tile rock 	= new Stone(2);
-
+	public static Tile ground 	= new Sky(0);
+	public static Tile sky 	= new Ground(1);
+	public static Tile notFound	= new NotFound(255);
+	
 	/*************CLASS VARIABLES*****************/	
 
 	//Default Tile size

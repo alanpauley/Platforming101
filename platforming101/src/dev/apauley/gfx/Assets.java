@@ -1,5 +1,6 @@
 package dev.apauley.gfx;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 /*
@@ -10,6 +11,9 @@ public class Assets {
 
 	//Width and Height of tiles/player (except for heightBig which is double the size)
 	private static final int width = 32, height = width;
+	
+	//Fonts
+	public static Font font28;
 
 	//Holds all tiles/items/etc.
 	public static BufferedImage player, dirt, grass, stone;
@@ -29,11 +33,21 @@ public class Assets {
 	//start game button
 	public static BufferedImage[] btn_start;
 	
+	//inventory screen
+	public static BufferedImage inventoryScreen;
+	
 	//Initializes Assets
 	public static void init() {
 		
-		//Title Screen sprites, namely the big "Super Mario Brothers" menu
+		//Set font(s)
+		//font28 = FontLoader.loadFont("res/fonts/Roboto/Roboto-Black.ttf", 28);
+		font28 = FontLoader.loadFont("res/fonts/amatic/Amatic-Bold.ttf", 28);
+		
+		//Loads tiles, items, and player texture file
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+	
+		//Inventory Screen
+		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 	
 		//Start game buttons
 		btn_start = new BufferedImage[2];

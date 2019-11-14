@@ -90,6 +90,14 @@ public class Item {
 		i.setPosition(x, y);
 		return i;
 	}
+
+	//Overloaded: generates an item instance and does not add to game world, but is set up to add to inventory (Testing purposes only?)
+	public Item createNew(int count) {
+		Item i = new Item(texture, name, id);
+		i.setPickedUp(true);
+		i.setCount(count);
+		return i;
+	}
 	
 	//Sets an items position AND sets bounding box for item drop
 	public void setPosition(int x, int y) {
@@ -157,6 +165,10 @@ public class Item {
 
 	public boolean isPickedUp() {
 		return pickedUp;
+	}
+
+	public void setPickedUp(boolean pickedUp) {
+		this.pickedUp = pickedUp;
 	}
 
 }

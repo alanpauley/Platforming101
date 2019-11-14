@@ -81,6 +81,10 @@ public class Player extends Creature{
 		if(attackTimer < attackCooldown)
 			return;
 		
+		//Player cannot attack while in inventory
+		if(inventory.isActive())
+			return;
+		
 		//collision bounds rectangle (Gets coordinates for collision box of player)
 		Rectangle cb = getCollisionBounds(0, 0);
 		
@@ -142,6 +146,10 @@ public class Player extends Creature{
 		xMove = 0;
 		yMove = 0;
 		
+		//Player cannot move while in inventory
+		if(inventory.isActive())
+			return;
+		
 		//Setting x/y move to a certain speed, THEN moving player that much
 		
 		//Handles player Movement
@@ -168,8 +176,13 @@ public class Player extends Creature{
 //				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
 //				 , bounds.width, bounds.height);
 		
+	}
+	
+	//works just like inventory, but it renders things AFTER the other render, so that this is on top
+	public void postRender(Graphics g) {
+
 		//Inventory
-		inventory.render(g);
+		inventory.render(g);		
 	}
 
 	/*************** GETTERS and SETTERS ***************/

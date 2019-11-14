@@ -74,6 +74,9 @@ public class EntityManager {
 		for(Entity e : entities) { 
 			e.render(g);
 		}
+		
+		//Render everything that should show up on top, AFTER everything else
+		player.postRender(g);
 	}
 
 	//Take an entity and add to the Entity Array List (so it can be ticked and rendered)

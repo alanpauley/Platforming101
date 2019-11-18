@@ -26,8 +26,8 @@ public abstract class Creature extends Entity {
 	protected float xMove, yMove;	
 	
 	//Creature Constructor. Establishes some defaults
-	public Creature(Handler handler, float x, float y, int width, int height) {
-		super(handler, x,y, width, height);
+	public Creature(Handler handler, float x, float y, int width, int height, String name) {
+		super(handler, x,y, width, height, name);
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
@@ -167,7 +167,7 @@ public abstract class Creature extends Entity {
 	}
 
 	//Sets creature xMovement
-	public void setxMove(float xMove) {
+	public void setXMove(float xMove) {
 		this.xMove = xMove;
 	}
 
@@ -177,7 +177,7 @@ public abstract class Creature extends Entity {
 	}
 
 	//Sets creature yMovement
-	public void setyMove(float yMove) {
+	public void setYMove(float yMove) {
 		this.yMove = yMove;
 	}
 

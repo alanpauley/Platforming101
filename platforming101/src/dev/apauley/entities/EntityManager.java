@@ -79,6 +79,25 @@ public class EntityManager {
 		player.postRender(g);
 	}
 
+	//Remove all entities from the Entity Array List
+	public void removeAllEntities() {
+		//Loop through entities to tick them all using an iterator
+		Iterator<Entity> it = entities.iterator();
+
+		while(it.hasNext()) {
+			Entity e = it.next(); //The same as saying entities[i] or entities.get(i), but for an iterator
+			
+			//Don't remove player
+			//if(e.name != "PLAYER")
+				it.remove();
+		}
+	}
+	
+	//Take an entity and remove it from the Entity Array List
+	public void removeEntity(Entity e) {
+		entities.remove(e);
+	}
+	
 	//Take an entity and add to the Entity Array List (so it can be ticked and rendered)
 	public void addEntity(Entity e) {
 		entities.add(e);

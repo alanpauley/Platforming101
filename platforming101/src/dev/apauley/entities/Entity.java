@@ -35,14 +35,18 @@ public abstract class Entity {
 
 	//Boundary box for collision detection
 	protected Rectangle bounds;
+	
+	//Contains entity name
+	protected String name;
 
 	//Constructor to set Defaults
-	public Entity(Handler handler, float x, float y, int width, int height) {
+	public Entity(Handler handler, float x, float y, int width, int height, String name) {
 		this.handler = handler;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.name = name;
 		health = DEFAULT_HEALTH;
 		flash = 0;
 				
@@ -144,6 +148,16 @@ public abstract class Entity {
 	//Sets entity height
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	//Gets entity name
+	public String getName() {
+		return name;
+	}
+
+	//Sets entity name
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	//Gets entity health

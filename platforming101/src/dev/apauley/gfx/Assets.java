@@ -16,7 +16,9 @@ public class Assets {
 	public static Font font28;
 
 	//Holds all tiles/items/etc.
-	public static BufferedImage player, ground, sky
+	public static BufferedImage player, ground, sky, rainbowSky
+							  , groundBevel, skyBevel //Bevels
+							  , grey, blue //Colors
 	                          , notFound; //Handles when a tile cannot be found
 	
 	//Holds all static entities
@@ -75,8 +77,14 @@ public class Assets {
 //			player_crouch[0] = sheet.crop(width * 6, height * 0, width, height);
 //			player_crouch[1] = sheet.crop(width * 7, height * 0, width, height);
 		
-		ground 	= sheet.crop(width * 2, height * 7, width, height);
-		sky 	= sheet.crop(width * 2, height * 5, width, height);
+		groundBevel	= sheet.crop(width * 5, height * 6, width, height);
+		skyBevel	= sheet.crop(width * 5, height * 5, width, height);
+		ground		= sheet.crop(width * 7, height * 7, width, height);
+		sky			= sheet.crop(width * 6, height * 6, width, height);
+		rainbowSky 	= sheet.crop(width * 7, height * 6, width, height);
+
+		grey 	= sheet.crop(width * 2, height * 7, width, height);
+		blue 	= sheet.crop(width * 2, height * 5, width, height);
 		notFound= sheet.crop(width * 7, height * 7, width, height);
 		
 		//Static Entities

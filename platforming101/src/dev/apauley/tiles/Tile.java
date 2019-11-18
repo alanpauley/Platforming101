@@ -3,9 +3,14 @@ package dev.apauley.tiles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import dev.apauley.tiles.tileAssets.Blue;
+import dev.apauley.tiles.tileAssets.Grey;
 import dev.apauley.tiles.tileAssets.Ground;
-import dev.apauley.tiles.tileAssets.Sky;
+import dev.apauley.tiles.tileAssets.GroundBevel;
 import dev.apauley.tiles.tileAssets.NotFound;
+import dev.apauley.tiles.tileAssets.RainbowSky;
+import dev.apauley.tiles.tileAssets.Sky;
+import dev.apauley.tiles.tileAssets.SkyBevel;
 
 /*
  * Contains Everything that every tile must have
@@ -16,12 +21,17 @@ public class Tile {
 	/*************STATIC VARIABLES*****************/	
 
 	//Holds all tile references
-	public static Tile[] tiles = new Tile[256];
+	public static Tile[] tiles = new Tile[1000];
 
 	//Initializes Tiles with id values
-	public static Tile ground 	= new Sky(0);
-	public static Tile sky 	= new Ground(1);
-	public static Tile notFound	= new NotFound(255);
+	public static Tile blue 			= new Blue(000);
+	public static Tile grey 			= new Grey(001);
+	public static Tile skyBevel			= new SkyBevel(100);
+	public static Tile grounddBevel 	= new GroundBevel(101);
+	public static Tile ground 			= new Sky(200);
+	public static Tile sky 				= new Ground(201);
+	public static Tile rainbowSky 		= new RainbowSky(300);
+	public static Tile notFound			= new NotFound(999);
 	
 	/*************CLASS VARIABLES*****************/	
 

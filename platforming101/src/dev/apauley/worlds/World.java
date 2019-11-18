@@ -21,7 +21,7 @@ public class World {
 	private Handler handler;
 	
 	//Holds all world files
-	private String[] worldPaths = new String[5];
+	private String[] worldPaths = new String[6];
 	
 	//Width and Height of level
 	private int width, height;
@@ -44,7 +44,7 @@ public class World {
 	//Constructor
 	public World(Handler handler) {
 		this.handler = handler;
-		entityManager = new EntityManager(handler, new Player(handler, 300, 400));
+		entityManager = new EntityManager(handler, new Player(handler, 0,0));
 		itemManager = new ItemManager(handler);
 		
 		worldPaths[0] = "res/worlds/world0.txt";
@@ -52,6 +52,7 @@ public class World {
 		worldPaths[2] = "res/worlds/world2.txt";
 		worldPaths[3] = "res/worlds/world3.txt";
 		worldPaths[4] = "res/worlds/world4.txt";
+		worldPaths[5] = "res/worlds/world5.txt";
 		
 		currentWorld = 1;
 
@@ -137,6 +138,13 @@ public class World {
 			}
 		}
 		
+		//Remove all entities
+		entityManager.removeAllEntities();
+		
+		//Add Player
+		entityManager = new EntityManager(handler, new Player(handler, 0,0));
+		
+		//Load entities specific to Phase
 		if(handler.getPhaseManager().getCurrentPhase() > 5) {
 			//Adds entities to the Entity list
 			entityManager.addEntity(new Tree(handler, 200,200));
@@ -201,6 +209,26 @@ public class World {
 
 	public void setItemManager(ItemManager itemManager) {
 		this.itemManager = itemManager;
+	}
+
+	//Get Player SpawnX
+	public int getSpawnX() {
+		return spawnX;
+	}
+
+	//Get Player SpawnX
+	public void setSpawnX(int spawnX) {
+		this.spawnX = spawnX;
+	}
+
+	//Get Player SpawnY
+	public int getSpawnY() {
+		return spawnY;
+	}
+
+	//Set Player SpawnY
+	public void setSpawnY(int spawnY) {
+		this.spawnY = spawnY;
 	}
 
 }

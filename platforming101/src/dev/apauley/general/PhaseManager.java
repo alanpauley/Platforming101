@@ -65,14 +65,30 @@ public class PhaseManager {
 		case 1:
 			loadLevel = currentPhase;
 			break;
+		case 2:
+			loadLevel = currentPhase;
+			break;
+		case 3:
+		case 4:
+		case 5:
+			loadLevel = 3;
+			break;
+		case 19:
+			loadLevel = 4;
+			break;
 		default:
-			loadLevel = 2;
+			loadLevel = 5;
 			break;
 		}
 		
-		//Load appropriate world
-			handler.getWorld().loadWorld(handler.getWorld().getWorldPaths(loadLevel));
+		//Remove Entities
 		
+		//Load appropriate world
+		handler.getWorld().loadWorld(handler.getWorld().getWorldPaths(loadLevel));
+		
+		//Reset player
+		handler.getWorld().getEntityManager().getPlayer().resetPlayer();
+
 		//Reset phaseTimer
 		phaseTimer = 0;		
 	}

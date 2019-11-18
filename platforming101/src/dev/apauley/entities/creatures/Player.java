@@ -28,7 +28,7 @@ public class Player extends Creature{
 	private Inventory inventory;
 	
 	public Player(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT,"PLAYER");
 
 		//Boundary box for player
 		bounds.x = 1;
@@ -209,6 +209,15 @@ public class Player extends Creature{
 		//Inventory
 		inventory.render(g);		
 	}
+	
+	//Reset Player for phase changes and such
+	public void resetPlayer() {
+		setX(handler.getWorld().getSpawnX());
+		setY(handler.getWorld().getSpawnY());
+		setXMove(0);
+		setYMove(0);
+	}
+	
 
 	/*************** GETTERS and SETTERS ***************/
 

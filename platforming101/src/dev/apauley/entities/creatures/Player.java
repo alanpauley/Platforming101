@@ -3,6 +3,7 @@ package dev.apauley.entities.creatures;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import dev.apauley.entities.Entity;
@@ -48,9 +49,6 @@ public class Player extends Creature{
 
 	@Override
 	public void tick() {
-		
-		//Gravity's effect on the player
-		gravity();
 		
 		//Animations
 //		animJump.tick();
@@ -173,7 +171,20 @@ public class Player extends Creature{
 			xMove = speed;
 		if(handler.getKeyManager().left)
 			xMove = -speed;
+		if(handler.getKeyManager().jump)
+			yMove += -30f;
 		
+		//If jump was just pressed, perform hangtime
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE) && !handler.getKeyManager().jump) {System.out.println("Both");}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+			System.out.println("Just Pressed");
+			if(!handler.getKeyManager().jump) {
+				System.out.println("Released Bbbbbbbbbbb");
+				hangtime = true;
+				hangTimeTimer = 0;	
+			}
+		}
+			
 	}
 
 	@Override

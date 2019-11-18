@@ -68,16 +68,8 @@ public class PhaseManager {
 		case 2:
 			loadLevel = currentPhase;
 			break;
-		case 3:
-		case 4:
-		case 5:
-			loadLevel = 3;
-			break;
-		case 19:
-			loadLevel = 4;
-			break;
 		default:
-			loadLevel = 5;
+			loadLevel = 3;
 			break;
 		}
 		

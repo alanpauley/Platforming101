@@ -52,7 +52,6 @@ public class World {
 		worldPaths[2] = "res/worlds/world2.txt";
 		worldPaths[3] = "res/worlds/world3.txt";
 		worldPaths[4] = "res/worlds/world4.txt";
-		worldPaths[5] = "res/worlds/world5.txt";
 		
 		currentWorld = 1;
 

@@ -25,6 +25,12 @@ public abstract class Creature extends Entity {
 	//Helper for moving creatures on x and y plane
 	protected float xMove, yMove;	
 	
+	//Tracks creature jumping hangtime (whether should be floating after jumping)
+	protected boolean hangtime;
+		
+	//Jump Timer
+	protected long lastHangTimeTimer, hangTimeCooldown = 400, hangTimeTimer = hangTimeCooldown;
+	
 	//Creature Constructor. Establishes some defaults
 	public Creature(Handler handler, float x, float y, int width, int height, String name) {
 		super(handler, x,y, width, height, name);
@@ -37,17 +43,34 @@ public abstract class Creature extends Entity {
 	//Gravity on creatures
 	public void gravity() {
 		
+		//Update HangTimeTimer
+		hangTimeTimer += System.currentTimeMillis() - lastHangTimeTimer;
+		lastHangTimeTimer = System.currentTimeMillis();
+		
+		//check if can ready to fall yet yet
+		if(hangTimeTimer < hangTimeCooldown)
+		return;
+
+		//Reset hangTimeTimer
+		hangtime = false;
+
 		//only allow gravity on Phase >= 3
 		if(handler.getPhaseManager().getCurrentPhase() < 3) {
 			yMove = 0;
 			return;		
 		}
-								
-		yMove = DEFAULT_GRAVITY;
+
+		//if player is jumping and not in hangtime, apply gravity
+		if(yMove <= 0 && !hangtime) {
+			yMove += DEFAULT_GRAVITY;
+		}
 	}
 	
 	//Moves creature using helpers
 	public void move() {
+		
+		//Gravity's effect on the player
+		gravity();
 		
 		//If no collision, movement is allowed, otherwise stop
 		if(!checkEntityCollisions(xMove, 0f))

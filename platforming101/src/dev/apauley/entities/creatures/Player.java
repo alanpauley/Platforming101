@@ -184,15 +184,15 @@ public class Player extends Creature{
 		if(handler.getKeyManager().jump)
 			yMove += -30f;
 		
-		//If jump was just pressed, perform hangtime
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE) && !handler.getKeyManager().jump) {System.out.println("Both");}
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
-			System.out.println("Just Pressed");
-			if(!handler.getKeyManager().jump) {
-				System.out.println("Released Bbbbbbbbbbb");
-				hangtime = true;
-				hangTimeTimer = 0;	
-			}
+		//If jump was just pressed, set jumping to true
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE))
+			jumping = true;
+
+		//If Jumping and jump is released, start hangtime and reset jumping
+		if(!handler.getKeyManager().jump && jumping) {
+			hangtime = true;
+			hangTimeTimer = 0;
+			jumping = false;
 		}
 			
 	}

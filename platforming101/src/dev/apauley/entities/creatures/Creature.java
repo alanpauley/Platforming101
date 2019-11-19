@@ -28,11 +28,14 @@ public abstract class Creature extends Entity {
 	//Helper for moving creatures on x and y plane
 	protected float xMove, yMove;	
 	
+	//Tracks whether creature IS jumping (meaning still ascending
+	protected boolean jumping;
+	
 	//Tracks creature jumping hangtime (whether should be floating after jumping)
 	protected boolean hangtime;
 		
 	//Jump Timer
-	protected long lastHangTimeTimer, hangTimeCooldown = 400, hangTimeTimer = hangTimeCooldown;
+	protected long lastHangTimeTimer, hangTimeCooldown = 180, hangTimeTimer = hangTimeCooldown;
 	
 	//Creature Constructor. Establishes some defaults
 	public Creature(Handler handler, float x, float y, int width, int height, String name) {
@@ -227,6 +230,14 @@ public abstract class Creature extends Entity {
 	//Sets creature yMovement
 	public void setYMove(float yMove) {
 		this.yMove = yMove;
+	}
+
+	public boolean isJumping() {
+		return jumping;
+	}
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
 	}
 
 	public boolean isHangtime() {

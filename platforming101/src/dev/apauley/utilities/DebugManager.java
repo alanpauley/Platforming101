@@ -20,12 +20,12 @@ public class DebugManager {
 	private Font fontHeader = Assets.fontRobotoRegular40;
 	private Font fontStats = Assets.fontRobotoRegular30;
 	
-	private boolean debugPlayer, debugSystem;
+	private boolean debugPlayer, debugSystem, debugRandom;
 	private ArrayList<Boolean> debugs;
 	
 	//spacing buffer
 	private int spBf = 5;
-	private int spBfGroupX = 300;
+	private int spBfGroupX = 340;
 	
 	//Bounding box light up size
 	private int bbox = 5;
@@ -154,6 +154,19 @@ public class DebugManager {
 			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Phase: " + handler.getPhaseManager().getCurrentPhase() + " - " + handler.getPhaseManager().getCurrentPhaseName(), getStX(x), getStY(i), false, color, fontStats); i++;
 		}
+
+		//Only Draw if DebugRandom = True
+		if(debugRandom) {
+			
+			//Draw System Debug to Screen
+			Color color =  new Color(102, 102, 255); //Purplish Blue
+			int x = 2, i = 1;
+			Text.drawStringShadow(g, "Random", getStX(x), headY, false, color, fontHeader);
+			Text.drawStringShadow(g, "xOffset: " + handler.getGameCamera().getxOffset(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "yOffset: " + handler.getGameCamera().getyOffset(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "xMouse: " + handler.getMouseManager().getMouseX(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "yMouse: " + handler.getMouseManager().getMouseY(), getStX(x), getStY(i), false, color, fontStats); i++;
+		}
 	}
 		
 	/*************** GETTERS and SETTERS ***************/
@@ -162,6 +175,7 @@ public class DebugManager {
 	public void setAllDebugs(boolean tf) {
 		debugPlayer = tf;
 		debugSystem = tf;
+		debugRandom = tf;
 	}
 
 	//set ALL debugs on/off
@@ -170,8 +184,27 @@ public class DebugManager {
 		setAllDebugs(false);
 		debugSystem = !tf;
 		debugPlayer = !tf;
+		debugRandom = !tf;
 	}
 
+	//Checks whether debugPlayer is true or false
+	public boolean isDebugPlayer() {
+		return debugPlayer;
+	}
+
+	//set debugPlayer to true or false
+	public void setDebugPlayer(boolean debugPlayer) {
+		setAllDebugs(false);
+		this.debugPlayer = debugPlayer;
+	}
+
+	//Toggles Debug Player to opposite (on >> off, off >> on)
+	public void toggleDebugPlayer() {
+		boolean tf = isDebugPlayer();
+		setAllDebugs(false);
+		debugPlayer = !tf;
+	}
+	
 	//Checks whether debugSystem is true or false
 	public boolean isDebugSystem() {
 		return debugSystem;
@@ -191,21 +224,21 @@ public class DebugManager {
 	}
 	
 	//Checks whether debugPlayer is true or false
-	public boolean isDebugPlayer() {
-		return debugPlayer;
+	public boolean isDebugRandom() {
+		return debugRandom;
 	}
 
 	//set debugPlayer to true or false
-	public void setDebugPlayer(boolean debugPlayer) {
+	public void setDebugRandom(boolean debugRandom) {
 		setAllDebugs(false);
-		this.debugPlayer = debugPlayer;
+		this.debugRandom = debugRandom;
 	}
 
 	//Toggles Debug Player to opposite (on >> off, off >> on)
-	public void toggleDebugPlayer() {
-		boolean tf = isDebugPlayer();
+	public void toggleDebugRandom() {
+		boolean tf = isDebugRandom();
 		setAllDebugs(false);
-		debugPlayer = !tf;
+		debugRandom = !tf;
 	}
 	
 }

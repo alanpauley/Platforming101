@@ -6,7 +6,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import dev.apauley.entities.creatures.Player;
+import dev.apauley.entities.statics.Rock;
 import dev.apauley.general.Handler;
+import dev.apauley.gfx.Assets;
 
 /*
  * Handles Entities
@@ -46,6 +48,25 @@ public class EntityManager {
 	
 	public void tick() {
 		
+		//Mouse clicks
+		if(handler.getMouseManager().isLeftPressed()) {
+			//if mouse.X > player.X, put on right of player
+			if(handler.getMouseManager().getMouseX() > handler.getWorld().getEntityManager().getPlayer().getX()) {
+				System.out.println("right");
+				handler.getWorld().getEntityManager().addEntity(new Rock(handler, 0
+						 													    , 0));
+//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset()
+//						    , handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset()));
+//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getWidth()
+//						    , handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset() - Assets.obj1.getHeight()/2)); //Not Divided by 2 because twice as tall
+			//otherwise, put on left of player
+			} else {
+				System.out.println("left");
+				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset() - Assets.obj1.getWidth() //Not Divided by 2 because twice as tall
+						    													, handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset() - Assets.obj1.getHeight()/2)); //Not Divided by 2 because twice as tall
+			}
+		}
+
 		//Loop through entities to tick them all using an iterator
 		Iterator<Entity> it = entities.iterator();
 		

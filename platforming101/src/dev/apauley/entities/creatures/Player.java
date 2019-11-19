@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import dev.apauley.entities.Entity;
+import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Animation;
 import dev.apauley.gfx.Assets;
@@ -209,7 +210,7 @@ public class Player extends Creature{
 			hangTimeTimer = 0;
 			jumping = false;
 		}
-			
+		
 	}
 
 	@Override

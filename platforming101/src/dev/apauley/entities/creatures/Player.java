@@ -62,6 +62,10 @@ public class Player extends Creature{
 		//Sets position using movement
 		move();
 		
+		//only allow camera to follow player (and subsequent code) on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 8)
+			return;		
+		
 		//Centers camera on player
 		handler.getGameCamera().centerOnEntity(this);
 		
@@ -174,15 +178,26 @@ public class Player extends Creature{
 		
 		//Handles player Movement
 		if(handler.getKeyManager().up)
-			yMove = -speed;
+			setFaceTop(true);
 		if(handler.getKeyManager().down)
-			yMove = speed;
+			setFaceBottom(true);
 		if(handler.getKeyManager().right)
 			xMove = speed;
 		if(handler.getKeyManager().left)
 			xMove = -speed;
 		if(handler.getKeyManager().jump)
 			yMove += -30f;
+
+		//Reset top/bottom facing directions if not held
+		if(!handler.getKeyManager().up)
+			setFaceTop(false);
+		if(!handler.getKeyManager().down)
+			setFaceBottom(false);
+		//Reset left/right if facing opposite direction
+		if(handler.getKeyManager().right)
+			setFaceLeft(false);
+		if(handler.getKeyManager().left)
+			setFaceRight(false);
 		
 		//If jump was just pressed, set jumping to true
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE))
@@ -200,7 +215,7 @@ public class Player extends Creature{
 	@Override
 	public void render(Graphics g) {
 
-		if(handler.getPhaseManager().getCurrentPhase() > 5) {
+		if(handler.getPhaseManager().getCurrentPhase() > 7) {
 
 			//Temporarily doing no animation:
 			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
@@ -208,10 +223,11 @@ public class Player extends Creature{
 			//Draw Player to screen WITH animation
 			//g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
 
+		//Don't have camera follow player
 		} else {
 
 			//Draw Player to screen WITHOUT animation
-			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);			
+			g.drawImage(Assets.player, (int) x, (int) y, width, height, null);			
 		}
 
 	}

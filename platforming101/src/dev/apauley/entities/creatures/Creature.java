@@ -24,6 +24,9 @@ public abstract class Creature extends Entity {
 	
 	//Tracks how much speed creature has
 	protected float speed;
+	
+	//Tracks which direction the player is facing
+	protected boolean faceTop, faceBottom, faceRight, faceLeft;
 
 	//Helper for moving creatures on x and y plane
 	protected float xMove, yMove;	
@@ -125,6 +128,9 @@ public abstract class Creature extends Entity {
 		
 		//Moving right
 		if(xMove > 0) {
+
+			//Set facing right = true
+			setFaceRight(true);
 			
 			int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
 			
@@ -141,6 +147,9 @@ public abstract class Creature extends Entity {
 		//Moving left
 		}else if(xMove < 0) {
 
+			//Set facing left = true
+			setFaceLeft(true);
+			
 			int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
 			
 			//Same check
@@ -150,7 +159,8 @@ public abstract class Creature extends Entity {
 				//move player as close to the tile as possible without being inside of it
 				//Note: We weirdly don't have to add a 1-pixel gap for "sliding" to not get stuck along the boundaries. Don't ask me why...
 				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
-		}
+		} 
+			
 	}
 	
 	public void moveY() {
@@ -287,4 +297,45 @@ public abstract class Creature extends Entity {
 	public void setCollisionWithTileRight(boolean collisionWithTileRight) {
 		this.collisionWithTileRight = collisionWithTileRight;
 	}
+
+	//Checks whether player is facing up
+	public boolean isFaceTop() {
+		return faceTop;
+	}
+
+	//Sets whether player is facing up
+	public void setFaceTop(boolean faceTop) {
+		this.faceTop = faceTop;
+	}
+
+	//Checks whether player is facing down
+	public boolean isFaceBottom() {
+		return faceBottom;
+	}
+
+	//Sets whether player is facing down
+	public void setFaceBottom(boolean faceBottom) {
+		this.faceBottom = faceBottom;
+	}
+
+	//Checks whether player is facing right
+	public boolean isFaceRight() {
+		return faceRight;
+	}
+
+	//Sets whether player is facing right
+	public void setFaceRight(boolean faceRight) {
+		this.faceRight = faceRight;
+	}
+
+	//Checks whether player is facing left
+	public boolean isFaceLeft() {
+		return faceLeft;
+	}
+
+	//Sets whether player is facing left
+	public void setFaceLeft(boolean faceLeft) {
+		this.faceLeft = faceLeft;
+	}
+
 }

@@ -64,6 +64,29 @@ public class DebugManager {
 					 , bbox, handler.getWorld().getEntityManager().getPlayer().getBounds().height);
 	}
 	
+	//Draw smaller facing box in your specified color for each side you list as TRUE
+	public void drawFacingBox(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
+
+		g.setColor(c);
+		
+		if(top)
+			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox * 2, bbox * 2);
+		if(bottom)
+			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox - bbox * 2)
+					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox * 2, bbox * 2);
+		if(left)
+			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , bbox * 2, handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox * 2);
+		if(right)
+			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox - bbox * 2)
+					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , bbox * 2, handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox * 2);
+	}
+
 	//Takes in the horizontal int and converts it based on input parameters
 	public int getStX(int mult) {
 		return headX + spBfGroupX * mult;
@@ -89,6 +112,13 @@ public class DebugManager {
 					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight()
 					      , Color.YELLOW);
 	
+			//Light up Smaller Box with direction facing
+			drawFacingBox(g, handler.getWorld().getEntityManager().getPlayer().isFaceTop()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceBottom()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceLeft()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceRight()
+					      , Color.CYAN);
+
 			//Draw Player Debug to Screen
 			Color color =  new Color(245,66,149); //Pink
 			int x = 0, i = 1;
@@ -105,7 +135,10 @@ public class DebugManager {
 			Text.drawStringShadow(g, "R-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), getStX(x), getStY(i), false, color, fontStats); i++;
-		
+			Text.drawStringShadow(g, "T-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceTop(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "B-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceBottom(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "L-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceLeft(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "R-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceRight(), getStX(x), getStY(i), false, color, fontStats); i++;		
 		}
 		
 		//Only Draw if DebugSystem = True
@@ -119,6 +152,7 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Height: " + handler.getGame().getHeight(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "FPS: " + handler.getGame().getFpsTicks(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Phase: " + handler.getPhaseManager().getCurrentPhase() + " - " + handler.getPhaseManager().getCurrentPhaseName(), getStX(x), getStY(i), false, color, fontStats); i++;
 		}
 	}
 		

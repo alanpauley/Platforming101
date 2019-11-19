@@ -16,6 +16,8 @@ public abstract class State {
 	//We want an instance of our game class in all our state classes
 	//But now going to reference game class via handler
 	protected Handler handler;
+	
+	protected static String stateName; 
 
 	public State(Handler handler) {
 		this.handler = handler;
@@ -27,12 +29,17 @@ public abstract class State {
 	
 	/***************** GETTERS AND SETTERS *****************/
 	
-	public static void setState(State state) {
+	public static void setState(State state, String name) {
 		currentState = state;
+		stateName = name;
 	}
 	
 	public static State getState() {
 		return currentState;
+	}
+	
+	public static String getStateName() {
+		return stateName;
 	}
 	
 

@@ -239,4 +239,12 @@ public class World {
 		this.spawnY = spawnY;
 	}
 
+	public DebugManager getDebugManager() {
+		return debugManager;
+	}
+
+	public void setDebugManager(DebugManager debugManager) {
+		this.debugManager = debugManager;
+	}
+
 }

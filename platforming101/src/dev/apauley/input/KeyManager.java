@@ -27,7 +27,8 @@ public class KeyManager implements KeyListener {
 				   /*ATTACKS WITH ARROW KEYS*/
 					  , aUp, aDown, aLeft, aRight
 				   /*SYSTEM KEYS*/
-					  , phasePrev, phaseNext;
+					  , phasePrev, phaseNext
+					  , debugPlayer, debugSystem, debugAll;
 
 	//Constructor that creates base key array
 	//And other arrays of same length, for controlling key press timing
@@ -75,6 +76,11 @@ public class KeyManager implements KeyListener {
 		//*SYSTEM*/
 		phasePrev= keys[KeyEvent.VK_COMMA];
 		phaseNext = keys[KeyEvent.VK_PERIOD];
+
+		debugPlayer = keys[KeyEvent.VK_F1];
+		debugSystem = keys[KeyEvent.VK_F2];
+		debugAll = keys[KeyEvent.VK_F12];
+		
 	}
 	
 	//Checks whether a key was just pressed

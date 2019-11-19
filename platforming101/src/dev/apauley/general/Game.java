@@ -34,6 +34,9 @@ public class Game implements Runnable {
 	//Thread via Runnable
 	private Thread thread;
 	
+	//Monitors FPS
+	private int fpsTicks;
+	
 	/*
 	 * A way for computer to draw things to screen, using buffers
 	 *    - Buffer is like a hidden computer screen, drawing behind the scenes
@@ -98,8 +101,7 @@ public class Game implements Runnable {
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
-		State.setState(gameState);
-		
+		State.setState(gameState, "GameState");
 	}
 	
 	//Update everything for game
@@ -207,6 +209,7 @@ public class Game implements Runnable {
 			if(timer >= nanoSeconds) {
 				
 				//System.out.println("FPS: " + ticks); //Debug
+				fpsTicks = ticks;
 				ticks = 0;
 				timer = 0;
 			}
@@ -286,6 +289,15 @@ public class Game implements Runnable {
 	//Gets Height of window
 	public int getHeight() {
 		return height;
+	}
+
+	//Gets current FPS
+	public int getFpsTicks() {
+		return fpsTicks;
+	}
+
+	public String getStateName() {
+		return State.getStateName();
 	}
 	
 }

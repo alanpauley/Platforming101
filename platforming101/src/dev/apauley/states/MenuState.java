@@ -49,7 +49,7 @@ public class MenuState extends State {
 				handler.getMouseManager().setUIManager(null);
 				
 				//Switches game to gameState
-				State.setState(handler.getGame().gameState);
+				State.setState(handler.getGame().gameState, "MenuState");
 				
 			}
 		}));

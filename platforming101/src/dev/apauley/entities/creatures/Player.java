@@ -148,6 +148,16 @@ public class Player extends Creature{
 	//Takes user input and performs various actions
 	private void getInput() {
 
+		//Toggle debugKeys
+		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F1)) 
+			handler.getWorld().getDebugManager().toggleDebugPlayer();
+		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F2)) 
+			handler.getWorld().getDebugManager().toggleDebugSystem();
+
+		//Toggle ALL debugs
+		if(handler.getKeyManager().debugAll && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F12))
+			handler.getWorld().getDebugManager().toggleAllDebugs();
+		
 		//only allow movement on Phase > x
 		if(handler.getPhaseManager().getCurrentPhase() < 5)
 			return;		

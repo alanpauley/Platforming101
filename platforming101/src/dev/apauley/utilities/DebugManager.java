@@ -119,7 +119,6 @@ public class DebugManager {
 			Text.drawStringShadow(g, "FPS: " + handler.getGame().getFpsTicks(), getStX(x), getStY(3), false, color, fontStats);
 			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), getStX(x), getStY(4), false, color, fontStats);		
 		}
-		
 	}
 		
 	/*************** GETTERS and SETTERS ***************/

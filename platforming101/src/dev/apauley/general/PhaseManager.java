@@ -56,7 +56,7 @@ public class PhaseManager {
 		if(currentPhase > 20)
 			currentPhase = 20;
 		this.currentPhase = currentPhase;
-		System.out.println("current Phase: " + currentPhase);
+		//System.out.println("current Phase: " + currentPhase);
 
 		switch(currentPhase) {
 		case 0:

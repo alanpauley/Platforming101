@@ -9,6 +9,7 @@ import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.items.ItemManager;
 import dev.apauley.tiles.Tile;
+import dev.apauley.utilities.DebugManager;
 import dev.apauley.utilities.Utilities;
 
 /*
@@ -38,6 +39,9 @@ public class World {
 	//stores Items
 	private ItemManager itemManager;
 	
+	//Used to access debugging
+	private DebugManager debugManager;	
+
 	//stores currentWorld
 	private int currentWorld;
 	
@@ -46,6 +50,7 @@ public class World {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 0,0));
 		itemManager = new ItemManager(handler);
+		debugManager = new DebugManager(handler);
 		
 		worldPaths[0] = "res/worlds/world0.txt";
 		worldPaths[1] = "res/worlds/world1.txt";
@@ -102,6 +107,10 @@ public class World {
 
 		//Entities
 		entityManager.render(g);
+
+		//Debug Text
+		debugManager.Render(g);
+
 	}
 
 	//Gets data from txt file and stores in tiles multidimensional array

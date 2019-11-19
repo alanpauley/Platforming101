@@ -96,12 +96,12 @@ public class Inventory {
 			if(i == 0) {
 				
 				//Draw string to inventory
-				Text.drawString(g, "> " + inventoryItems.get(selectedItem + i).getName() + " <", invListCenterX, invListCenterY + i * invListSpacing, true, Color.YELLOW, Assets.font28);
+				Text.drawString(g, "> " + inventoryItems.get(selectedItem + i).getName() + " <", invListCenterX, invListCenterY + i * invListSpacing, true, Color.YELLOW, Assets.fontAmaticBold30);
 
 			}else {
 			
 				//Draw string to inventory
-				Text.drawString(g, inventoryItems.get(selectedItem + i).getName(), invListCenterX, invListCenterY + i * invListSpacing, true, Color.WHITE, Assets.font28);
+				Text.drawString(g, inventoryItems.get(selectedItem + i).getName(), invListCenterX, invListCenterY + i * invListSpacing, true, Color.WHITE, Assets.fontAmaticBold30);
 			
 			}
 		}
@@ -113,7 +113,7 @@ public class Inventory {
 		g.drawImage(item.getTexture(), invImageX, invImageY, invImageWidth, invImageHeight, null);
 		
 		//Draw count of selected item to screen
-		Text.drawString(g, Integer.toString(item.getCount()), invCountX, invCountY, true, Color.WHITE, Assets.font28);
+		Text.drawString(g, Integer.toString(item.getCount()), invCountX, invCountY, true, Color.WHITE, Assets.fontAmaticBold30);
 		
 	}
 	

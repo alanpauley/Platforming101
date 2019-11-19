@@ -16,6 +16,9 @@ public abstract class Creature extends Entity {
 	//Refactored speed to account for different sizes
 	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f); 
 
+	//Collision with Tile Booleans
+	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
+	
 	//Gravity on creatures
 	protected final float DEFAULT_GRAVITY = 9.8f;
 	
@@ -71,6 +74,40 @@ public abstract class Creature extends Entity {
 		
 		//Gravity's effect on the player
 		gravity();
+
+		//Check all collisions
+		/*X coordinate of creature, + where you want to move to, + x bound offset, 
+		 * + bounds width since moving right and checking right side
+		 */
+
+		//Right Collision Check
+		int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+		if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) && !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT))
+			collisionWithTileRight = false;
+		else
+			collisionWithTileRight = true;
+		
+		//Left Collision Check
+		tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+		if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) && !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT))
+			collisionWithTileLeft = false;
+		else
+			collisionWithTileLeft = true;
+
+		//Top Collision Check
+		int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+		if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) && !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty))
+			collisionWithTileTop = false;
+		else
+			collisionWithTileTop = true;
+		
+		//Bottom Collision Check
+		ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+		if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) && !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty))
+			collisionWithTileBottom = false;
+		else
+			collisionWithTileBottom = true;
+		
 		
 		//If no collision, movement is allowed, otherwise stop
 		if(!checkEntityCollisions(xMove, 0f))
@@ -82,73 +119,61 @@ public abstract class Creature extends Entity {
 	//Instead of moving both x and y in same move method, creating separate
 	//move methods for x and y
 	public void moveX() {
+		
 		//Moving right
 		if(xMove > 0) {
 			
-			/*X coordinate of creature, + where you want to move to, + x bound offset, 
-			 * + bounds width since moving right and checking right side
-			 */
-
 			int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
 			
 			/*Check the tile upper right is moving in to, and lower right is moving in to
 			 * If both tiles are NOT solid (thus ! in front of collision method), then go ahead and move!
 			 */
-			if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			if(!collisionWithTileRight)
 				x += xMove;
-			} else {
+			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries
 				x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
-			}
 			
 		//Moving left
 		}else if(xMove < 0) {
 
-			//Same as above, except moving left, so don't need to add bounds width
 			int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
 			
 			//Same check
-			if(!collisionWithTile(tx, (int) (y + bounds.y)/ Tile.TILEHEIGHT) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			if(!collisionWithTileLeft)
 				x += xMove;
-			} else {
+			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We weirdly don't have to add a 1-pixel gap for "sliding" to not get stuck along the boundaries. Don't ask me why...
 				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
-			}
 		}
 	}
 	
 	public void moveY() {
+		
 		//Moving up
 		if(yMove < 0) {
 			
-			//Same logic as xMove, but now for y. Using temp y, x left, and x right variables
 			int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
 
-			if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			if(!collisionWithTileTop)
 				y += yMove;
-			} else {
+			else
 				//move player as close to the tile as possible without being inside of it
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
-			}
 			
 		//Moving down
 		}else if(yMove > 0) {
 			
 			int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 			
-			if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			if(!collisionWithTileBottom)
 				y += yMove;
-			} else {
+			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries
 				y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
-			}
 		}
 	}
 	
@@ -204,4 +229,51 @@ public abstract class Creature extends Entity {
 		this.yMove = yMove;
 	}
 
+	public boolean isHangtime() {
+		return hangtime;
+	}
+
+	public void setHangtime(boolean hangtime) {
+		this.hangtime = hangtime;
+	}
+
+	//Checks whether Creature is colliding with Tile on Top
+	public boolean isCollisionWithTileTop() {
+		return collisionWithTileTop;
+	}
+
+	//Set whether Creature is colliding with Tile on Top
+	public void setCollisionWithTileTop(boolean collisionWithTileTop) {
+		this.collisionWithTileTop = collisionWithTileTop;
+	}
+
+	//Checks whether Creature is colliding with Tile on Bottom
+	public boolean isCollisionWithTileBottom() {
+		return collisionWithTileBottom;
+	}
+
+	//Set whether Creature is colliding with Tile on Bottom
+	public void setCollisionWithTileBottom(boolean collisionWithTileBottom) {
+		this.collisionWithTileBottom = collisionWithTileBottom;
+	}
+	
+	//Checks whether Creature is colliding with Tile on Left
+	public boolean isCollisionWithTileLeft() {
+		return collisionWithTileLeft;
+	}
+
+	//Set whether Creature is colliding with Tile on Left
+	public void setCollisionWithTileLeft(boolean collisionWithTileLeft) {
+		this.collisionWithTileLeft = collisionWithTileLeft;
+	}
+	
+	//Checks whether Creature is colliding with Tile on Right
+	public boolean isCollisionWithTileRight() {
+		return collisionWithTileRight;
+	}
+
+	//Set whether Creature is colliding with Tile on Right
+	public void setCollisionWithTileRight(boolean collisionWithTileRight) {
+		this.collisionWithTileRight = collisionWithTileRight;
+	}
 }

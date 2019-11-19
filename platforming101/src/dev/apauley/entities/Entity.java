@@ -180,4 +180,12 @@ public abstract class Entity {
 		this.active = active;
 	}
 
+	public Rectangle getBounds() {
+		return bounds;
+	}
+
+	public void setBounds(Rectangle bounds) {
+		this.bounds = bounds;
+	}
+
 }

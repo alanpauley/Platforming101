@@ -202,16 +202,8 @@ public class Player extends Creature{
 
 			//Draw Player to screen WITHOUT animation
 			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);			
-
-
 		}
 
-		//Debug Bounding Box:
-		g.setColor(Color.YELLOW);
-		g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset())
-				 , (int) (y + bounds.y - handler.getGameCamera().getyOffset())
-				 , bounds.width, bounds.height);
-		
 	}
 	
 	//works just like inventory, but it renders things AFTER the other render, so that this is on top

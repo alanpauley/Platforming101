@@ -11,6 +11,7 @@ import java.awt.Graphics;
 
 public class Text {
 
+	//Draws string to screen
 	public static void drawString(Graphics g, String text, int xPos, int yPos, boolean center, Color c, Font font) {
 		g.setColor(c);
 		g.setFont(font);
@@ -31,6 +32,12 @@ public class Text {
 			y = (yPos - fm.getHeight() / 2) + fm.getAscent();
 		}
 		g.drawString(text, x, y);
+	}
+	
+	//Draws same string as above, but with a shadow
+	public static void drawStringShadow(Graphics g, String text, int xPos, int yPos, boolean center, Color c, Font font) {
+		drawString(g, text, xPos + font.getSize()/10, yPos + font.getSize()/10, center, Color.BLACK, font);
+		drawString(g, text, xPos, yPos, center, c, font);
 	}
 	
 }

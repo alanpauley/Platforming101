@@ -14,7 +14,8 @@ public abstract class Creature extends Entity {
 			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
 	
 	//Refactored speed to account for different sizes
-	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f); 
+	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
+							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f; 
 
 	//Collision with Tile Booleans
 	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
@@ -22,8 +23,15 @@ public abstract class Creature extends Entity {
 	//Gravity on creatures
 	protected final float DEFAULT_GRAVITY = 9.8f;
 	
+	//Gravity to level off jumps
+	protected float gravityHangtime = DEFAULT_GRAVITY;
+	protected int gravityHangTimeTick = 0;
+	
 	//Tracks how much speed creature has
 	protected float speed;
+	
+	//Tracks whether player is running or not
+	protected boolean running;
 	
 	//Tracks which direction the player is facing
 	protected boolean faceTop, faceBottom, faceRight, faceLeft;
@@ -32,14 +40,14 @@ public abstract class Creature extends Entity {
 	protected float xMove, yMove;	
 	
 	//Tracks whether creature IS jumping (meaning still ascending
-	protected boolean jumping;
+	protected boolean jumping, canJump;
+	
+	//Jump Timer
+	protected long lastJumpTimer, jumpCooldown = 250, jumpTimer = jumpCooldown;
 	
 	//Tracks creature jumping hangtime (whether should be floating after jumping)
 	protected boolean hangtime;
 		
-	//Jump Timer
-	protected long lastHangTimeTimer, hangTimeCooldown = 180, hangTimeTimer = hangTimeCooldown;
-	
 	//Creature Constructor. Establishes some defaults
 	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name) {
 		super(handler, x,y, width, height, xMove, yMove, name);
@@ -52,16 +60,35 @@ public abstract class Creature extends Entity {
 	//Gravity on creatures
 	public void gravity() {
 		
-		//Update HangTimeTimer
-		hangTimeTimer += System.currentTimeMillis() - lastHangTimeTimer;
-		lastHangTimeTimer = System.currentTimeMillis();
+		//Update JumpTimer
+		jumpTimer += System.currentTimeMillis() - lastJumpTimer;
+		lastJumpTimer = System.currentTimeMillis();
 		
 		//check if can ready to fall yet yet
-		if(hangTimeTimer < hangTimeCooldown)
-		return;
+		if(jumpTimer < jumpCooldown)
+			return;
+		
+		jumping = false;
+		canJump = false;
+		
+		//Level off Gravity
+		if(gravityHangtime < DEFAULT_GRAVITY) {
+			gravityHangtime += 0.4f;
+			
+			//At middle point, level off player to imitate "hangtime"
+			if(gravityHangtime >= DEFAULT_GRAVITY / 2 - 2f && gravityHangtime <= DEFAULT_GRAVITY / 2 + 2f) {
+				gravityHangTimeTick++;
+				yMove += gravityHangtime - 0.4f * gravityHangTimeTick;
 
-		//Reset hangTimeTimer
-		hangtime = false;
+			//Otherwise apply full gravityHangtime amount
+			} else {
+				yMove += gravityHangtime;
+			}
+		
+		//Finally end hangtime to apply full gravity to player
+		} else {
+			hangtime = false;
+		}
 
 		//only allow gravity on Phase >= 3
 		if(handler.getPhaseManager().getCurrentPhase() < 3) {
@@ -108,8 +135,10 @@ public abstract class Creature extends Entity {
 		ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 		if(!collisionWithTile((int) (x + bounds.x)/ Tile.TILEWIDTH, ty) && !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty))
 			collisionWithTileBottom = false;
-		else
+		else {
 			collisionWithTileBottom = true;
+			canJump = true;
+		}
 		
 		
 		//If no collision, movement is allowed, otherwise stop
@@ -195,6 +224,18 @@ public abstract class Creature extends Entity {
 			return false;
 								
 		return handler.getWorld().getTile(x,y).isSolid();
+	}
+	
+	//Increase speed if running
+	public void run() {
+		running = true;
+		speed = DEFAULT_RUN;
+	}
+	
+	//Decrease speed if walking
+	public void walk() {
+		running = false;
+		speed = DEFAULT_SPEED;
 	}
 
 	/*************** GETTERS and SETTERS ***************/
@@ -333,6 +374,22 @@ public abstract class Creature extends Entity {
 	//Sets whether player is facing left
 	public void setFaceLeft(boolean faceLeft) {
 		this.faceLeft = faceLeft;
+	}
+
+	public boolean isCanJump() {
+		return canJump;
+	}
+
+	public void setCanJump(boolean canJump) {
+		this.canJump = canJump;
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
 	}
 
 }

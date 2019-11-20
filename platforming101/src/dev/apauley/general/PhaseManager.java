@@ -35,6 +35,7 @@ public class PhaseManager {
 			phases.add("Player can move");
 			phases.add("Player can jump");
 			phases.add("Player can shoot");
+			phases.add("Player can run");
 			phases.add("Camera will follow player");
 		//3 - Environment
 			phases.add("Enemies spawn");
@@ -96,8 +97,8 @@ public class PhaseManager {
 		//Prevent going to an undefined phase (need to be between 1 and ???)
 		if(currentPhase < 0)
 			currentPhase = 0;
-		if(currentPhase > 31)
-			currentPhase = 31;
+		if(currentPhase > 32)
+			currentPhase = 32;
 		this.currentPhase = currentPhase;
 		//System.out.println("current Phase: " + currentPhase);
 
@@ -111,8 +112,16 @@ public class PhaseManager {
 		case 2:
 			loadLevel = currentPhase;
 			break;
-		default:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
 			loadLevel = 3;
+			break;
+		default:
+			loadLevel = 4;
 			break;
 		}
 		
@@ -124,6 +133,9 @@ public class PhaseManager {
 		//Reset player
 		handler.getWorld().getEntityManager().getPlayer().resetPlayer();
 
+		//Reset GameCamera
+		handler.getGameCamera().resetGameCamera();
+		
 		//Reset phaseTimer
 		phaseTimer = 0;		
 	}

@@ -1,12 +1,12 @@
-package dev.apauley.tiles.tileAssets;
+package dev.apauley.tiles.tileAssets.colors;
 
 import dev.apauley.gfx.Assets;
 import dev.apauley.tiles.Tile;
 
-public class Grey extends Tile {
+public class GreyDark extends Tile {
 
-	public Grey(int id) {
-		super(Assets.grey, id);
+	public GreyDark(int id) {
+		super(Assets.greyDark, id);
 	}
 	
 	@Override

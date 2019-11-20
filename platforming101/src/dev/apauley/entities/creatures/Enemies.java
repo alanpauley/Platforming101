@@ -9,9 +9,9 @@ import dev.apauley.gfx.Assets;
  * Projectiles fired by player
  */
 
-public class Bullet extends Creature{
+public class Enemies extends Creature{
 
-	public Bullet(Handler handler, float x, float y, float xMove, float yMove) {
+	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH / 4, Creature.DEFAULT_CREATURE_HEIGHT / 4, xMove, yMove, "BULLET");
 		
 		//Boundary box for player
@@ -33,7 +33,7 @@ public class Bullet extends Creature{
 	
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.yellow, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+		g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
 	}
 
 	@Override

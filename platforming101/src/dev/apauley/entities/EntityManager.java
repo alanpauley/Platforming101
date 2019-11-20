@@ -49,27 +49,6 @@ public class EntityManager {
 	
 	public void tick() {
 		
-		//Mouse clicks
-		if(handler.getMouseManager().isLeftPressed()) {
-		//if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) {
-			//if mouse.X > player.X, put on right of player
-			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
-				//System.out.println("right");
-//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-//						, handler.getWorld().getEntityManager().getPlayer().getY()));
-				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-																				  , handler.getWorld().getEntityManager().getPlayer().getY(), 10, 0));
-				
-			//otherwise, put on left of player
-			} else {
-				//System.out.println("left");
-//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth() * 2 //Not sure why * 2 tbh
-//						, handler.getWorld().getEntityManager().getPlayer().getY()));
-				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth() * 2 //Not sure why * 2 tbh
-				, handler.getWorld().getEntityManager().getPlayer().getY(), -10, 0));
-			}
-		}
-
 		//Loop through entities to tick them all using an iterator
 		Iterator<Entity> it = entities.iterator();
 		
@@ -88,6 +67,40 @@ public class EntityManager {
 		
 		//Resort entities based on renderSorter
 		entities.sort(renderSorter);
+
+		//only allow attacks on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 7)
+			return;		
+				
+		//Generate bullets from player if left mouse is clicked
+		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
+		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
+
+			float xMove = 10f;
+			float yMove = 0f;
+			
+			//Get player direction(s) to get yMoves of bullets (don't need left and right since that's implied in mouse click side)
+			if(handler.getWorld().getEntityManager().getPlayer().isFaceTop())
+				yMove = -10f;
+			if(handler.getWorld().getEntityManager().getPlayer().isFaceBottom())
+				yMove = 10f;
+					
+			//if mouse.X > player.X, put on right of player
+			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
+				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove));
+				handler.getWorld().getEntityManager().getPlayer().setFaceRight(true);
+				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(false);
+				
+			//otherwise, put on left of player
+			} else {
+				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth()/2 //Not sure why * 2 tbh
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove));
+				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
+				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
+			}
+		}
+
 	}
 	
 	public void render(Graphics g) {

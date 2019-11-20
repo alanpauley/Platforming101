@@ -67,7 +67,7 @@ public class Player extends Creature{
 		move();
 		
 		//only allow camera to follow player (and subsequent code) on Phase > x
-		if(handler.getPhaseManager().getCurrentPhase() < 8)
+		if(handler.getPhaseManager().getCurrentPhase() < 9)
 			return;		
 		
 		//Centers camera on player
@@ -161,6 +161,10 @@ public class Player extends Creature{
 			handler.getWorld().getDebugManager().toggleDebugPlayer();
 		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F2)) 
 			handler.getWorld().getDebugManager().toggleDebugSystem();
+		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F3)) 
+			handler.getWorld().getDebugManager().toggleDebugRandom();
+		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F11)) 
+			handler.getWorld().getDebugManager().toggleDebugBoundingBox();
 
 		//Toggle ALL debugs
 		if(handler.getKeyManager().debugAll && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F12))
@@ -178,7 +182,13 @@ public class Player extends Creature{
 		if(inventory.isActive())
 			return;
 		
-		//Setting x/y move to a certain speed, THEN moving player that much
+		//adjusts speeds based on whether player is running or not (can only be adjusted when on the ground)
+		if(collisionWithTileBottom) {
+			if(handler.getKeyManager().run)
+				run();
+			else
+				walk();
+		}
 		
 		//Handles player Movement
 		if(handler.getKeyManager().up)
@@ -189,8 +199,10 @@ public class Player extends Creature{
 			xMove = speed;
 		if(handler.getKeyManager().left)
 			xMove = -speed;
-		if(handler.getKeyManager().jump)
-			yMove += -30f;
+		
+		//Check whether player CAN jump, if so, jump
+		if(handler.getKeyManager().jump && jumping && canJump)
+			yMove += -25f;
 
 		//Reset top/bottom facing directions if not held
 		if(!handler.getKeyManager().up)
@@ -204,14 +216,15 @@ public class Player extends Creature{
 			setFaceRight(false);
 		
 		//If jump was just pressed, set jumping to true
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE))
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE) && canJump) {
 			jumping = true;
-
+			jumpTimer = 0;
+			gravityHangtime = 0;
+			gravityHangTimeTick = 0;
+		}
 		//If Jumping and jump is released, start hangtime and reset jumping
-		if(!handler.getKeyManager().jump && jumping) {
+		if(!handler.getKeyManager().jump && !jumping) {
 			hangtime = true;
-			hangTimeTimer = 0;
-			jumping = false;
 		}
 		
 	}
@@ -219,7 +232,7 @@ public class Player extends Creature{
 	@Override
 	public void render(Graphics g) {
 
-		if(handler.getPhaseManager().getCurrentPhase() > 7) {
+		if(handler.getPhaseManager().getCurrentPhase() > 8) {
 
 			//Temporarily doing no animation:
 			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	

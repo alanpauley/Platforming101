@@ -62,6 +62,12 @@ public class GameCamera {
 		checkBlankSpace();			
 	}
 	
+	//Resets GameCamera
+	public void resetGameCamera() {
+		xOffset = 0;
+		yOffset = 0;
+	}
+	
 	/*************** GETTERS and SETTERS ***************/
 	
 	//Gets X Offset
@@ -83,5 +89,5 @@ public class GameCamera {
 	public void setyOffset(float yOffset) {
 		this.yOffset = yOffset;
 	}
-
+	
 }

@@ -153,7 +153,7 @@ public class World {
 		entityManager = new EntityManager(handler, new Player(handler, 0,0));
 		
 		//Load entities specific to Phase
-		if(handler.getPhaseManager().getCurrentPhase() > 8) {
+		if(handler.getPhaseManager().getCurrentPhase() > 15) {
 			//Adds entities to the Entity list
 			entityManager.addEntity(new Tree(handler,  600,400));
 			entityManager.addEntity(new Rock(handler,  780,350));

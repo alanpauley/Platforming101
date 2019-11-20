@@ -20,7 +20,7 @@ public class DebugManager {
 	private Font fontHeader = Assets.fontRobotoRegular40;
 	private Font fontStats = Assets.fontRobotoRegular30;
 	
-	private boolean debugPlayer, debugSystem, debugRandom;
+	private boolean debugPlayer, debugSystem, debugRandom, debugBoundingBox;
 	private ArrayList<Boolean> debugs;
 	
 	//spacing buffer
@@ -99,8 +99,8 @@ public class DebugManager {
 
 	public void Render(Graphics g) {
 
-		//Only Draw if DebugPlayer = True
-		if(debugPlayer) {
+		//Only Draw if DebugBoundingBox = True
+		if(debugBoundingBox) {
 		
 			//Draw player Bounding Box
 			drawBoundingBox(g, true, true, true, true, Color.GREEN);
@@ -118,7 +118,11 @@ public class DebugManager {
 					      , handler.getWorld().getEntityManager().getPlayer().isFaceLeft()
 					      , handler.getWorld().getEntityManager().getPlayer().isFaceRight()
 					      , Color.CYAN);
+		}
 
+		//Only Draw if DebugPlayer = True
+		if(debugPlayer) {
+			
 			//Draw Player Debug to Screen
 			Color color =  new Color(245,66,149); //Pink
 			int x = 0, i = 1;
@@ -127,8 +131,11 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Y: " + handler.getWorld().getEntityManager().getPlayer().getY(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveX: " + handler.getWorld().getEntityManager().getPlayer().getxMove(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Speed: " + handler.getWorld().getEntityManager().getPlayer().getSpeed(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Running: " + handler.getWorld().getEntityManager().getPlayer().isRunning(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Can Jump: " + handler.getWorld().getEntityManager().getPlayer().isCanJump(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), getStX(x), getStY(i), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), getStX(x), getStY(i), false, color, fontStats); i++;
@@ -153,6 +160,7 @@ public class DebugManager {
 			Text.drawStringShadow(g, "FPS: " + handler.getGame().getFpsTicks(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Phase: " + handler.getPhaseManager().getCurrentPhase() + " - " + handler.getPhaseManager().getCurrentPhaseName(), getStX(x), getStY(i), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Entity #: " + handler.getWorld().getEntityManager().getEntities().size(), getStX(x), getStY(i), false, color, fontStats); i++;
 		}
 
 		//Only Draw if DebugRandom = True
@@ -176,6 +184,7 @@ public class DebugManager {
 		debugPlayer = tf;
 		debugSystem = tf;
 		debugRandom = tf;
+		debugBoundingBox = tf;
 	}
 
 	//set ALL debugs on/off
@@ -185,6 +194,7 @@ public class DebugManager {
 		debugSystem = !tf;
 		debugPlayer = !tf;
 		debugRandom = !tf;
+		debugBoundingBox = !tf;
 	}
 
 	//Checks whether debugPlayer is true or false
@@ -239,6 +249,24 @@ public class DebugManager {
 		boolean tf = isDebugRandom();
 		setAllDebugs(false);
 		debugRandom = !tf;
+	}
+
+	//Checks whether debugPlayer is true or false
+	public boolean isDebugBoundingBox() {
+		return debugBoundingBox;
+	}
+
+	//set debugPlayer to true or false
+	public void setDebugBoundingBox(boolean debugBoundingBox) {
+		setAllDebugs(false);
+		this.debugBoundingBox = debugBoundingBox;
+	}
+
+	//Toggles Debug Player to opposite (on >> off, off >> on)
+	public void toggleDebugBoundingBox() {
+		boolean tf = isDebugBoundingBox();
+		setAllDebugs(false);
+		debugBoundingBox= !tf;
 	}
 	
 }

@@ -19,7 +19,7 @@ public class Assets {
 	//Holds all tiles/items/etc.
 	public static BufferedImage player, ground, sky, rainbowSky
 							  , groundBevel, skyBevel //Bevels
-							  , grey, blue //Colors
+							  , red, orange, yellow, yellowGreen, green, cyan, blueLight, blueDark, purple, purplePink, pink, magenta, white, greyLight, greyDark, black //Colors
 	                          , notFound; //Handles when a tile cannot be found
 	
 	//Holds all static entities
@@ -82,14 +82,30 @@ public class Assets {
 //			player_crouch[0] = sheet.crop(width * 6, height * 0, width, height);
 //			player_crouch[1] = sheet.crop(width * 7, height * 0, width, height);
 		
+	/*TILES*/
 		groundBevel	= sheet.crop(width * 5, height * 6, width, height);
 		skyBevel	= sheet.crop(width * 5, height * 5, width, height);
 		ground		= sheet.crop(width * 7, height * 7, width, height);
 		sky			= sheet.crop(width * 6, height * 6, width, height);
 		rainbowSky 	= sheet.crop(width * 7, height * 6, width, height);
 
-		grey 	= sheet.crop(width * 2, height * 7, width, height);
-		blue 	= sheet.crop(width * 2, height * 5, width, height);
+	/*COLORS*/
+		red 		= sheet.crop(width * 1, height * 4, width, height);
+		orange 		= sheet.crop(width * 2, height * 4, width, height);
+		yellow 		= sheet.crop(width * 3, height * 4, width, height);
+		yellowGreen	= sheet.crop(width * 4, height * 4, width, height);
+		green 		= sheet.crop(width * 1, height * 5, width, height);
+		cyan 		= sheet.crop(width * 2, height * 5, width, height);
+		blueLight 	= sheet.crop(width * 3, height * 5, width, height);
+		blueDark 	= sheet.crop(width * 4, height * 5, width, height);
+		purple 		= sheet.crop(width * 1, height * 6, width, height);
+		purplePink 	= sheet.crop(width * 2, height * 6, width, height);
+		pink 		= sheet.crop(width * 3, height * 6, width, height);
+		magenta 	= sheet.crop(width * 4, height * 6, width, height);
+		white 		= sheet.crop(width * 1, height * 7, width, height);
+		greyLight 	= sheet.crop(width * 2, height * 7, width, height);
+		greyDark 	= sheet.crop(width * 3, height * 7, width, height);
+		black 		= sheet.crop(width * 4, height * 7, width, height);
 		notFound= sheet.crop(width * 7, height * 7, width, height);
 		
 		//Static Entities

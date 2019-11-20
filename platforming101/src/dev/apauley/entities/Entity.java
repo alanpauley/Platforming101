@@ -20,6 +20,9 @@ public abstract class Entity {
 	//Float = smoother movement using decimals for calculations
 	//X and Y coordinates of entity
 	protected float x, y;
+	
+	//x and y Move
+	protected float xMove, yMove;
 
 	//Size of entity
 	protected int width, height;
@@ -40,7 +43,7 @@ public abstract class Entity {
 	protected String name;
 
 	//Constructor to set Defaults
-	public Entity(Handler handler, float x, float y, int width, int height, String name) {
+	public Entity(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name) {
 		this.handler = handler;
 		this.x = x;
 		this.y = y;
@@ -49,6 +52,8 @@ public abstract class Entity {
 		this.name = name;
 		health = DEFAULT_HEALTH;
 		flash = 0;
+		this.xMove = xMove;
+		this.yMove = yMove;
 				
 		//By default, set boundary box to be exact size of entity
 		//So 0,0 to start top left of entity, then same width/height
@@ -186,6 +191,22 @@ public abstract class Entity {
 
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+
+	public float getxMove() {
+		return xMove;
+	}
+
+	public void setxMove(float xMove) {
+		this.xMove = xMove;
+	}
+
+	public float getyMove() {
+		return yMove;
+	}
+
+	public void setyMove(float yMove) {
+		this.yMove = yMove;
 	}
 
 }

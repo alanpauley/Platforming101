@@ -109,6 +109,9 @@ public class Game implements Runnable {
 
 		//Update keys
 		keyManager.tick();
+		
+		//Update clicks
+		mouseManager.tick();
 				
 		//Only tick if state is populated 
 		if(State.getState() != null)

@@ -1,12 +1,13 @@
 package dev.apauley.entities;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import dev.apauley.entities.creatures.Bullet;
 import dev.apauley.entities.creatures.Player;
-import dev.apauley.entities.statics.Rock;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
 
@@ -50,20 +51,22 @@ public class EntityManager {
 		
 		//Mouse clicks
 		if(handler.getMouseManager().isLeftPressed()) {
+		//if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) {
 			//if mouse.X > player.X, put on right of player
-			if(handler.getMouseManager().getMouseX() > handler.getWorld().getEntityManager().getPlayer().getX()) {
-				System.out.println("right");
-				handler.getWorld().getEntityManager().addEntity(new Rock(handler, 0
-						 													    , 0));
-//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset()
-//						    , handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset()));
-//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-//						    , handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset() - Assets.obj1.getHeight()/2)); //Not Divided by 2 because twice as tall
+			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
+				//System.out.println("right");
+//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
+//						, handler.getWorld().getEntityManager().getPlayer().getY()));
+				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
+																				  , handler.getWorld().getEntityManager().getPlayer().getY(), 10, 0));
+				
 			//otherwise, put on left of player
 			} else {
-				System.out.println("left");
-				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - handler.getGameCamera().getxOffset() - Assets.obj1.getWidth() //Not Divided by 2 because twice as tall
-						    													, handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset() - Assets.obj1.getHeight()/2)); //Not Divided by 2 because twice as tall
+				//System.out.println("left");
+//				handler.getWorld().getEntityManager().addEntity(new Rock(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth() * 2 //Not sure why * 2 tbh
+//						, handler.getWorld().getEntityManager().getPlayer().getY()));
+				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth() * 2 //Not sure why * 2 tbh
+				, handler.getWorld().getEntityManager().getPlayer().getY(), -10, 0));
 			}
 		}
 

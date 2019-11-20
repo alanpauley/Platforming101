@@ -129,16 +129,16 @@ public class DebugManager {
 			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "B-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "L-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "R-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight(), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), getStX(x), getStY(i), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "T-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceTop(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "B-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceBottom(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "L-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceLeft(), getStX(x), getStY(i), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "R-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceRight(), getStX(x), getStY(i), false, color, fontStats); i++;		
+//			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "B-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "L-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "R-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "T-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceTop(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "B-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceBottom(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "L-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceLeft(), getStX(x), getStY(i), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "R-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceRight(), getStX(x), getStY(i), false, color, fontStats); i++;		
 		}
 		
 		//Only Draw if DebugSystem = True

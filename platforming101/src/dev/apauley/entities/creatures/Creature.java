@@ -41,11 +41,11 @@ public abstract class Creature extends Entity {
 	protected long lastHangTimeTimer, hangTimeCooldown = 180, hangTimeTimer = hangTimeCooldown;
 	
 	//Creature Constructor. Establishes some defaults
-	public Creature(Handler handler, float x, float y, int width, int height, String name) {
-		super(handler, x,y, width, height, name);
+	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name) {
+		super(handler, x,y, width, height, xMove, yMove, name);
 		speed = DEFAULT_SPEED;
-		xMove = 0;
-		yMove = 0;
+		this.xMove = xMove;
+		this.yMove = yMove;
 
 	}
 
@@ -78,9 +78,6 @@ public abstract class Creature extends Entity {
 	//Moves creature using helpers
 	public void move() {
 		
-		//Gravity's effect on the player
-		gravity();
-
 		//Check all collisions
 		/*X coordinate of creature, + where you want to move to, + x bound offset, 
 		 * + bounds width since moving right and checking right side

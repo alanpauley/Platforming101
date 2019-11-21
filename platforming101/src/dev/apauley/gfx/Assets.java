@@ -14,7 +14,8 @@ public class Assets {
 	
 	//Fonts
 	public static Font fontAmaticBold40, fontJackPortRegular40, fontRobotoRegular40
-	                 , fontAmaticBold30, fontJackPortRegular30, fontRobotoRegular30;
+	                 , fontAmaticBold30, fontJackPortRegular30, fontRobotoRegular30
+	                 , fontAmaticBold20, fontJackPortRegular20, fontRobotoRegular20;
 
 	//Holds all tiles/items/etc.
 	public static BufferedImage player, ground, sky, rainbowSky
@@ -50,6 +51,9 @@ public class Assets {
 		fontAmaticBold30 = FontLoader.loadFont("res/fonts/amatic/Amatic-Bold.ttf", 30);
 		fontJackPortRegular30 = FontLoader.loadFont("res/fonts/JACKPORT REGULAR NCV.ttf", 30);
 		fontRobotoRegular30 = FontLoader.loadFont("res/fonts/Roboto/Roboto-Black.ttf", 30);
+		fontAmaticBold20 = FontLoader.loadFont("res/fonts/amatic/Amatic-Bold.ttf", 20);
+		fontJackPortRegular20 = FontLoader.loadFont("res/fonts/JACKPORT REGULAR NCV.ttf", 20);
+		fontRobotoRegular20 = FontLoader.loadFont("res/fonts/Roboto/Roboto-Black.ttf", 20);
 		
 		//Loads tiles, items, and player texture file
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));

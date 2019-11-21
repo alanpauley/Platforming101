@@ -78,11 +78,11 @@ public class KeyManager implements KeyListener {
 		phasePrev= keys[KeyEvent.VK_COMMA];
 		phaseNext = keys[KeyEvent.VK_PERIOD];
 
-		debugPlayer = keys[KeyEvent.VK_F1];
-		debugSystem = keys[KeyEvent.VK_F2];
-		debugRandom = keys[KeyEvent.VK_F3];
-		debugBoundingBox = keys[KeyEvent.VK_F11];
-		debugAll = keys[KeyEvent.VK_F12];
+		debugSystem = keys[KeyEvent.VK_1];
+		debugPlayer = keys[KeyEvent.VK_2];
+		debugRandom = keys[KeyEvent.VK_3];
+		debugBoundingBox = keys[KeyEvent.VK_9];
+		debugAll = keys[KeyEvent.VK_0];
 		
 	}
 	

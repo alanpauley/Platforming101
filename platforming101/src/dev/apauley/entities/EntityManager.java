@@ -23,7 +23,10 @@ public class EntityManager {
 	//An ArrayList of Entities that holds all entities. 
 	//- like Entity[] but has no size (can add/subtract at will)
 	private ArrayList<Entity> entities;
-	
+
+	//Temporary holding place for entities that are added (possibly removed) when done outside of this class
+	private ArrayList<Entity> entitiesLimbo;
+
 	//Used to compare entities (namely the order which we render them)
 	//Return -1 if A should be rendered BEFORE B
 	//Return +1 if A should be rendered AFTER  B
@@ -42,6 +45,7 @@ public class EntityManager {
 		this.handler = handler;
 		this.player = player;
 		entities = new ArrayList<Entity>();
+		entitiesLimbo = new ArrayList<Entity>();
 		
 		//Puts player into the array list of entities
 		addEntity(player);
@@ -68,39 +72,9 @@ public class EntityManager {
 		//Resort entities based on renderSorter
 		entities.sort(renderSorter);
 
-		//only allow attacks on Phase > x
-		if(handler.getPhaseManager().getCurrentPhase() < 7)
-			return;		
-				
-		//Generate bullets from player if left mouse is clicked
-		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
-		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
-
-			float xMove = 10f;
-			float yMove = 0f;
-			
-			//Get player direction(s) to get yMoves of bullets (don't need left and right since that's implied in mouse click side)
-			if(handler.getWorld().getEntityManager().getPlayer().isFaceTop())
-				yMove = -10f;
-			if(handler.getWorld().getEntityManager().getPlayer().isFaceBottom())
-				yMove = 10f;
-					
-			//if mouse.X > player.X, put on right of player
-			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
-				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove));
-				handler.getWorld().getEntityManager().getPlayer().setFaceRight(true);
-				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(false);
-				
-			//otherwise, put on left of player
-			} else {
-				handler.getWorld().getEntityManager().addEntity(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth()/2 //Not sure why * 2 tbh
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove));
-				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
-				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
-			}
-		}
-
+		//Add entities from entitiesLimbo to entities then purge entitiesLimbo list
+		entitiesLimboPurge();
+		
 	}
 	
 	public void render(Graphics g) {
@@ -117,9 +91,9 @@ public class EntityManager {
 	}
 
 	//Remove all entities from the Entity Array List
-	public void removeAllEntities() {
+	public void removeAllEntities(ArrayList<Entity> entitiesList) {
 		//Loop through entities to tick them all using an iterator
-		Iterator<Entity> it = entities.iterator();
+		Iterator<Entity> it = entitiesList.iterator();
 
 		while(it.hasNext()) {
 			Entity e = it.next(); //The same as saying entities[i] or entities.get(i), but for an iterator
@@ -138,6 +112,22 @@ public class EntityManager {
 	//Take an entity and add to the Entity Array List (so it can be ticked and rendered)
 	public void addEntity(Entity e) {
 		entities.add(e);
+	}
+	
+	//Removes all entities from entitiesLimbo >> entities
+	public void entitiesLimboPurge() {
+		
+		//If entitiesLimbo is empty, exit
+		if(entitiesLimbo.size() == 0)
+			return;
+		
+		//otherwise, add them to entities list
+		for(Entity e : entitiesLimbo) {
+			addEntity(e);
+		}
+		
+		//safely remove all entities from entitiesLimbo
+		removeAllEntities(entitiesLimbo);
 	}
 	
 	/*************** GETTERS and SETTERS ***************/
@@ -166,4 +156,12 @@ public class EntityManager {
 		this.entities = entities;
 	}
 		
+	public ArrayList<Entity> getEntitiesLimbo() {
+		return entitiesLimbo;
+	}
+
+	public void setEntitiesLimbo(ArrayList<Entity> entitiesLimbo) {
+		this.entitiesLimbo = entitiesLimbo;
+	}
+
 }

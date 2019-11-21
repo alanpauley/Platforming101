@@ -150,7 +150,7 @@ public class World {
 		}
 		
 		//Remove all entities
-		entityManager.removeAllEntities();
+		//entityManager.removeAllEntities(handler.getWorld().getEntityManager().getEntities());
 		
 		//Add Player
 		entityManager = new EntityManager(handler, new Player(handler, 0,0));

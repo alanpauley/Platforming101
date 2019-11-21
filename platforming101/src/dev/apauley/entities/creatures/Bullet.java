@@ -1,9 +1,9 @@
 package dev.apauley.entities.creatures;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import dev.apauley.general.Handler;
-import dev.apauley.gfx.Assets;
 
 /*
  * Projectiles fired by player
@@ -11,9 +11,11 @@ import dev.apauley.gfx.Assets;
 
 public class Bullet extends Creature{
 
-	public Bullet(Handler handler, float x, float y, float xMove, float yMove) {
+	public Image bullet;
+	
+	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH / 4, Creature.DEFAULT_CREATURE_HEIGHT / 4, xMove, yMove, "BULLET");
-		
+		this.bullet = bullet;
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
@@ -33,7 +35,7 @@ public class Bullet extends Creature{
 	
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.yellow, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+		g.drawImage(bullet, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
 	}
 
 	@Override

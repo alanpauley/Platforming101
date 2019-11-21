@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import dev.apauley.entities.Entity;
@@ -76,9 +77,49 @@ public class Player extends Creature{
 		//Attack
 		checkAttacks();
 		
+		//Shoot
+		shoot();
+		
 		//Inventory
 		inventory.tick();
 	}
+	
+	//When player shoots,bullets are created
+	public void shoot() {
+	
+	//only allow attacks on Phase > x
+	if(handler.getPhaseManager().getCurrentPhase() < 7)
+		return;		
+			
+		//Generate bullets from player if left mouse is clicked
+		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
+		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
+			
+			float xMove = 10f;
+			float yMove = 0f;
+			
+			//Get player direction(s) to get yMoves of bullets (don't need left and right since that's implied in mouse click side)
+			if(handler.getWorld().getEntityManager().getPlayer().isFaceTop())
+				yMove = -10f;
+			if(handler.getWorld().getEntityManager().getPlayer().isFaceBottom())
+				yMove = 10f;
+					
+			//if mouse.X > player.X, put on right of player
+			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
+				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.yellow));
+				handler.getWorld().getEntityManager().getPlayer().setFaceRight(true);
+				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(false);
+				
+			//otherwise, put on left of player
+			} else {
+				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth()/2 //Not sure why * 2 tbh
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove, Assets.yellow));
+				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
+				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
+			}
+		}
+	}	
 	
 	//Check is user is pressing attacking key. If so, generate attack
 	public void checkAttacks() {
@@ -157,19 +198,24 @@ public class Player extends Creature{
 	private void getInput() {
 
 		//Toggle debugKeys
-		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F1)) 
-			handler.getWorld().getDebugManager().toggleDebugPlayer();
-		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F2)) 
+		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_1)) 
 			handler.getWorld().getDebugManager().toggleDebugSystem();
-		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F3)) 
+		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) 
+			handler.getWorld().getDebugManager().toggleDebugPlayer();
+		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) 
 			handler.getWorld().getDebugManager().toggleDebugRandom();
-		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F11)) 
+		
+		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_9)) 
 			handler.getWorld().getDebugManager().toggleDebugBoundingBox();
 
 		//Toggle ALL debugs
-		if(handler.getKeyManager().debugAll && handler.getKeyManager().keyJustPressed(KeyEvent.VK_F12))
+		if(handler.getKeyManager().debugAll && handler.getKeyManager().keyJustPressed(KeyEvent.VK_0))
 			handler.getWorld().getDebugManager().toggleAllDebugs();
 		
+		//Temp just for screen capture
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_4)) 
+			handler.getWorld().getDebugManager().setDebugCapture();
+
 		//only allow movement on Phase > x
 		if(handler.getPhaseManager().getCurrentPhase() < 5)
 			return;		

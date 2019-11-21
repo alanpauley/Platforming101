@@ -14,6 +14,9 @@ public class Enemies extends Creature{
 	//Waits til player is loaded before finishing initialization
 	protected boolean initialized;
 	
+	//Attack Timer
+	private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
+	
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, xMove, yMove, "ENEMY 1");
 		
@@ -71,6 +74,11 @@ public class Enemies extends Creature{
 			if(checkEntityCollisions(xMove, 0f) || checkEntityCollisions(0f, yMove))
 				die();
 		}
+		
+		//Block for phase to have enemy shoot
+		if(handler.getPhaseManager().getCurrentPhase() > 13) {
+			enemyShoot();
+		}		
 	}
 	
 	@Override
@@ -109,5 +117,54 @@ public class Enemies extends Creature{
 			xMove *= -1;			
 		}
 	}
+	
+	//Handles enemy shooting
+	public void enemyShoot() {
+		
+		//Update AttackTimer
+		attackTimer += System.currentTimeMillis() - lastAttackTimer;
+		lastAttackTimer = System.currentTimeMillis();
+		
+		//check if can attack yet
+		if(attackTimer < attackCooldown)
+			return;
+		
+		//Check if enemy is facing player
+		if(x - handler.getWorld().getEntityManager().getPlayer().getX() > 0 && faceRight) // If on the right and facing right, exit
+			return;
+		if(x - handler.getWorld().getEntityManager().getPlayer().getX() < 0 && faceLeft) // If on the left and facing left, exit
+			return;
+		
+		float xMove = 10f;
+		float yMove = 0f;
+		
+		//Get enemy direction(s) to get yMoves of bullets (don't need left and right since that's implied in mouse click side)
+		if(handler.getWorld().getEntityManager().getPlayer().isFaceTop())
+			yMove = -10f;
+		if(handler.getWorld().getEntityManager().getPlayer().isFaceBottom())
+			yMove = 10f;
+
+		//if enemy sees player, shoot bullet at player
+		if(Math.abs(x - handler.getWorld().getEntityManager().getPlayer().getX()) <= 1000 && Math.abs(y - handler.getWorld().getEntityManager().getPlayer().getY()) <= handler.getWorld().getEntityManager().getPlayer().getHeight()/4) {
+
+			//Different bullet direction depending on where the player is in relation to the enemy
+			if(faceRight) {
+				xMove = 10f;
+				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x + width + 10
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink));
+			} 
+			if(faceLeft) {
+				xMove = -10f;
+				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x - Assets.obj1.getWidth()
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink));
+			}			
+
+			//Reset attackTimer
+			attackTimer = 0;		
+
+		}
+		
+	}
+	
 	
 }

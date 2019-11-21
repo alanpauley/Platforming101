@@ -14,6 +14,9 @@ public class PhaseManager {
 	//handle phases of game construction (/res/references/First Platformer Checklist.xlsx)
 	private int currentPhase;
 	
+	//tracks how long currentPhaseName is so we can show debugger "Prettier" <3
+	private int currentPhaseNameLength;
+	
 	private ArrayList<String> phases;
 	
 	//Phase Timer
@@ -124,6 +127,46 @@ public class PhaseManager {
 			loadLevel = 4;
 			break;
 		}
+
+		//Sets currentPhaseNameLength
+		switch(currentPhase) {
+		case 0: currentPhaseNameLength = 340; break;
+		case 1: currentPhaseNameLength = 380; break;
+		case 2: currentPhaseNameLength = 375; break;
+		case 3: currentPhaseNameLength = 280; break;
+		case 4: currentPhaseNameLength = 500; break;
+		case 5: currentPhaseNameLength = 265; break;
+		case 6: currentPhaseNameLength = 255; break;
+		case 7: currentPhaseNameLength = 265; break;
+		case 8: currentPhaseNameLength = 245; break;
+		case 9: currentPhaseNameLength = 345; break;
+		case 10: currentPhaseNameLength = 265; break;
+		case 11: currentPhaseNameLength = 430; break;
+		case 12: currentPhaseNameLength = 255; break;
+		case 13: currentPhaseNameLength = 375; break;
+		case 14: currentPhaseNameLength = 260; break;
+		case 15: currentPhaseNameLength = 270; break;
+		case 16: currentPhaseNameLength = 200; break;
+		case 17: currentPhaseNameLength = 200; break;
+		case 18: currentPhaseNameLength = 200; break;
+		case 19: currentPhaseNameLength = 200; break;
+		case 20: currentPhaseNameLength = 200; break;
+		case 21: currentPhaseNameLength = 200; break;
+		case 22: currentPhaseNameLength = 200; break;
+		case 23: currentPhaseNameLength = 200; break;
+		case 24: currentPhaseNameLength = 200; break;
+		case 25: currentPhaseNameLength = 200; break;
+		case 26: currentPhaseNameLength = 200; break;
+		case 27: currentPhaseNameLength = 200; break;
+		case 28: currentPhaseNameLength = 200; break;
+		case 29: currentPhaseNameLength = 200; break;
+		case 30: currentPhaseNameLength = 200; break;
+		case 31: currentPhaseNameLength = 200; break;
+		case 32: currentPhaseNameLength = 200; break;
+		case 33: currentPhaseNameLength = 200; break;
+		case 34: currentPhaseNameLength = 200; break;
+		default: currentPhaseNameLength = 0; break;
+		}
 		
 		//Remove Entities
 		
@@ -143,4 +186,15 @@ public class PhaseManager {
 	public String getCurrentPhaseName() {
 		return phases.get(currentPhase);
 	}
+
+	//Gets how long currentPhaseName is so we can show debugger "Prettier" <3
+	public int getCurrentPhaseNameLength() {
+		return currentPhaseNameLength;
+	}
+
+	//Sets how long currentPhaseName is so we can show debugger "Prettier" <3
+	public void setCurrentPhaseNameLength(int currentPhaseNameLength) {
+		this.currentPhaseNameLength = currentPhaseNameLength;
+	}
+
 }

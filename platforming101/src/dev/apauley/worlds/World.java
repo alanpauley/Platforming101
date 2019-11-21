@@ -3,10 +3,13 @@ package dev.apauley.worlds;
 import java.awt.Graphics;
 
 import dev.apauley.entities.EntityManager;
+import dev.apauley.entities.creatures.Bullet;
+import dev.apauley.entities.creatures.Enemies;
 import dev.apauley.entities.creatures.Player;
 import dev.apauley.entities.statics.Rock;
 import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
+import dev.apauley.gfx.Assets;
 import dev.apauley.items.ItemManager;
 import dev.apauley.tiles.Tile;
 import dev.apauley.utilities.DebugManager;
@@ -152,6 +155,14 @@ public class World {
 		//Add Player
 		entityManager = new EntityManager(handler, new Player(handler, 0,0));
 		
+		//Load entities specific to Phase
+		if(handler.getPhaseManager().getCurrentPhase() > 9) {
+			//Adds entities to the Entity list
+			entityManager.addEntity(new Enemies(handler, 200,400, 0f, 0f));
+			entityManager.addEntity(new Enemies(handler, 600,400, 0f, 0f));
+			entityManager.addEntity(new Enemies(handler, 900,400, 0f, 0f));
+		}
+
 		//Load entities specific to Phase
 		if(handler.getPhaseManager().getCurrentPhase() > 15) {
 			//Adds entities to the Entity list

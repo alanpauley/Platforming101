@@ -23,7 +23,7 @@ public class GameState extends State {
 		//Creates world (generic start)
 		world = new World(handler);
 		handler.setWorld(world);
-		handler.getPhaseManager().setCurrentPhase(8);		
+		handler.getPhaseManager().setCurrentPhase(14);		
 		
 	}
 	

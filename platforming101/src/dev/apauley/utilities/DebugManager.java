@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import dev.apauley.entities.Entity;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
 import dev.apauley.gfx.Text;
@@ -47,7 +48,7 @@ public class DebugManager {
 	}
 	
 	//Draw Bounding box in your specified color for each side you list as TRUE
-	public void drawBoundingBox(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
+	public void drawBoundingBoxPlayer(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
 
 		g.setColor(c);
 		
@@ -69,6 +70,29 @@ public class DebugManager {
 					 , bbox, handler.getWorld().getEntityManager().getPlayer().getBounds().height);
 	}
 	
+	//Draw Bounding box for creatures in your specified color for each side you list as TRUE
+	public void drawBoundingBox(Graphics g, Entity e, boolean top, boolean bottom, boolean left, boolean right, Color c) {
+
+		g.setColor(c);
+		
+		if(top)
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset())
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset())
+					 , e.getBounds().width, bbox);
+		if(bottom)
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset())
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset() + e.getBounds().height - bbox)
+					 , e.getBounds().width, bbox);
+		if(left)
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset())
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset())
+					 , bbox, e.getBounds().height);
+		if(right)
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset() + e.getBounds().width - bbox)
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset())
+					 , bbox, e.getBounds().height);
+	}
+
 	//Draw smaller facing box in your specified color for each side you list as TRUE
 	public void drawFacingBox(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
 
@@ -111,11 +135,39 @@ public class DebugManager {
 		//Only Draw if DebugBoundingBox = True
 		if(debugBoundingBox) {
 		
-			//Draw player Bounding Box
-			drawBoundingBox(g, true, true, true, true, Color.GREEN);
+			//Draw Bounding boxes around all entities
+			for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+				Color c1 = Color.BLACK
+					, c2 = Color.WHITE;
+				if(e.getName() == "PLAYER") {
+					c1 = Color.GREEN;
+				    c2 = Color.YELLOW;
+				} else if(e.getName() == "BULLET") {
+					c1 = Color.PINK;
+				    c2 = Color.ORANGE;
+				} else if(e.getName() == "ENEMY") {
+					c1 = Color.BLUE;
+				    c2 = Color.WHITE;
+				}
+				drawBoundingBox(g, e, true, true, true, true, c1);
+
+			//Light up Small Box when colliding with tile
+			drawBoundingBoxPlayer(g, handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop()
+					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom()
+					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft()
+					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight()
+					      , Color.YELLOW);
 	
+			//Light up Smaller Box with direction facing
+			drawFacingBox(g, handler.getWorld().getEntityManager().getPlayer().isFaceTop()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceBottom()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceLeft()
+					      , handler.getWorld().getEntityManager().getPlayer().isFaceRight()
+					      , Color.CYAN);
+			}
+
 			//Light up Bounding Box with collision
-			drawBoundingBox(g, handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop()
+			drawBoundingBoxPlayer(g, handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop()
 					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom()
 					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft()
 					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight()

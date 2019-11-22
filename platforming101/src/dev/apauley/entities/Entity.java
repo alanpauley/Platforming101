@@ -27,6 +27,12 @@ public abstract class Entity {
 	//Size of entity
 	protected int width, height;
 	
+	//Collision with Tile Booleans
+	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
+	
+	//Tracks which direction the player is facing
+	protected boolean faceTop, faceBottom, faceRight, faceLeft;
+
 	//Tracks how much HP creature has
 	protected int health;
 
@@ -207,6 +213,88 @@ public abstract class Entity {
 
 	public void setyMove(float yMove) {
 		this.yMove = yMove;
+	}
+
+	//Checks whether Creature is colliding with Tile on Top
+	public boolean isCollisionWithTileTop() {
+		return collisionWithTileTop;
+	}
+
+	//Set whether Creature is colliding with Tile on Top
+	public void setCollisionWithTileTop(boolean collisionWithTileTop) {
+		this.collisionWithTileTop = collisionWithTileTop;
+	}
+
+	//Checks whether Creature is colliding with Tile on Bottom
+	public boolean isCollisionWithTileBottom() {
+		return collisionWithTileBottom;
+	}
+
+	//Set whether Creature is colliding with Tile on Bottom
+	public void setCollisionWithTileBottom(boolean collisionWithTileBottom) {
+		this.collisionWithTileBottom = collisionWithTileBottom;
+	}
+	
+	//Checks whether Creature is colliding with Tile on Left
+	public boolean isCollisionWithTileLeft() {
+		return collisionWithTileLeft;
+	}
+
+	//Set whether Creature is colliding with Tile on Left
+	public void setCollisionWithTileLeft(boolean collisionWithTileLeft) {
+		this.collisionWithTileLeft = collisionWithTileLeft;
+	}
+	
+	//Checks whether Creature is colliding with Tile on Right
+	public boolean isCollisionWithTileRight() {
+		return collisionWithTileRight;
+	}
+
+	//Set whether Creature is colliding with Tile on Right
+	public void setCollisionWithTileRight(boolean collisionWithTileRight) {
+		this.collisionWithTileRight = collisionWithTileRight;
+	}
+
+	//Checks whether player is facing up
+	public boolean isFaceTop() {
+		return faceTop;
+	}
+
+	//Sets whether player is facing up
+	public void setFaceTop(boolean faceTop) {
+		this.faceTop = faceTop;
+	}
+
+	//Checks whether player is facing down
+	public boolean isFaceBottom() {
+		return faceBottom;
+	}
+
+	//Sets whether player is facing down
+	public void setFaceBottom(boolean faceBottom) {
+		this.faceBottom = faceBottom;
+	}
+
+	//Checks whether player is facing right
+	public boolean isFaceRight() {
+		return faceRight;
+	}
+
+	//Sets whether player is facing right
+	public void setFaceRight(boolean faceRight) {
+		this.faceRight = faceRight;
+		if(faceRight)
+			System.out.println("Face right: " + this.getName());
+	}
+
+	//Checks whether player is facing left
+	public boolean isFaceLeft() {
+		return faceLeft;
+	}
+
+	//Sets whether player is facing left
+	public void setFaceLeft(boolean faceLeft) {
+		this.faceLeft = faceLeft;
 	}
 
 }

@@ -17,9 +17,6 @@ public abstract class Creature extends Entity {
 	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
 							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f; 
 
-	//Collision with Tile Booleans
-	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
-	
 	//Gravity on creatures
 	protected final float DEFAULT_GRAVITY = 9.8f;
 	
@@ -33,9 +30,6 @@ public abstract class Creature extends Entity {
 	//Tracks whether player is running or not
 	protected boolean running;
 	
-	//Tracks which direction the player is facing
-	protected boolean faceTop, faceBottom, faceRight, faceLeft;
-
 	//Helper for moving creatures on x and y plane
 	protected float xMove, yMove;	
 	
@@ -294,86 +288,6 @@ public abstract class Creature extends Entity {
 
 	public void setHangtime(boolean hangtime) {
 		this.hangtime = hangtime;
-	}
-
-	//Checks whether Creature is colliding with Tile on Top
-	public boolean isCollisionWithTileTop() {
-		return collisionWithTileTop;
-	}
-
-	//Set whether Creature is colliding with Tile on Top
-	public void setCollisionWithTileTop(boolean collisionWithTileTop) {
-		this.collisionWithTileTop = collisionWithTileTop;
-	}
-
-	//Checks whether Creature is colliding with Tile on Bottom
-	public boolean isCollisionWithTileBottom() {
-		return collisionWithTileBottom;
-	}
-
-	//Set whether Creature is colliding with Tile on Bottom
-	public void setCollisionWithTileBottom(boolean collisionWithTileBottom) {
-		this.collisionWithTileBottom = collisionWithTileBottom;
-	}
-	
-	//Checks whether Creature is colliding with Tile on Left
-	public boolean isCollisionWithTileLeft() {
-		return collisionWithTileLeft;
-	}
-
-	//Set whether Creature is colliding with Tile on Left
-	public void setCollisionWithTileLeft(boolean collisionWithTileLeft) {
-		this.collisionWithTileLeft = collisionWithTileLeft;
-	}
-	
-	//Checks whether Creature is colliding with Tile on Right
-	public boolean isCollisionWithTileRight() {
-		return collisionWithTileRight;
-	}
-
-	//Set whether Creature is colliding with Tile on Right
-	public void setCollisionWithTileRight(boolean collisionWithTileRight) {
-		this.collisionWithTileRight = collisionWithTileRight;
-	}
-
-	//Checks whether player is facing up
-	public boolean isFaceTop() {
-		return faceTop;
-	}
-
-	//Sets whether player is facing up
-	public void setFaceTop(boolean faceTop) {
-		this.faceTop = faceTop;
-	}
-
-	//Checks whether player is facing down
-	public boolean isFaceBottom() {
-		return faceBottom;
-	}
-
-	//Sets whether player is facing down
-	public void setFaceBottom(boolean faceBottom) {
-		this.faceBottom = faceBottom;
-	}
-
-	//Checks whether player is facing right
-	public boolean isFaceRight() {
-		return faceRight;
-	}
-
-	//Sets whether player is facing right
-	public void setFaceRight(boolean faceRight) {
-		this.faceRight = faceRight;
-	}
-
-	//Checks whether player is facing left
-	public boolean isFaceLeft() {
-		return faceLeft;
-	}
-
-	//Sets whether player is facing left
-	public void setFaceLeft(boolean faceLeft) {
-		this.faceLeft = faceLeft;
 	}
 
 	public boolean isCanJump() {

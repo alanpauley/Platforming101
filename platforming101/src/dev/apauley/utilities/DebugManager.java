@@ -37,7 +37,7 @@ public class DebugManager {
 	/*STAT HEADER POSITIONS*/
 	private int headX = spBf
 			  , headYTop = fontHeader.getSize() - spBf
-			  , headYBottom = fontHeader.getSize() - spBf + 480;
+			  , headYBottom = fontHeader.getSize() - spBf + 780;
 	
   		
 	public DebugManager(Handler handler) {
@@ -45,29 +45,6 @@ public class DebugManager {
 		debugs = new ArrayList<Boolean>();
 		debugs.add(debugPlayer);
 		debugs.add(debugSystem);
-	}
-	
-	//Draw Bounding box in your specified color for each side you list as TRUE
-	public void drawBoundingBoxPlayer(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
-
-		g.setColor(c);
-		
-		if(top)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset())
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset())
-					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width, bbox);
-		if(bottom)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset())
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox)
-					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width, bbox);
-		if(left)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset())
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset())
-					 , bbox, handler.getWorld().getEntityManager().getPlayer().getBounds().height);
-		if(right)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox)
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset())
-					 , bbox, handler.getWorld().getEntityManager().getPlayer().getBounds().height);
 	}
 	
 	//Draw Bounding box for creatures in your specified color for each side you list as TRUE
@@ -94,26 +71,26 @@ public class DebugManager {
 	}
 
 	//Draw smaller facing box in your specified color for each side you list as TRUE
-	public void drawFacingBox(Graphics g, boolean top, boolean bottom, boolean left, boolean right, Color c) {
+	public void drawFacingBox(Graphics g, Entity e, boolean top, boolean bottom, boolean left, boolean right, Color c) {
 
 		g.setColor(c);
 		
 		if(top)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
-					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox * 2, bbox * 2);
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , e.getBounds().width - bbox * 2, bbox * 2);
 		if(bottom)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox - bbox * 2)
-					 , handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox * 2, bbox * 2);
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset() + e.getBounds().height - bbox - bbox * 2)
+					 , e.getBounds().width - bbox * 2, bbox * 2);
 		if(left)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + bbox)
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
-					 , bbox * 2, handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox * 2);
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset() + bbox)
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , bbox * 2, e.getBounds().height - bbox * 2);
 		if(right)
-			g.fillRect((int) (handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getBounds().x - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getBounds().width - bbox - bbox * 2)
-					 , (int) (handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getBounds().y - handler.getGameCamera().getyOffset() + bbox)
-					 , bbox * 2, handler.getWorld().getEntityManager().getPlayer().getBounds().height - bbox * 2);
+			g.fillRect((int) (e.getX() + e.getBounds().x - handler.getGameCamera().getxOffset() + e.getBounds().width - bbox - bbox * 2)
+					 , (int) (e.getY() + e.getBounds().y - handler.getGameCamera().getyOffset() + bbox)
+					 , bbox * 2, e.getBounds().height - bbox * 2);
 	}
 
 	//Takes in the horizontal int and converts it based on input parameters
@@ -137,48 +114,43 @@ public class DebugManager {
 		
 			//Draw Bounding boxes around all entities
 			for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+				
+				//Get color(s) based on entity
 				Color c1 = Color.BLACK
-					, c2 = Color.WHITE;
+					, c2 = Color.WHITE
+					, c3 = Color.RED;
 				if(e.getName() == "PLAYER") {
 					c1 = Color.GREEN;
 				    c2 = Color.YELLOW;
+				    c3 = Color.CYAN;
 				} else if(e.getName() == "BULLET") {
 					c1 = Color.PINK;
 				    c2 = Color.ORANGE;
+				    c3 = Color.YELLOW;
 				} else if(e.getName() == "ENEMY") {
 					c1 = Color.BLUE;
 				    c2 = Color.WHITE;
+				    c3 = Color.RED;
 				}
+				
+				//Draw Bounding Box
 				drawBoundingBox(g, e, true, true, true, true, c1);
 
-			//Light up Small Box when colliding with tile
-			drawBoundingBoxPlayer(g, handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight()
-					      , Color.YELLOW);
+				//Light up Bounding Box with Tile collision
+				drawBoundingBox(g, e, e.isCollisionWithTileTop()
+					      , e.isCollisionWithTileBottom()
+					      , e.isCollisionWithTileLeft()
+					      , e.isCollisionWithTileRight()
+					      , c2);
 	
-			//Light up Smaller Box with direction facing
-			drawFacingBox(g, handler.getWorld().getEntityManager().getPlayer().isFaceTop()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceBottom()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceLeft()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceRight()
-					      , Color.CYAN);
+				//Light up Smaller Box with direction facing
+				drawFacingBox(g, e, e.isFaceTop()
+						      , e.isFaceBottom()
+						      , e.isFaceLeft()
+						      , e.isFaceRight()
+						      , c3);
 			}
 
-			//Light up Bounding Box with collision
-			drawBoundingBoxPlayer(g, handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft()
-					      , handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight()
-					      , Color.YELLOW);
-	
-			//Light up Smaller Box with direction facing
-			drawFacingBox(g, handler.getWorld().getEntityManager().getPlayer().isFaceTop()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceBottom()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceLeft()
-					      , handler.getWorld().getEntityManager().getPlayer().isFaceRight()
-					      , Color.CYAN);
 		}
 
 		//Only Draw if DebugSystem = True

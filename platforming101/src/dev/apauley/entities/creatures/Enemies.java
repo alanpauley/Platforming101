@@ -139,9 +139,9 @@ public class Enemies extends Creature{
 		float yMove = 0f;
 		
 		//Get enemy direction(s) to get yMoves of bullets (don't need left and right since that's implied in mouse click side)
-		if(handler.getWorld().getEntityManager().getPlayer().isFaceTop())
+		if(faceTop)
 			yMove = -10f;
-		if(handler.getWorld().getEntityManager().getPlayer().isFaceBottom())
+		if(faceBottom)
 			yMove = 10f;
 
 		//if enemy sees player, shoot bullet at player

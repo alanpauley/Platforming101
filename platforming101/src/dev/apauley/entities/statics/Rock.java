@@ -14,7 +14,7 @@ import dev.apauley.tiles.Tile;
 public class Rock extends StaticEntity {
 	
 	public Rock(Handler handler, float x, float y) {
-		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT,"ROCK");
+		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT,"ROCK","ITEM");
 		
 		//Tree Bounding Box
 		bounds.x = 3;

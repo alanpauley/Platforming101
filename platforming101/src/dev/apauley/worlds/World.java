@@ -153,6 +153,10 @@ public class World {
 		//entityManager.removeAllEntities(handler.getWorld().getEntityManager().getEntities());
 		
 		//Add Player
+		
+		//If world and Entity Manager HAVE been initialized, reset playerCount (can't do if not initialized)
+		if(handler.getWorld() != null && handler.getWorld().getEntityManager() != null)
+			handler.getWorld().getEntityManager().setPlayerCount(0);
 		entityManager = new EntityManager(handler, new Player(handler, 0,0));
 		
 		//Load entities specific to Phase

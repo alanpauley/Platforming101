@@ -20,6 +20,9 @@ public class EntityManager {
 	private Handler handler;
 	private Player player;
 	
+	//Counts Enemies
+	private int playerCount = 1, enemyCount, bulletPlayerCount, bulletEnemyCount;
+	
 	//An ArrayList of Entities that holds all entities. 
 	//- like Entity[] but has no size (can add/subtract at will)
 	private ArrayList<Entity> entities;
@@ -104,10 +107,11 @@ public class EntityManager {
 		}
 	}
 	
+	//We don't actually use this, I can probably delete it...
 	//Take an entity and remove it from the Entity Array List
-	public void removeEntity(Entity e) {
-		entities.remove(e);
-	}
+//	public void removeEntity(Entity e) {
+//		entities.remove(e);
+//	}
 	
 	//Take an entity and add to the Entity Array List (so it can be ticked and rendered)
 	public void addEntity(Entity e) {
@@ -164,4 +168,37 @@ public class EntityManager {
 		this.entitiesLimbo = entitiesLimbo;
 	}
 
+	public int getEnemyCount() {
+		return enemyCount;
+	}
+
+	public void setEnemyCount(int enemyCount) {
+		this.enemyCount = enemyCount;
+	}
+
+	public int getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setPlayerCount(int playerCount) {
+		this.playerCount = playerCount;
+	}
+
+	public int getBulletPlayerCount() {
+		return bulletPlayerCount;
+	}
+
+	public void setBulletPlayerCount(int bulletPlayerCount) {
+		this.bulletPlayerCount = bulletPlayerCount;
+	}
+
+	public int getBulletEnemyCount() {
+		return bulletEnemyCount;
+	}
+
+	public void setBulletEnemyCount(int bulletEnemyCount) {
+		this.bulletEnemyCount = bulletEnemyCount;
+	}
+
+	
 }

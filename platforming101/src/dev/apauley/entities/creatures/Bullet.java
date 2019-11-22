@@ -13,8 +13,8 @@ public class Bullet extends Creature{
 
 	public Image bullet;
 	
-	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH / 4, Creature.DEFAULT_CREATURE_HEIGHT / 4, xMove, yMove, "BULLET");
+	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet, String name, String group, int originID) {
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH / 4, Creature.DEFAULT_CREATURE_HEIGHT / 4, xMove, yMove, "BULLET", "ENEMY");
 		this.bullet = bullet;
 		//Boundary box for player
 		bounds.x = 1;
@@ -22,6 +22,28 @@ public class Bullet extends Creature{
 		bounds.width = Creature.DEFAULT_CREATURE_WIDTH / 4 - 2;
 		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT / 4 - 2;
 		
+		this.name = name;
+		this.group = group;
+		
+		//Rename bullet with number appended based on bulletCount
+		if(group.equals("PLAYER")) {
+			id = handler.getWorld().getEntityManager().getBulletPlayerCount();
+			
+			//Increment player bullet count
+			handler.getWorld().getEntityManager().setBulletPlayerCount(handler.getWorld().getEntityManager().getBulletPlayerCount() + 1);
+		}
+		if(group.equals("ENEMY")) {
+			id = handler.getWorld().getEntityManager().getBulletEnemyCount();
+
+			//Increment enemy bullet count
+			handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() + 1);
+		}
+		
+		//Rename enemy with number appended based on enemyCount
+		fullName = group + originID + name + id;
+
+		System.out.println("fullName: " + fullName + " | group: " + group + " ~ name: " + name);
+	
 	}
 	
 	@Override

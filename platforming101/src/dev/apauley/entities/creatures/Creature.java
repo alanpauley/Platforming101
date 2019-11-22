@@ -43,8 +43,8 @@ public abstract class Creature extends Entity {
 	protected boolean hangtime;
 		
 	//Creature Constructor. Establishes some defaults
-	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name) {
-		super(handler, x,y, width, height, xMove, yMove, name);
+	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name, String group) {
+		super(handler, x,y, width, height, xMove, yMove, name, group);
 		speed = DEFAULT_SPEED;
 		this.xMove = xMove;
 		this.yMove = yMove;

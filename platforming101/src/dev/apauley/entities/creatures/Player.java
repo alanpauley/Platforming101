@@ -31,13 +31,25 @@ public class Player extends Creature{
 	private Inventory inventory;
 	
 	public Player(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0, 0, "PLAYER");
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0, 0, "PLAYER", "PLAYER");
 
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
 		bounds.width = Creature.DEFAULT_CREATURE_WIDTH - 2;
 		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT - 2;
+		
+		if(handler.getWorld() != null) {
+			//Rename player with number appended based on playerCount
+			id = handler.getWorld().getEntityManager().getPlayerCount();
+
+			//Increment player count
+			handler.getWorld().getEntityManager().setPlayerCount(handler.getWorld().getEntityManager().getPlayerCount() + 1);
+		} else {
+			id=0;
+		}
+
+		fullName = name + id;
 		
 		//Animations
 //		animJump 	= new Animation(animSpeed, Assets.player_jump);
@@ -107,14 +119,14 @@ public class Player extends Creature{
 			//if mouse.X > player.X, put on right of player
 			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.yellow));
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.yellow, "BULLET", "PLAYER", id));
 				handler.getWorld().getEntityManager().getPlayer().setFaceRight(true);
 				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(false);
 				
 			//otherwise, put on left of player
 			} else {
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth()/2 //Not sure why * 2 tbh
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove, Assets.yellow));
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove, Assets.yellow, "BULLET", "PLAYER", id));
 				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
 				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
 			}
@@ -203,7 +215,9 @@ public class Player extends Creature{
 		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) 
 			handler.getWorld().getDebugManager().toggleDebugPlayer();
 		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) 
-			handler.getWorld().getDebugManager().toggleDebugRandom();
+			//handler.getWorld().getDebugManager().toggleDebugRandom();
+			handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Enemies(handler, 200,400, 0f, 0f));
+
 		
 		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_9)) 
 			handler.getWorld().getDebugManager().toggleDebugBoundingBox();

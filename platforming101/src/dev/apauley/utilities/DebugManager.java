@@ -24,27 +24,21 @@ public class DebugManager {
 	//Sets transparency for BG rectangles
 	private int alpha = 50;
 	
-	private boolean debugPlayer, debugSystem, debugRandom, debugBoundingBox;
-	private ArrayList<Boolean> debugs;
+	private boolean debugSystem, debugPlayer, debugObjects, debugRandom, debugBoundingBox;
 	
 	//spacing buffer
 	private int spBf = 5;
-	private int spBfGroupX = 360;
 	
 	//Bounding box light up size
 	private int bbox = 5;
 	
 	/*STAT HEADER POSITIONS*/
-	private int headX = spBf
-			  , headYTop = fontHeader.getSize() - spBf
+	private int headYTop = fontHeader.getSize() - spBf
 			  , headYBottom = fontHeader.getSize() - spBf + 780;
 	
   		
 	public DebugManager(Handler handler) {
 		this.handler = handler;
-		debugs = new ArrayList<Boolean>();
-		debugs.add(debugPlayer);
-		debugs.add(debugSystem);
 	}
 	
 	//Draw Bounding box for creatures in your specified color for each side you list as TRUE
@@ -95,7 +89,7 @@ public class DebugManager {
 
 	//Takes in the horizontal int and converts it based on input parameters
 	public int getStX(int mult) {
-		return headX + spBfGroupX * mult;
+		return mult;
 	}
 
 	//Takes in the vertical int and converts it based on input parameters
@@ -115,19 +109,23 @@ public class DebugManager {
 			//Draw Bounding boxes around all entities
 			for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 				
+				//Get entity condensed name
+				String name;
+				
+				
 				//Get color(s) based on entity
 				Color c1 = Color.BLACK
 					, c2 = Color.WHITE
 					, c3 = Color.RED;
-				if(e.getName() == "PLAYER") {
+				if(e.getName().equals("PLAYER")) {
 					c1 = Color.GREEN;
 				    c2 = Color.YELLOW;
 				    c3 = Color.CYAN;
-				} else if(e.getName() == "BULLET") {
+				} else if(e.getName().equals("BULLET")) {
 					c1 = Color.PINK;
 				    c2 = Color.ORANGE;
 				    c3 = Color.YELLOW;
-				} else if(e.getName() == "ENEMY") {
+				} else if(e.getName().equals("ENEMY")) {
 					c1 = Color.BLUE;
 				    c2 = Color.WHITE;
 				    c3 = Color.RED;
@@ -158,54 +156,73 @@ public class DebugManager {
 			
 			//Draw System Debug to Screen
 			Color color =  new Color(247,95,30); //Orange
-			int x = 0, i = 1;
+			int x = 2, i = 1;
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(247,95,30,alpha));
-			g.fillRect(0, 0, handler.getPhaseManager().getCurrentPhaseNameLength(), 32 + 21 * 6); //getCurrentPhaseNameLength() is used to keep this variable based on name
+			g.fillRect(x-5, 0, handler.getPhaseManager().getCurrentPhaseNameLength(), 32 + 21 * 5); //getCurrentPhaseNameLength() is used to keep this variable based on name
 
 			//Draw Text to screen
-			Text.drawStringShadow(g, "System", getStX(x), headYTop, false, color, fontHeader);
-			Text.drawStringShadow(g, "Phase: " + handler.getPhaseManager().getCurrentPhase() + " - " + handler.getPhaseManager().getCurrentPhaseName(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Width: " + handler.getGame().getWidth(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Height: " + handler.getGame().getHeight(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "FPS: " + handler.getGame().getFpsTicks(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Entity #: " + handler.getWorld().getEntityManager().getEntities().size(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "System", x, headYTop, false, color, fontHeader);
+			Text.drawStringShadow(g, "Phase: " + handler.getPhaseManager().getCurrentPhase() + " - " + handler.getPhaseManager().getCurrentPhaseName(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Width: " + handler.getGame().getWidth(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Height: " + handler.getGame().getHeight(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "FPS: " + handler.getGame().getFpsTicks(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "State: " + handler.getGame().getStateName(), x, getStY(i,"T"), false, color, fontStats); i++;
 		}
 
+		//Only Draw if DebugObjects = True
+		if(debugObjects) {
+			
+			//Draw Objects Debug to Screen
+			Color color =  new Color(121,0,227); //Purple
+			int x = 552, i = 1;
+
+			//Draw Transparent BG Rectangle
+			g.setColor(new Color(121,0,227,alpha));
+			g.fillRect(x-5, 0, 198, 32 + 21 * 5);
+
+			//Draw Text to screen
+			Text.drawStringShadow(g, "Objects", x, headYTop, false, color, fontHeader);
+			Text.drawStringShadow(g, "Entity #: " + handler.getWorld().getEntityManager().getEntities().size(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Player #: " + handler.getWorld().getEntityManager().getPlayerCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Enemy #: " + handler.getWorld().getEntityManager().getEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "(Player) Bullet #: " + handler.getWorld().getEntityManager().getBulletPlayerCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "(Enemy) Bullet #: " + handler.getWorld().getEntityManager().getBulletEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+		}
+		
 		//Only Draw if DebugPlayer = True
 		if(debugPlayer) {
 			
 			//Draw Player Debug to Screen
 			Color color =  new Color(245,66,149); //Pink
-			int x = 2, i = 1;
+			int x = 750, i = 1;
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(245,66,149,alpha));
-			g.fillRect(720, 0, 180, 32 + 21 * 9);
+			g.fillRect(x-5, 0, 180, 32 + 21 * 9);
 
 			//Draw Text to screen
-			Text.drawStringShadow(g, "Player", getStX(x), headYTop, false, color, fontHeader);
-			Text.drawStringShadow(g, "X: " + handler.getWorld().getEntityManager().getPlayer().getX(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Y: " + handler.getWorld().getEntityManager().getPlayer().getY(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "MoveX: " + handler.getWorld().getEntityManager().getPlayer().getxMove(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Speed: " + handler.getWorld().getEntityManager().getPlayer().getSpeed(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Running: " + handler.getWorld().getEntityManager().getPlayer().isRunning(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Can Jump: " + handler.getWorld().getEntityManager().getPlayer().isCanJump(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "B-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "L-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "R-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "T-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceTop(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "B-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceBottom(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "L-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceLeft(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;
-//			Text.drawStringShadow(g, "R-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceRight(), getStX(x), getStY(i,"T"), false, color, fontStats); i++;		
+			Text.drawStringShadow(g, "Player", x, headYTop, false, color, fontHeader);
+			Text.drawStringShadow(g, "X: " + handler.getWorld().getEntityManager().getPlayer().getX(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Y: " + handler.getWorld().getEntityManager().getPlayer().getY(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "MoveX: " + handler.getWorld().getEntityManager().getPlayer().getxMove(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Speed: " + handler.getWorld().getEntityManager().getPlayer().getSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Running: " + handler.getWorld().getEntityManager().getPlayer().isRunning(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Can Jump: " + handler.getWorld().getEntityManager().getPlayer().isCanJump(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "B-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileBottom(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "L-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileLeft(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "R-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileRight(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "T-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceTop(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "B-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceBottom(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "L-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceLeft(), x, getStY(i,"T"), false, color, fontStats); i++;
+//			Text.drawStringShadow(g, "R-Face: " + handler.getWorld().getEntityManager().getPlayer().isFaceRight(), x, getStY(i,"T"), false, color, fontStats); i++;		
 		}
 		
 		//Only Draw if DebugRandom = True
@@ -213,18 +230,18 @@ public class DebugManager {
 			
 			//Draw System Debug to Screen
 			Color color =  new Color(102,102,255); //Purplish Blue
-			int x = 0, i = 1;
+			int x = 2, i = 1;
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(102,102,255,alpha));
-			g.fillRect(0, headYBottom - 28, 185, 32 + 21 * 4 + 20); //Added +20 cause it doesn't really matter and want to fill to bottom (off screen is okay)
+			g.fillRect(x-5, headYBottom - 28, 185, 32 + 21 * 4 + 20); //Added +20 cause it doesn't really matter and want to fill to bottom (off screen is okay)
 
 			//Draw Text to screen
-			Text.drawStringShadow(g, "Random", getStX(x), headYBottom, false, color, fontHeader);
-			Text.drawStringShadow(g, "xOffset: " + handler.getGameCamera().getxOffset(), getStX(x), getStY(i,"B"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "yOffset: " + handler.getGameCamera().getyOffset(), getStX(x), getStY(i,"B"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "xMouse: " + handler.getMouseManager().getMouseX(), getStX(x), getStY(i,"B"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "yMouse: " + handler.getMouseManager().getMouseY(), getStX(x), getStY(i,"B"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Random", x, headYBottom, false, color, fontHeader);
+			Text.drawStringShadow(g, "xOffset: " + handler.getGameCamera().getxOffset(), x, getStY(i,"B"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "yOffset: " + handler.getGameCamera().getyOffset(), x, getStY(i,"B"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "xMouse: " + handler.getMouseManager().getMouseX(), x, getStY(i,"B"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "yMouse: " + handler.getMouseManager().getMouseY(), x, getStY(i,"B"), false, color, fontStats); i++;
 		}
 		
 	}
@@ -233,8 +250,9 @@ public class DebugManager {
 
 	//set ALL debugs on/off
 	public void setAllDebugs(boolean tf) {
-		debugPlayer = tf;
 		debugSystem = tf;
+		debugPlayer = tf;
+		debugObjects = tf;
 		debugRandom = tf;
 		debugBoundingBox = tf;
 	}
@@ -245,28 +263,11 @@ public class DebugManager {
 		setAllDebugs(false);
 		debugSystem = !tf;
 		debugPlayer = !tf;
+		debugObjects = !tf;
 		debugRandom = !tf;
 		debugBoundingBox = !tf;
 	}
 
-	//Checks whether debugPlayer is true or false
-	public boolean isDebugPlayer() {
-		return debugPlayer;
-	}
-
-	//set debugPlayer to true or false
-	public void setDebugPlayer(boolean debugPlayer) {
-		setAllDebugs(false);
-		this.debugPlayer = debugPlayer;
-	}
-
-	//Toggles Debug Player to opposite (on >> off, off >> on)
-	public void toggleDebugPlayer() {
-		boolean tf = isDebugPlayer();
-		setAllDebugs(false);
-		debugPlayer = !tf;
-	}
-	
 	//Checks whether debugSystem is true or false
 	public boolean isDebugSystem() {
 		return debugSystem;
@@ -286,35 +287,71 @@ public class DebugManager {
 	}
 	
 	//Checks whether debugPlayer is true or false
+	public boolean isDebugPlayer() {
+		return debugPlayer;
+	}
+
+	//set debugPlayer to true or false
+	public void setDebugPlayer(boolean debugPlayer) {
+		setAllDebugs(false);
+		this.debugPlayer = debugPlayer;
+	}
+
+	//Toggles Debug Player to opposite (on >> off, off >> on)
+	public void toggleDebugPlayer() {
+		boolean tf = isDebugPlayer();
+		setAllDebugs(false);
+		debugPlayer = !tf;
+	}
+	
+	//Checks whether debugObjects is true or false
+	public boolean isDebugObjects() {
+		return debugObjects;
+	}
+
+	//set debugObjects to true or false
+	public void setDebugObjects(boolean debugObjects) {
+		setAllDebugs(false);
+		this.debugObjects = debugObjects;
+	}
+
+	//Toggles Debug Objects to opposite (on >> off, off >> on)
+	public void toggleDebugObjects() {
+		boolean tf = isDebugObjects();
+		setAllDebugs(false);
+		debugObjects= !tf;
+	}
+	
+	//Checks whether debugRandom is true or false
 	public boolean isDebugRandom() {
 		return debugRandom;
 	}
 
-	//set debugPlayer to true or false
+	//set debugRandom to true or false
 	public void setDebugRandom(boolean debugRandom) {
 		setAllDebugs(false);
 		this.debugRandom = debugRandom;
 	}
 
-	//Toggles Debug Player to opposite (on >> off, off >> on)
+	//Toggles Debug Random to opposite (on >> off, off >> on)
 	public void toggleDebugRandom() {
 		boolean tf = isDebugRandom();
 		setAllDebugs(false);
 		debugRandom = !tf;
 	}
 
-	//Checks whether debugPlayer is true or false
+	//Checks whether debugBoundingBox is true or false
 	public boolean isDebugBoundingBox() {
 		return debugBoundingBox;
 	}
 
-	//set debugPlayer to true or false
+	//set debugBoundingBox to true or false
 	public void setDebugBoundingBox(boolean debugBoundingBox) {
 		setAllDebugs(false);
 		this.debugBoundingBox = debugBoundingBox;
 	}
 
-	//Toggles Debug Player to opposite (on >> off, off >> on)
+	//Toggles Debug BoundingBox to opposite (on >> off, off >> on)
 	public void toggleDebugBoundingBox() {
 		boolean tf = isDebugBoundingBox();
 		setAllDebugs(false);
@@ -325,6 +362,7 @@ public class DebugManager {
 	public void setDebugCapture() {
 		debugSystem = true;
 		debugPlayer = true;
+		debugObjects = true;
 		debugBoundingBox = true;
 	}
 	

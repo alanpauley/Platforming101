@@ -45,17 +45,27 @@ public abstract class Entity {
 	//Boundary box for collision detection
 	protected Rectangle bounds;
 	
-	//Contains entity name
+	//Contains entity Full name (ie, PLAYER1, ENEMY3, ENEMY3BULLET2, etc.)
+	protected String fullName;
+
+	//Contains entity name (Player, enemy, bullet, etc.)
 	protected String name;
 
+	//Contains entity group (ie, player, enemy, etc.)
+	protected String group;
+	
+	//Contains entity id (1,2,3) used to append per group (ie: PLAYER1, ENEMY1, ENEMY1BULLET2, etc.)
+	protected int id;
+	
 	//Constructor to set Defaults
-	public Entity(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name) {
+	public Entity(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name, String group) {
 		this.handler = handler;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.name = name;
+		this.group = group;
 		health = DEFAULT_HEALTH;
 		flash = 0;
 		this.xMove = xMove;
@@ -94,6 +104,7 @@ public abstract class Entity {
 		if(flash > 0)
 			flash--;
 	}
+
 	/*************** HELPER METHODS ***************/
 	
 	//Checks all collisions in game
@@ -104,9 +115,33 @@ public abstract class Entity {
 			if(e.equals(this))
 				continue;
 			
+			//We don't want players hurting players or enemies hurting enemies, so this may stops friendly fire
+			if(e.group.equals(group)) {
+				continue;
+			}
+			
+			//We don't want bullets cancelling each other out
+			if(e.name.equals(name))
+				continue;
+			
 			//if intersects, collision = detected
 			if(e.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset, yOffset))) {
-				return true;
+//				//We don't want players hurting enemies by touching
+//				if(!e.name.equals("BULLET") && !name.equals("BULLET")) {
+//					if(e.name.equals("ENEMY")) {
+//						e.x -= 3;
+//						System.out.println("test1");
+//					}
+//					if(name.equals("ENEMY")) {
+//						x += 3;
+//						System.out.println("test2");
+//					}
+//					continue;
+//				}
+//				else {
+					System.out.println("[" + e.group + "] " + e.fullName + " >> HURT << " + fullName + " [" + group + "]");
+					return true;
+//				}
 			}
 		}
 		
@@ -189,6 +224,25 @@ public abstract class Entity {
 	//Sets whether entity is active or not
 	public void setActive(boolean active) {
 		this.active = active;
+
+		//If player is active, exit procedure
+		if(active)
+			return;
+		
+		//Decrement counts accordingly:
+		if(group.equals("PLAYER")) {
+			if(name.equals("PLAYER"))
+				handler.getWorld().getEntityManager().setPlayerCount(handler.getWorld().getEntityManager().getPlayerCount() - 1);
+			if(name.equals("BULLET"))
+				handler.getWorld().getEntityManager().setBulletPlayerCount(handler.getWorld().getEntityManager().getBulletPlayerCount() - 1);
+		}
+		if(group.equals("ENEMY")) {
+			if(name.equals("ENEMY"))
+				handler.getWorld().getEntityManager().setEnemyCount(handler.getWorld().getEntityManager().getEnemyCount() - 1);
+			if(name.equals("BULLET"))
+				handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() - 1);
+		}
+
 	}
 
 	public Rectangle getBounds() {
@@ -283,8 +337,6 @@ public abstract class Entity {
 	//Sets whether player is facing right
 	public void setFaceRight(boolean faceRight) {
 		this.faceRight = faceRight;
-		if(faceRight)
-			System.out.println("Face right: " + this.getName());
 	}
 
 	//Checks whether player is facing left
@@ -295,6 +347,30 @@ public abstract class Entity {
 	//Sets whether player is facing left
 	public void setFaceLeft(boolean faceLeft) {
 		this.faceLeft = faceLeft;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 }

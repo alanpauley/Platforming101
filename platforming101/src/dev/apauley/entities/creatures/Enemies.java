@@ -18,14 +18,22 @@ public class Enemies extends Creature{
 	private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 	
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, xMove, yMove, "ENEMY 1");
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, xMove, yMove, "ENEMY", "ENEMY");
 		
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
 		bounds.width = Creature.DEFAULT_CREATURE_WIDTH - 2;
 		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT - 2;
+		
+		this.group = group;
+		
+		//Rename enemy with number appended based on enemyCount
+		id = handler.getWorld().getEntityManager().getEnemyCount();
+		fullName = name + id;			
 
+		//Increment enemy count
+		handler.getWorld().getEntityManager().setEnemyCount(handler.getWorld().getEntityManager().getEnemyCount() + 1);
 	}
 	
 	@Override
@@ -151,12 +159,12 @@ public class Enemies extends Creature{
 			if(faceRight) {
 				xMove = 10f;
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x + width + 10
-						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink));
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", "ENEMY", id));
 			} 
 			if(faceLeft) {
 				xMove = -10f;
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x - Assets.obj1.getWidth()
-						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink));
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", "ENEMY", id));
 			}			
 
 			//Reset attackTimer

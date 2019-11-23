@@ -92,6 +92,34 @@ public class EntityManager {
 		//Render everything that should show up on top, AFTER everything else
 		player.postRender(g);
 	}
+	
+	//Lower each entity's speed
+	public void speedDown() {
+
+		//Loop through entities
+		for(Entity e : entities) { 
+			e.setSpeed(e.getSpeed() - 1f);
+
+			//Don't let speed go below MIN_SPEED
+			if(e.getSpeed() <= e.MIN_SPEED)
+				e.setSpeed(e.MIN_SPEED);
+		}
+		
+	}
+
+	//Increase each entity's speed
+	public void speedUp() {
+
+		//Loop through entities
+		for(Entity e : entities) { 
+			e.setSpeed(e.getSpeed() + 1f);
+
+			//Don't let speed go above MAX_SPEED
+			if(e.getSpeed() >= e.MAX_SPEED)
+				e.setSpeed(e.MAX_SPEED);
+		}
+		
+	}
 
 	//Remove all entities from the Entity Array List
 	public void removeAllEntities(ArrayList<Entity> entitiesList) {

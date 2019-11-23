@@ -17,6 +17,19 @@ public abstract class Entity {
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
 	
+	//Default Creature Values
+	public static final int DEFAULT_CREATURE_WIDTH = 64
+			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
+	
+	//Gravity on creatures
+	protected final float DEFAULT_GRAVITY = 9.8f;
+	
+	//Refactored speed to account for different sizes
+	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
+							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f
+							, MAX_SPEED = 20f
+							, MIN_SPEED = 0; 
+
 	//Float = smoother movement using decimals for calculations
 	//X and Y coordinates of entity
 	protected float x, y;
@@ -26,6 +39,9 @@ public abstract class Entity {
 
 	//Size of entity
 	protected int width, height;
+	
+	//Tracks how much speed creature has
+	protected float speed;
 	
 	//Collision with Tile Booleans
 	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
@@ -93,7 +109,7 @@ public abstract class Entity {
 		
 		//If entity loses all health, set active to false to remove from game
 		if(health <= 0) {
-			active = false;
+			setActive(false);
 			die();
 		}
 	}
@@ -120,14 +136,15 @@ public abstract class Entity {
 				continue;
 			}
 			
-			//We don't want bullets cancelling each other out
+			//We don't want bullets/enemies cancelling each other out
 			if(e.name.equals(name))
 				continue;
 			
 			//if intersects, collision = detected
 			if(e.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset, yOffset))) {
-//				//We don't want players hurting enemies by touching
-//				if(!e.name.equals("BULLET") && !name.equals("BULLET")) {
+
+				//We don't want players hurting enemies by touching
+				if(!e.name.equals("BULLET") && !name.equals("BULLET")) {
 //					if(e.name.equals("ENEMY")) {
 //						e.x -= 3;
 //						System.out.println("test1");
@@ -136,12 +153,13 @@ public abstract class Entity {
 //						x += 3;
 //						System.out.println("test2");
 //					}
-//					continue;
-//				}
-//				else {
-					System.out.println("[" + e.group + "] " + e.fullName + " >> HURT << " + fullName + " [" + group + "]");
+					continue;
+				}
+				else {
+					//System.out.println("[" + e.group + "] " + e.fullName + " >> HURT << " + fullName + " [" + group + "]");
+					//die();
 					return true;
-//				}
+				}
 			}
 		}
 		
@@ -239,8 +257,9 @@ public abstract class Entity {
 		if(group.equals("ENEMY")) {
 			if(name.equals("ENEMY"))
 				handler.getWorld().getEntityManager().setEnemyCount(handler.getWorld().getEntityManager().getEnemyCount() - 1);
-			if(name.equals("BULLET"))
+			if(name.equals("BULLET")) {
 				handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() - 1);
+			}
 		}
 
 	}
@@ -371,6 +390,16 @@ public abstract class Entity {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	//Gets creature speed
+	public float getSpeed() {
+		return speed;
+	}
+
+	//Sets creature speed
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 
 }

@@ -39,6 +39,9 @@ public class Enemies extends Creature{
 	@Override
 	public void tick() {
 
+		if(!active)
+			return;
+		
 		//Waits til player is loaded before finishing initialization
 		if(handler.getWorld().getEntityManager().getPlayer().getX() == 0)
 			return;
@@ -109,9 +112,9 @@ public class Enemies extends Creature{
 		//Else, movement in direction they are facing
 		else {
 			if(faceRight)
-				xMove = DEFAULT_SPEED; 
+				xMove = speed; 
 			if(faceLeft)
-				xMove = -DEFAULT_SPEED; 
+				xMove = -speed; 
 		}
 
 		if(collisionWithTileLeft) {

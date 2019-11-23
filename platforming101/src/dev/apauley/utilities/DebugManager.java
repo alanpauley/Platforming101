@@ -3,9 +3,11 @@ package dev.apauley.utilities;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import dev.apauley.entities.Entity;
+import dev.apauley.entities.creatures.Enemies;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
 import dev.apauley.gfx.Text;
@@ -100,8 +102,21 @@ public class DebugManager {
 			return headYBottom + fontStats.getSize() * mult + spBf;
 		return -1; //Error
 	}
+	
+	public void tick() {
+		//Create enemies
+		if(handler.getKeyManager().debugTrigger && handler.getKeyManager().keyJustPressed(KeyEvent.VK_5)) 
+			handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Enemies(handler, 400,400, 0f, 0f));
 
-	public void Render(Graphics g) {
+		if(handler.getKeyManager().speedDown && handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
+			handler.getWorld().getEntityManager().speedDown();
+		}
+		if(handler.getKeyManager().speedUp && handler.getKeyManager().keyJustPressed(KeyEvent.VK_L)) {
+			handler.getWorld().getEntityManager().speedUp();
+		}
+	}	
+
+	public void render(Graphics g) {
 
 		//Only Draw if DebugBoundingBox = True
 		if(debugBoundingBox) {

@@ -9,26 +9,12 @@ import dev.apauley.tiles.Tile;
  */
 public abstract class Creature extends Entity {
 
-	//Default Creature Values
-	public static final int DEFAULT_CREATURE_WIDTH = 64
-			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
-	
-	//Refactored speed to account for different sizes
-	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
-							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f; 
-
-	//Gravity on creatures
-	protected final float DEFAULT_GRAVITY = 9.8f;
-	
 	//Gravity to level off jumps
 	protected float gravityHangtime = DEFAULT_GRAVITY;
 	protected int gravityHangTimeTick = 0;
 	
-	//Tracks how much speed creature has
-	protected float speed;
-	
-	//Tracks whether player is running or not
-	protected boolean running;
+	//Tracks whether player is running/walking or not
+	protected boolean running, walking;
 	
 	//Helper for moving creatures on x and y plane
 	protected float xMove, yMove;	
@@ -134,7 +120,6 @@ public abstract class Creature extends Entity {
 			canJump = true;
 		}
 		
-		
 		//If no collision, movement is allowed, otherwise stop
 		if(!checkEntityCollisions(xMove, 0f))
 			moveX();
@@ -223,13 +208,17 @@ public abstract class Creature extends Entity {
 	//Increase speed if running
 	public void run() {
 		running = true;
-		speed = DEFAULT_RUN;
+		walking = false;
+		speed *= 2;
+		System.out.println("running");
 	}
 	
 	//Decrease speed if walking
 	public void walk() {
+		walking = true;
 		running = false;
-		speed = DEFAULT_SPEED;
+		speed /= 2;
+		System.out.println("walking");
 	}
 
 	/*************** GETTERS and SETTERS ***************/
@@ -242,16 +231,6 @@ public abstract class Creature extends Entity {
 	//Sets creature HP
 	public void setHealth(int health) {
 		this.health = health;
-	}
-
-	//Gets creature speed
-	public float getSpeed() {
-		return speed;
-	}
-
-	//Sets creature speed
-	public void setSpeed(float speed) {
-		this.speed = speed;
 	}
 
 	//Gets creature xMovement
@@ -304,6 +283,14 @@ public abstract class Creature extends Entity {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+
+	public boolean isWalking() {
+		return walking;
+	}
+
+	public void setWalking(boolean walking) {
+		this.walking = walking;
 	}
 
 }

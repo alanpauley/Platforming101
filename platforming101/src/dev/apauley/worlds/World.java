@@ -78,6 +78,9 @@ public class World {
 
 		//Entities
 		entityManager.tick();
+		
+		//DebugManager
+		debugManager.tick();
 
 	}
 	
@@ -112,7 +115,7 @@ public class World {
 		entityManager.render(g);
 
 		//Debug Text
-		debugManager.Render(g);
+		debugManager.render(g);
 
 	}
 

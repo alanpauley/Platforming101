@@ -28,7 +28,8 @@ public class KeyManager implements KeyListener {
 					  , aUp, aDown, aLeft, aRight
 				   /*SYSTEM KEYS*/
 					  , phasePrev, phaseNext
-					  , debugPlayer, debugSystem, debugRandom, debugBoundingBox, debugAll;
+					  , speedDown, speedUp
+					  , debugPlayer, debugSystem, debugRandom, debugTrigger, debugBoundingBox, debugAll;
 
 	//Constructor that creates base key array
 	//And other arrays of same length, for controlling key press timing
@@ -78,9 +79,13 @@ public class KeyManager implements KeyListener {
 		phasePrev= keys[KeyEvent.VK_COMMA];
 		phaseNext = keys[KeyEvent.VK_PERIOD];
 
+		speedDown= keys[KeyEvent.VK_K];
+		speedUp = keys[KeyEvent.VK_L];
+
 		debugSystem = keys[KeyEvent.VK_1];
 		debugPlayer = keys[KeyEvent.VK_2];
 		debugRandom = keys[KeyEvent.VK_3];
+		debugTrigger = keys[KeyEvent.VK_5];
 		debugBoundingBox = keys[KeyEvent.VK_9];
 		debugAll = keys[KeyEvent.VK_0];
 		

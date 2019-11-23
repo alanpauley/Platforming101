@@ -44,11 +44,6 @@ public class GameState extends State {
 	//Draws Level and player to screen
 	@Override
 	public void render(Graphics g) {		
-
-		switch(handler.getPhaseManager().getCurrentPhase()){
-		case 0:
-			handler.getWorld().getEntityManager().getPlayer().setActive(true);
-		}
 		
 		//Shows BG Level
 		//Note: Must render level before player do to proper layer positioning

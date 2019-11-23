@@ -64,6 +64,11 @@ public class Player extends Creature{
 	@Override
 	public void tick() {
 		
+		if(handler.getPhaseManager().getCurrentPhase() > 20) {
+			if(!active)
+				return;
+		}
+		
 		//Animations
 //		animJump.tick();
 //		animCrouch.tick();
@@ -204,6 +209,7 @@ public class Player extends Creature{
 	@Override	
 	public void die() {
 		System.out.println("You Lose");
+		setActive(false);
 	}
 		
 	//Takes user input and performs various actions
@@ -215,10 +221,8 @@ public class Player extends Creature{
 		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) 
 			handler.getWorld().getDebugManager().toggleDebugPlayer();
 		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) 
-			//handler.getWorld().getDebugManager().toggleDebugRandom();
-			handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Enemies(handler, 200,400, 0f, 0f));
+			handler.getWorld().getDebugManager().toggleDebugRandom();
 
-		
 		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_9)) 
 			handler.getWorld().getDebugManager().toggleDebugBoundingBox();
 
@@ -242,11 +246,11 @@ public class Player extends Creature{
 		if(inventory.isActive())
 			return;
 		
-		//adjusts speeds based on whether player is running or not (can only be adjusted when on the ground)
+		//adjusts speeds based on whether player is running/walking or not (can only be adjusted when on the ground)
 		if(collisionWithTileBottom) {
-			if(handler.getKeyManager().run)
+			if(handler.getKeyManager().run && !running)
 				run();
-			else
+			else if(!handler.getKeyManager().run && !walking)
 				walk();
 		}
 		

@@ -24,6 +24,7 @@ public class Bullet extends Creature{
 		
 		this.name = name;
 		this.group = group;
+		this.speed = speed * 2;
 		
 		//Rename bullet with number appended based on bulletCount
 		if(group.equals("PLAYER")) {
@@ -37,17 +38,19 @@ public class Bullet extends Creature{
 
 			//Increment enemy bullet count
 			handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() + 1);
+			
 		}
 		
 		//Rename enemy with number appended based on enemyCount
 		fullName = group + originID + name + id;
-
-		System.out.println("fullName: " + fullName + " | group: " + group + " ~ name: " + name);
 	
 	}
 	
 	@Override
 	public void tick() {
+		
+		if(!active)
+			return;
 		move();
 		
 		//If bullet collides with anything, remove it

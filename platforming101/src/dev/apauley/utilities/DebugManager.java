@@ -195,7 +195,15 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(121,0,227,alpha));
-			g.fillRect(x-5, 0, 198, 32 + 21 * 5);
+			int enemyCount = handler.getWorld().getEntityManager().getEnemyCount();
+			int baseHeight = 32 + 21 * 5;
+			int height = baseHeight;
+			
+			//Adjust height if there are enemies
+			if(enemyCount > 0)
+				height = height + 32 + 21 * enemyCount;
+			
+			g.fillRect(x-5, 0, 198, height);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Objects", x, headYTop, false, color, fontHeader);
@@ -204,6 +212,15 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Enemy #: " + handler.getWorld().getEntityManager().getEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "(Player) Bullet #: " + handler.getWorld().getEntityManager().getBulletPlayerCount(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "(Enemy) Bullet #: " + handler.getWorld().getEntityManager().getBulletEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+
+			//if Enemies exist, drawing, otherwise break
+			if(enemyCount > 0) {
+				Text.drawStringShadow(g, "Enemies", x, headYTop + baseHeight, false, color, fontHeader);
+				
+				for(Entity e : handler.getWorld().getEntityManager().getEntities())
+					if(e.getName().equals("ENEMY"))
+					Text.drawStringShadow(g, "Enemy" + e.getId() + ": HP: " + e.getHealth(), x, getStY(i,"T") + 32 + 21 * e.getId(), false, color, fontStats); i++;
+			}
 		}
 		
 		//Only Draw if DebugPlayer = True
@@ -215,7 +232,7 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(245,66,149,alpha));
-			g.fillRect(x-5, 0, 180, 32 + 21 * 9);
+			g.fillRect(x-5, 0, 180, 32 + 21 * 10);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Player", x, headYTop, false, color, fontHeader);
@@ -223,11 +240,12 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Y: " + handler.getWorld().getEntityManager().getPlayer().getY(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveX: " + handler.getWorld().getEntityManager().getPlayer().getxMove(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), x, getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Speed: " + handler.getGVar().getGSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Speed: " + handler.getWorld().getEntityManager().getPlayer().getSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Running: " + handler.getWorld().getEntityManager().getPlayer().isRunning(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Can Jump: " + handler.getWorld().getEntityManager().getPlayer().isCanJump(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "HP: " + handler.getWorld().getEntityManager().getPlayer().getHealth(), x, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), x, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), x, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "T-Collision: " + handler.getWorld().getEntityManager().getPlayer().isCollisionWithTileTop(), x, getStY(i,"T"), false, color, fontStats); i++;

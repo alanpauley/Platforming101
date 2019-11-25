@@ -33,6 +33,8 @@ public class Player extends Creature{
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), 0, 0, "PLAYER", "PLAYER");
 
+		health = 20;
+		
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
@@ -63,7 +65,8 @@ public class Player extends Creature{
 
 	@Override
 	public void tick() {
-		
+		super.tick();
+
 		if(handler.getPhaseManager().getCurrentPhase() > 20) {
 			if(!active)
 				return;
@@ -296,7 +299,18 @@ public class Player extends Creature{
 	@Override
 	public void render(Graphics g) {
 
-		if(handler.getPhaseManager().getCurrentPhase() > 8) {
+		//Flash player if hit
+		if(handler.getPhaseManager().getCurrentPhase() > 12) {
+
+			if(flash > 0)
+				g.drawImage(Assets.white, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+			else
+				//Temporarily doing no animation:
+				g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+
+			//Draw Player to screen WITH animation
+			//g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+		} else if(handler.getPhaseManager().getCurrentPhase() > 8) {
 
 			//Temporarily doing no animation:
 			g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	

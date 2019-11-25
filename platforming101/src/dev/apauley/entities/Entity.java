@@ -11,8 +11,8 @@ import dev.apauley.general.Handler;
 public abstract class Entity {
 
 	//Default Creature Values
-	public static final int DEFAULT_HEALTH = 3;
-	public static final int DEFAULT_FLASH = 7;
+	public static final int DEFAULT_HEALTH = 10;
+	public static final int DEFAULT_FLASH = 30;
 
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
@@ -90,13 +90,17 @@ public abstract class Entity {
 	
 	//subtract health from entity and flash them
 	public void hurt(int amt) {
+
+		//If flashing, take no damage
+		if(flash > 0)
+			return;
+		
 		health -= amt;
 		
 		flash = DEFAULT_FLASH;
 		
 		//If entity loses all health, set active to false to remove from game
 		if(health <= 0) {
-			setActive(false);
 			die();
 		}
 	}
@@ -112,8 +116,16 @@ public abstract class Entity {
 	
 	//Checks all collisions in game
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
-		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 
+		//Phase check block to skip dmg
+		if(handler.getPhaseManager().getCurrentPhase() < 13)
+			return false;
+		
+		//If entity is currently flashing, run no checks against them (to save on processing power)
+		if(flash > 0)
+			return false;
+
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 			//We don't want to check against ourself
 			if(e.equals(this))
 				continue;
@@ -130,8 +142,19 @@ public abstract class Entity {
 			//if intersects, collision = detected
 			if(e.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset, yOffset))) {
 
-				//We don't want players hurting enemies by touching
+			//Phase check for players to ONLY hurt enemies and vice versa by touching each other (not bullets)
+			if(handler.getPhaseManager().getCurrentPhase() < 15) {
 				if(!e.name.equals("BULLET") && !name.equals("BULLET")) {
+					e.hurt(1);
+					hurt(1);
+					return true;
+				}
+				else
+					return false;
+			}
+				
+				//We don't want players hurting enemies by touching
+//				if(!e.name.equals("BULLET") && !name.equals("BULLET")) {
 //					if(e.name.equals("ENEMY")) {
 //						e.x -= 3;
 //						System.out.println("test1");
@@ -140,13 +163,13 @@ public abstract class Entity {
 //						x += 3;
 //						System.out.println("test2");
 //					}
-					continue;
-				}
-				else {
-					//System.out.println("[" + e.group + "] " + e.fullName + " >> HURT << " + fullName + " [" + group + "]");
-					//die();
-					return true;
-				}
+//					continue;
+//				}
+
+				//Phase check for players to not be able to hurt enemies and vice versa by touching each other (not bullets)
+			e.hurt(1);
+			hurt(1);
+			return true;
 			}
 		}
 		
@@ -379,4 +402,11 @@ public abstract class Entity {
 		this.fullName = fullName;
 	}
 
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
 }

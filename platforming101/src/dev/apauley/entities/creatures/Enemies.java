@@ -38,6 +38,7 @@ public class Enemies extends Creature{
 	
 	@Override
 	public void tick() {
+		super.tick();
 
 		if(!active)
 			return;
@@ -79,26 +80,32 @@ public class Enemies extends Creature{
 			enemyMove();
 		}
 		
-		//Block for phase to collide with other entities
-		if(handler.getPhaseManager().getCurrentPhase() > 12) {
-			//If enemies collides with anything, remove it
-			if(checkEntityCollisions(xMove, 0f) || checkEntityCollisions(0f, yMove))
-				die();
-		}
-		
 		//Block for phase to have enemy shoot
-		if(handler.getPhaseManager().getCurrentPhase() > 13) {
+		if(handler.getPhaseManager().getCurrentPhase() > 13.) {
 			enemyShoot();
 		}		
 	}
 	
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.yellowGreen, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);	
+
+		//Flash player if hit
+		if(handler.getPhaseManager().getCurrentPhase() > 12) {
+
+			if(flash > 0)
+				g.drawImage(Assets.white, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+			else
+				g.drawImage(Assets.yellowGreen, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+
+		} else {
+			g.drawImage(Assets.yellowGreen, (int) (x - handler.getGameCamera().getxOffset()), (int)  (y - handler.getGameCamera().getyOffset()), width, height, null);
+		}
+			
 	}
 
 	@Override
 	public void die() {
+		System.out.println(fullName + ": Dead");
 		setActive(false);
 	}
 	

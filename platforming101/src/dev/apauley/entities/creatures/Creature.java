@@ -209,16 +209,19 @@ public abstract class Creature extends Entity {
 	public void run() {
 		running = true;
 		walking = false;
-		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() * 2);
-		System.out.println("running");
+		speed = handler.getGVar().getGSpeed() * 2; //Double speed
 	}
 	
 	//Decrease speed if walking
 	public void walk() {
 		walking = true;
 		running = false;
-		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() / 2);
-		System.out.println("walking");
+		speed = handler.getGVar().getGSpeed(); //Return speed to normal
+	}
+	
+	//Things that happen to ALL creatures every tick
+	public void tick() {
+		flash();
 	}
 
 	/*************** GETTERS and SETTERS ***************/

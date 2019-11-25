@@ -76,7 +76,7 @@ public class EntityManager {
 		entities.sort(renderSorter);
 
 		//Add entities from entitiesLimbo to entities then purge entitiesLimbo list
-		entitiesLimboPurge();
+		purgeEntitiesLimbo();
 		
 	}
 	
@@ -151,7 +151,7 @@ public class EntityManager {
 	}
 	
 	//Removes all entities from entitiesLimbo >> entities
-	public void entitiesLimboPurge() {
+	public void purgeEntitiesLimbo() {
 		
 		//If entitiesLimbo is empty, exit
 		if(entitiesLimbo.size() == 0)

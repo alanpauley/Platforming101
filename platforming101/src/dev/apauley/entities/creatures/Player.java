@@ -282,8 +282,9 @@ public class Player extends Creature{
 		if(handler.getKeyManager().left)
 			setFaceRight(false);
 		
+		//This section is still a little iffy since can do a QUICK double jump, which you shouldn't be able to do. Granted, the double jump is weaker than a normal full jump, but still...
 		//If jump was just pressed, set jumping to true
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE) && canJump) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE) && canJump && collisionWithTileBottom) {
 			jumping = true;
 			jumpTimer = 0;
 			gravityHangtime = 0;

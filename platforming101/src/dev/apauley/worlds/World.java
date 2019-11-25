@@ -1,5 +1,6 @@
 package dev.apauley.worlds;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 import dev.apauley.entities.EntityManager;
@@ -105,6 +106,7 @@ public class World {
 		for(int y = yStart; y < yEnd; y++) {
 			for(int x = xStart; x < xEnd; x++) {
 				getTile(x,y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()), (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
+				
 			}
 		}		
 		
@@ -113,9 +115,6 @@ public class World {
 
 		//Entities
 		entityManager.render(g);
-
-		//Debug Text
-		debugManager.render(g);
 
 	}
 
@@ -171,7 +170,7 @@ public class World {
 		}
 
 		//Load entities specific to Phase
-		if(handler.getPhaseManager().getCurrentPhase() > 15) {
+		if(handler.getPhaseManager().getCurrentPhase() > 20) {
 			//Adds entities to the Entity list
 			entityManager.addEntity(new Tree(handler,  600,400));
 			entityManager.addEntity(new Rock(handler,  780,350));

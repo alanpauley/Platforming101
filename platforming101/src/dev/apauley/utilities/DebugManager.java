@@ -216,10 +216,13 @@ public class DebugManager {
 			//if Enemies exist, drawing, otherwise break
 			if(enemyCount > 0) {
 				Text.drawStringShadow(g, "Enemies", x, headYTop + baseHeight, false, color, fontHeader);
-				
+				int z = 1;
 				for(Entity e : handler.getWorld().getEntityManager().getEntities())
-					if(e.getName().equals("ENEMY"))
-					Text.drawStringShadow(g, "Enemy" + e.getId() + ": HP: " + e.getHealth(), x, getStY(i,"T") + 32 + 21 * e.getId(), false, color, fontStats); i++;
+					if(e.getName().equals("ENEMY")) {
+						//tbh, no idea why this math works, feels like 1 * z should not... Havne't researched function like I should. Putting off for now.
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": HP: " + e.getHealth(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++; 
+						z++;
+					}
 			}
 		}
 		

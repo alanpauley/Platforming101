@@ -31,13 +31,13 @@ public class Player extends Creature{
 	private Inventory inventory;
 	
 	public Player(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0, 0, "PLAYER", "PLAYER");
+		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), 0, 0, "PLAYER", "PLAYER");
 
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
-		bounds.width = Creature.DEFAULT_CREATURE_WIDTH - 2;
-		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT - 2;
+		bounds.width = handler.getGVar().get_DEFAULT_CREATURE_WIDTH() - 2;
+		bounds.height = handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() - 2;
 		
 		if(handler.getWorld() != null) {
 			//Rename player with number appended based on playerCount

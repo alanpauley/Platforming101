@@ -10,7 +10,7 @@ import dev.apauley.tiles.Tile;
 public abstract class Creature extends Entity {
 
 	//Gravity to level off jumps
-	protected float gravityHangtime = DEFAULT_GRAVITY;
+	protected float gravityHangtime = handler.getGVar().get_DEFAULT_GRAVITY();
 	protected int gravityHangTimeTick = 0;
 	
 	//Tracks whether player is running/walking or not
@@ -31,7 +31,7 @@ public abstract class Creature extends Entity {
 	//Creature Constructor. Establishes some defaults
 	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name, String group) {
 		super(handler, x,y, width, height, xMove, yMove, name, group);
-		speed = DEFAULT_SPEED;
+		speed = handler.getGVar().getGSpeed();
 		this.xMove = xMove;
 		this.yMove = yMove;
 
@@ -52,11 +52,11 @@ public abstract class Creature extends Entity {
 		canJump = false;
 		
 		//Level off Gravity
-		if(gravityHangtime < DEFAULT_GRAVITY) {
+		if(gravityHangtime < handler.getGVar().get_DEFAULT_GRAVITY()) {
 			gravityHangtime += 0.4f;
 			
 			//At middle point, level off player to imitate "hangtime"
-			if(gravityHangtime >= DEFAULT_GRAVITY / 2 - 2f && gravityHangtime <= DEFAULT_GRAVITY / 2 + 2f) {
+			if(gravityHangtime >= handler.getGVar().get_DEFAULT_GRAVITY() / 2 - 2f && gravityHangtime <= handler.getGVar().get_DEFAULT_GRAVITY() / 2 + 2f) {
 				gravityHangTimeTick++;
 				yMove += gravityHangtime - 0.4f * gravityHangTimeTick;
 
@@ -78,7 +78,7 @@ public abstract class Creature extends Entity {
 
 		//if player is jumping and not in hangtime, apply gravity
 		if(yMove <= 0 && !hangtime) {
-			yMove += DEFAULT_GRAVITY;
+			yMove += handler.getGVar().get_DEFAULT_GRAVITY();
 		}
 	}
 	
@@ -209,7 +209,7 @@ public abstract class Creature extends Entity {
 	public void run() {
 		running = true;
 		walking = false;
-		speed *= 2;
+		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() * 2);
 		System.out.println("running");
 	}
 	
@@ -217,7 +217,7 @@ public abstract class Creature extends Entity {
 	public void walk() {
 		walking = true;
 		running = false;
-		speed /= 2;
+		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() / 2);
 		System.out.println("walking");
 	}
 

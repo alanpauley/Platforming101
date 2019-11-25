@@ -12,6 +12,8 @@ public class Handler {
 	//Level Array, which holds multiple individual levels
 	private World world;
 	
+	private GVar gvar;
+	
 	public Handler(Game game) {
 		this.game = game;
 	}
@@ -32,6 +34,10 @@ public class Handler {
 
 	public PhaseManager getPhaseManager() {
 		return game.getPhaseManager();
+	}
+	
+	public GVar getGVar() {
+		return game.getGVar();
 	}
 	
 	public int getWidth() {

@@ -14,13 +14,13 @@ public class Bullet extends Creature{
 	public Image bullet;
 	
 	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet, String name, String group, int originID) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH / 4, Creature.DEFAULT_CREATURE_HEIGHT / 4, xMove, yMove, "BULLET", "ENEMY");
+		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH() / 4, handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() / 4, xMove, yMove, "BULLET", "ENEMY");
 		this.bullet = bullet;
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
-		bounds.width = Creature.DEFAULT_CREATURE_WIDTH / 4 - 2;
-		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT / 4 - 2;
+		bounds.width = handler.getGVar().get_DEFAULT_CREATURE_WIDTH() / 4 - 2;
+		bounds.height = handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() / 4 - 2;
 		
 		this.name = name;
 		this.group = group;
@@ -56,6 +56,20 @@ public class Bullet extends Creature{
 		//If bullet collides with anything, remove it
 		if(collisionWithTileTop || collisionWithTileBottom || collisionWithTileLeft || collisionWithTileRight || checkEntityCollisions(xMove, 0f) || checkEntityCollisions(0f, yMove))
 			die();
+	}
+	
+	@Override
+	public void move() {
+		
+		//Set speed
+		if(xMove > 0) xMove = speed;
+		if(xMove < 0) xMove = -speed;
+		if(xMove == 0) xMove = 0;
+		if(yMove > 0) yMove = speed;
+		if(yMove < 0) yMove = -speed;
+		if(yMove == 0) yMove = 0;
+		
+		super.move();		
 	}
 	
 	@Override

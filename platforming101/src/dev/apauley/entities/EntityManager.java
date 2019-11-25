@@ -96,13 +96,15 @@ public class EntityManager {
 	//Lower each entity's speed
 	public void speedDown() {
 
+		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() - 1f);
+
+		//Don't let speed go below MIN_SPEED
+		if(handler.getGVar().getGSpeed() <= handler.getGVar().getMinSpeed())
+			handler.getGVar().setGSpeed(handler.getGVar().getMinSpeed());
+
 		//Loop through entities
 		for(Entity e : entities) { 
-			e.setSpeed(e.getSpeed() - 1f);
-
-			//Don't let speed go below MIN_SPEED
-			if(e.getSpeed() <= e.MIN_SPEED)
-				e.setSpeed(e.MIN_SPEED);
+			e.speed = handler.getGVar().getGSpeed();
 		}
 		
 	}
@@ -110,13 +112,15 @@ public class EntityManager {
 	//Increase each entity's speed
 	public void speedUp() {
 
+		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() + 1f);
+
+		//Don't let speed go above MAX_SPEED
+		if(handler.getGVar().getGSpeed() >= handler.getGVar().getMaxSpeed())
+			handler.getGVar().setGSpeed(handler.getGVar().getMaxSpeed());
+
 		//Loop through entities
 		for(Entity e : entities) { 
-			e.setSpeed(e.getSpeed() + 1f);
-
-			//Don't let speed go above MAX_SPEED
-			if(e.getSpeed() >= e.MAX_SPEED)
-				e.setSpeed(e.MAX_SPEED);
+			e.speed = handler.getGVar().getGSpeed();
 		}
 		
 	}

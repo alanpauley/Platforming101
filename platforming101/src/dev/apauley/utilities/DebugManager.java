@@ -223,7 +223,7 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Y: " + handler.getWorld().getEntityManager().getPlayer().getY(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveX: " + handler.getWorld().getEntityManager().getPlayer().getxMove(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "MoveY: " + handler.getWorld().getEntityManager().getPlayer().getyMove(), x, getStY(i,"T"), false, color, fontStats); i++;
-			Text.drawStringShadow(g, "Speed: " + handler.getWorld().getEntityManager().getPlayer().getSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Speed: " + handler.getGVar().getGSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Running: " + handler.getWorld().getEntityManager().getPlayer().isRunning(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Jumping: " + handler.getWorld().getEntityManager().getPlayer().isJumping(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), x, getStY(i,"T"), false, color, fontStats); i++;

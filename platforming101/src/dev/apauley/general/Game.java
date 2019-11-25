@@ -58,6 +58,9 @@ public class Game implements Runnable {
 	//Used to access phases
 	private PhaseManager phaseManager;	
 	
+	//Used to access global variables
+	private GVar gVar;	
+	
 	//Used to access Game Camera	
 	private GameCamera gameCamera;
 
@@ -98,6 +101,8 @@ public class Game implements Runnable {
 		gameCamera = new GameCamera(handler,0,0);
 		
 		phaseManager = new PhaseManager(handler);
+		
+		gVar = new GVar(handler);
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
@@ -279,6 +284,11 @@ public class Game implements Runnable {
 		return phaseManager;
 	}
 
+	//Gets Game Camera
+	public GVar getGVar() {
+		return gVar;
+	}
+	
 	//Gets Game Camera
 	public GameCamera getGameCamera() {
 		return gameCamera;

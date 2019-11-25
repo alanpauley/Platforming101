@@ -18,13 +18,13 @@ public class Enemies extends Creature{
 	private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 	
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, xMove, yMove, "ENEMY", "ENEMY");
+		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), xMove, yMove, "ENEMY", "ENEMY");
 		
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;
-		bounds.width = Creature.DEFAULT_CREATURE_WIDTH - 2;
-		bounds.height = Creature.DEFAULT_CREATURE_HEIGHT - 2;
+		bounds.width = handler.getGVar().get_DEFAULT_CREATURE_WIDTH() - 2;
+		bounds.height = handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() - 2;
 		
 		this.group = group;
 		
@@ -63,7 +63,7 @@ public class Enemies extends Creature{
 		
 		//Block for phase to fall through ground
 		if(handler.getPhaseManager().getCurrentPhase() < 11) {
-			y += DEFAULT_GRAVITY;
+			y += handler.getGVar().get_DEFAULT_GRAVITY();
 			return;
 		} 
 

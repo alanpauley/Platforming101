@@ -17,19 +17,6 @@ public abstract class Entity {
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
 	
-	//Default Creature Values
-	public static final int DEFAULT_CREATURE_WIDTH = 64
-			              , DEFAULT_CREATURE_HEIGHT = DEFAULT_CREATURE_WIDTH;
-	
-	//Gravity on creatures
-	protected final float DEFAULT_GRAVITY = 9.8f;
-	
-	//Refactored speed to account for different sizes
-	public static final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
-							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f
-							, MAX_SPEED = 20f
-							, MIN_SPEED = 0; 
-
 	//Float = smoother movement using decimals for calculations
 	//X and Y coordinates of entity
 	protected float x, y;
@@ -390,16 +377,6 @@ public abstract class Entity {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	//Gets creature speed
-	public float getSpeed() {
-		return speed;
-	}
-
-	//Sets creature speed
-	public void setSpeed(float speed) {
-		this.speed = speed;
 	}
 
 }

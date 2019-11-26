@@ -32,13 +32,7 @@ public class GameState extends State {
 		//Creates world (generic start)
 		world = new World(handler);
 		handler.setWorld(world);
-		handler.getPhaseManager().setCurrentPhase(16);		
-		
-		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 0 + 100, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 1 + 200, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 2 + 300, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 3 + 400, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 4 + 500, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+		handler.getPhaseManager().setCurrentPhase(18);
 	}
 	
 	//Updates World

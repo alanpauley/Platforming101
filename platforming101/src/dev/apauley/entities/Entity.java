@@ -11,8 +11,9 @@ import dev.apauley.general.Handler;
 public abstract class Entity {
 
 	//Default Creature Values
-	public final int DEFAULT_HEALTH = 20;
-	public final int DEFAULT_FLASH = 30;
+	public int DEFAULT_HEALTH = 10;
+	public int DEFAULT_FLASH = 30;
+	public int DEFAULT_FLASH_HEALTH = 100;
 
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;
@@ -30,6 +31,9 @@ public abstract class Entity {
 	//Tracks how much speed creature has
 	protected float speed;
 	
+	//Jump Timer
+	protected long lastJumpTimer, jumpCooldown = 250, jumpTimer = jumpCooldown;
+	
 	//Collision with Tile Booleans
 	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
 	
@@ -41,6 +45,9 @@ public abstract class Entity {
 
 	//Tracks whether target is hit
 	protected int flash;
+
+	//Tracks whether target's hp is displayer
+	protected int flashHealth;
 	
 	//Tracks whether entity is still alive/active
 	protected boolean active = true;
@@ -71,6 +78,7 @@ public abstract class Entity {
 		this.group = group;
 		health = DEFAULT_HEALTH;
 		flash = 0;
+		flashHealth = 0;
 		this.xMove = xMove;
 		this.yMove = yMove;
 				
@@ -98,6 +106,7 @@ public abstract class Entity {
 		health -= amt;
 		
 		flash = DEFAULT_FLASH;
+		flashHealth = DEFAULT_FLASH_HEALTH;
 		
 		//If entity loses all health, set active to false to remove from game
 		if(health <= 0) {
@@ -110,6 +119,10 @@ public abstract class Entity {
 		
 		if(flash > 0)
 			flash--;
+
+		if(flashHealth > 0)
+			flashHealth--;
+
 	}
 
 	/*************** HELPER METHODS ***************/
@@ -408,5 +421,13 @@ public abstract class Entity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+
+	public long getJumpCooldown() {
+		return jumpCooldown;
+	}
+
+	public void setJumpCooldown(long jumpCooldown) {
+		this.jumpCooldown = jumpCooldown;
 	}
 }

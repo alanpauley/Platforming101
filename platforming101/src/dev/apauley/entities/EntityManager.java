@@ -121,6 +121,7 @@ public class EntityManager {
 		//Loop through entities
 		for(Entity e : entities) { 
 			e.speed = handler.getGVar().getGSpeed();
+			e.setJumpCooldown((long) (e.speed * 50));
 		}
 		
 	}

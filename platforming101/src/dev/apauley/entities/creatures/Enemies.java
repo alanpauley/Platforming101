@@ -1,5 +1,6 @@
 package dev.apauley.entities.creatures;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import dev.apauley.general.Handler;
@@ -20,7 +21,7 @@ public class Enemies extends Creature{
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), xMove, yMove, "ENEMY", "ENEMY");
 		
-		health = DEFAULT_HEALTH / 2;
+		health = DEFAULT_HEALTH;
 		
 		//Boundary box for player
 		bounds.x = 1;
@@ -93,6 +94,11 @@ public class Enemies extends Creature{
 	@Override
 	public void render(Graphics g) {
 
+		//Display enemy Health
+		if(handler.getPhaseManager().getCurrentPhase() > 17) {
+			enemyHealthDisplay(g);
+		}
+		
 		//Flash player if hit
 		if(handler.getPhaseManager().getCurrentPhase() > 12) {
 
@@ -189,6 +195,26 @@ public class Enemies extends Creature{
 			attackTimer = 0;		
 
 		}
+	}
+	
+	//Displays enemy health above...enemy
+	public void enemyHealthDisplay(Graphics g) {
+		
+		//Only display if enemy has recently been flashed
+		if(flashHealth <= 0)
+			return;
+		
+		float x2 = x - handler.getGameCamera().getxOffset() + 2;
+		float y = this.y - handler.getGameCamera().getyOffset() - 10;
+		int w = 4;
+		int h = 8;
+
+		g.setColor(Color.BLACK);
+		g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() - 12), w * 14 + 6, 12);
+		for(int i = 0; i < DEFAULT_HEALTH; i++)
+			g.drawImage(Assets.greyDark, (int) (x2 + (w + 2) * i), (int) (y), w, h, null);
+		for(int i = 0; i < DEFAULT_HEALTH; i++)
+			if(DEFAULT_HEALTH - health < DEFAULT_HEALTH - i) g.drawImage(Assets.red, (int) (x2 + (w + 2) * i), (int) (y), w, h, null);
 		
 	}
 	

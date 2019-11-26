@@ -32,7 +32,7 @@ public class GameState extends State {
 		//Creates world (generic start)
 		world = new World(handler);
 		handler.setWorld(world);
-		handler.getPhaseManager().setCurrentPhase(18);
+		handler.getPhaseManager().setCurrentPhase(19);
 	}
 	
 	//Updates World
@@ -65,7 +65,7 @@ public class GameState extends State {
 			g.fillRect(0, 0, handler.getGame().getWidth(), handler.getGame().getHeight() / 10);
 
 			int x = 5;
-			int x2 = x + 105;
+			int x2 = x + 110;
 			int y = 5;
 			int w = 30; //Width
 			int h = 40; //Height
@@ -85,7 +85,7 @@ public class GameState extends State {
 		//Block to hide player health tracking if not above x phase
 		if(handler.getPhaseManager().getCurrentPhase() > 16) {
 			int x = 400;
-			int x2 = x + 105;
+			int x2 = x + 60;
 			int y = 5;
 			int w = 30;
 			int h = 40;

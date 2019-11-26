@@ -33,6 +33,7 @@ public class Player extends Creature{
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), 0, 0, "PLAYER", "PLAYER");
 
+		DEFAULT_HEALTH = DEFAULT_HEALTH * 2;
 		health = DEFAULT_HEALTH;
 		
 		//Boundary box for player
@@ -273,7 +274,12 @@ public class Player extends Creature{
 		
 		//Check whether player CAN jump, if so, jump
 		if(handler.getKeyManager().jump && jumping && canJump)
-			yMove += -25f;
+			
+			//negate running to increase jump
+			if(running)
+				yMove += -(speed/2 * 5);
+			else
+				yMove += -(speed * 5);
 
 		//Reset top/bottom facing directions if not held
 		if(!handler.getKeyManager().up)

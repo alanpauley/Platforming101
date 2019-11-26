@@ -25,9 +25,6 @@ public abstract class Creature extends Entity {
 	//Tracks whether creature IS jumping (meaning still ascending
 	protected boolean jumping, canJump;
 	
-	//Jump Timer
-	protected long lastJumpTimer, jumpCooldown = 250, jumpTimer = jumpCooldown;
-	
 	//Tracks creature jumping hangtime (whether should be floating after jumping)
 	protected boolean hangtime;
 		

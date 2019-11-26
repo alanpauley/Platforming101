@@ -11,8 +11,8 @@ import dev.apauley.general.Handler;
 public abstract class Entity {
 
 	//Default Creature Values
-	public static final int DEFAULT_HEALTH = 10;
-	public static final int DEFAULT_FLASH = 30;
+	public final int DEFAULT_HEALTH = 20;
+	public final int DEFAULT_FLASH = 30;
 
 	//Main Handler object (can reference game or anything from here)
 	protected Handler handler;

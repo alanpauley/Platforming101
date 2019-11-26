@@ -20,6 +20,8 @@ public class Enemies extends Creature{
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), xMove, yMove, "ENEMY", "ENEMY");
 		
+		health = DEFAULT_HEALTH / 2;
+		
 		//Boundary box for player
 		bounds.x = 1;
 		bounds.y = 1;

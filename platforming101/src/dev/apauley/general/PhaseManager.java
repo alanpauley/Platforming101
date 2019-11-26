@@ -49,6 +49,8 @@ public class PhaseManager {
 			phases.add("Shots collide with player/enemies");
 		//4 - UI
 			phases.add("Bullets tracked");
+			phases.add("Player health tracked");
+			phases.add("Enemy health tracked");
 			phases.add("Reload implemented");
 			phases.add("Score tracked (kills, time elpased, etc.)");
 			phases.add("Pause button (stop time)");
@@ -100,8 +102,8 @@ public class PhaseManager {
 		//Prevent going to an undefined phase (need to be between 1 and ???)
 		if(currentPhase < 0)
 			currentPhase = 0;
-		if(currentPhase > 32)
-			currentPhase = 32;
+		if(currentPhase > phases.size())
+			currentPhase = phases.size();
 		this.currentPhase = currentPhase;
 		//System.out.println("current Phase: " + currentPhase);
 
@@ -147,22 +149,24 @@ public class PhaseManager {
 		case 14: currentPhaseNameLength = 260; break;
 		case 15: currentPhaseNameLength = 428; break;
 		case 16: currentPhaseNameLength = 260; break;
-		case 17: currentPhaseNameLength = 310; break;
-		case 18: currentPhaseNameLength = 480; break;
-		case 19: currentPhaseNameLength = 345; break;
-		case 20: currentPhaseNameLength = 450; break;
-		case 21: currentPhaseNameLength = 350; break;
-		case 22: currentPhaseNameLength = 248; break;
-		case 23: currentPhaseNameLength = 195; break;
-		case 24: currentPhaseNameLength = 207; break;
-		case 25: currentPhaseNameLength = 418; break;
-		case 26: currentPhaseNameLength = 333; break;
-		case 27: currentPhaseNameLength = 478; break;
-		case 28: currentPhaseNameLength = 269; break;
-		case 29: currentPhaseNameLength = 272; break;
-		case 30: currentPhaseNameLength = 222; break;
-		case 31: currentPhaseNameLength = 255; break;
-		case 32: currentPhaseNameLength = 420; break;
+		case 17: currentPhaseNameLength = 317; break;
+		case 18: currentPhaseNameLength = 322; break;
+		case 19: currentPhaseNameLength = 315; break;
+		case 20: currentPhaseNameLength = 480; break;
+		case 21: currentPhaseNameLength = 345; break;
+		case 22: currentPhaseNameLength = 450; break;
+		case 23: currentPhaseNameLength = 350; break;
+		case 24: currentPhaseNameLength = 248; break;
+		case 25: currentPhaseNameLength = 195; break;
+		case 26: currentPhaseNameLength = 207; break;
+		case 27: currentPhaseNameLength = 418; break;
+		case 28: currentPhaseNameLength = 333; break;
+		case 29: currentPhaseNameLength = 478; break;
+		case 30: currentPhaseNameLength = 269; break;
+		case 31: currentPhaseNameLength = 272; break;
+		case 32: currentPhaseNameLength = 222; break;
+		case 33: currentPhaseNameLength = 255; break;
+		case 34: currentPhaseNameLength = 420; break;
 		default: currentPhaseNameLength = 0; break;
 		}
 		

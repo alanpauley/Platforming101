@@ -65,25 +65,55 @@ public class GameState extends State {
 		//Note: Must render level before player do to proper layer positioning
 		world.render(g);
 		
-		//Block to hide header if not above x phase
+		//Block to hide header and bullet tracking if not above x phase
 		if(handler.getPhaseManager().getCurrentPhase() > 15) {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, handler.getGame().getWidth(), handler.getGame().getHeight() / 10);
 
-			Text.drawStringShadow(g, "Bullets:", 5, 5 + fontHeader.getSize(), false, Color.WHITE, fontHeader);
+			int x = 5;
+			int x2 = x + 105;
+			int y = 5;
+			int w = 30; //Width
+			int h = 40; //Height
 			
-			//g.drawImage(Assets.yellow,  90, 5, 50, 50, null);
-			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 5) g.drawImage(Assets.yellow, 110, 5, 30, 40, null);
-			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 4) g.drawImage(Assets.yellow, 145, 5, 30, 40, null);
-			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 3) g.drawImage(Assets.yellow, 180, 5, 30, 40, null);
-			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 2) g.drawImage(Assets.yellow, 215, 5, 30, 40, null);
-			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 1) g.drawImage(Assets.yellow, 250, 5, 30, 40, null);
+			//Track Bullets
+			Text.drawStringShadow(g, "Bullets:", x, y + fontHeader.getSize(), false, Color.WHITE, fontHeader);
 			
+			//Grey Base
+			for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX(); i++)
+				g.drawImage(Assets.greyDark, x2 + (w + 5) * i, y, w, h, null);
+
+			//Yellow Bullets
+			for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX(); i++)
+				if(handler.getWorld().getEntityManager().getBulletPlayerCount() < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX() - i) g.drawImage(Assets.yellow, x2 + (w + 5) * i, y, w, h, null);
+		}			
+
+		//Block to hide player health tracking if not above x phase
+		if(handler.getPhaseManager().getCurrentPhase() > 16) {
+			int x = 400;
+			int x2 = x + 105;
+			int y = 5;
+			int w = 30;
+			int h = 40;
+
+			//Track Health
+			Text.drawStringShadow(g, "HP:", 400, 5 + fontHeader.getSize(), false, Color.WHITE, fontHeader);
+
+			//Grey Base
+			for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH / 2; i++)
+				g.drawImage(Assets.greyDark, x2 + (w + 5) * i, y, w, h, null);
+
+			//Double layered:
+				//Purple
+				for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH / 2; i++)
+					if(handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH / 2 - handler.getWorld().getEntityManager().getPlayer().getHealth() < handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH / 2 - i) g.drawImage(Assets.red, x2 + (w + 5) * i, y, w, h, null);
+				//Red
+				for(int i = 10; i < handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH; i++)
+					if(handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH - handler.getWorld().getEntityManager().getPlayer().getHealth() < handler.getWorld().getEntityManager().getPlayer().DEFAULT_HEALTH - i) g.drawImage(Assets.purple, x2 + (w + 5) * (i - 10), y, w, h, null);
 		}
 
 		//Debug Text
 		handler.getWorld().getDebugManager().render(g);
-
 	}
 
 }

@@ -33,7 +33,7 @@ public class Player extends Creature{
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), 0, 0, "PLAYER", "PLAYER");
 
-		health = 20;
+		health = DEFAULT_HEALTH;
 		
 		//Boundary box for player
 		bounds.x = 1;

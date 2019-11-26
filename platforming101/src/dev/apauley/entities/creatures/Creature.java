@@ -299,4 +299,12 @@ public abstract class Creature extends Entity {
 		this.walking = walking;
 	}
 
+	public int getBULLET_MAX() {
+		return BULLET_MAX;
+	}
+
+	public void setBULLET_MAX(int bULLET_MAX) {
+		BULLET_MAX = bULLET_MAX;
+	}
+
 }

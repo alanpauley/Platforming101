@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import dev.apauley.entities.Entity;
 import dev.apauley.entities.creatures.Bullet;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
@@ -33,6 +34,11 @@ public class GameState extends State {
 		handler.setWorld(world);
 		handler.getPhaseManager().setCurrentPhase(16);		
 		
+		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 0 + 100, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 1 + 200, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 2 + 300, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 3 + 400, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+		handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 4 + 500, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
 	}
 	
 	//Updates World
@@ -64,12 +70,15 @@ public class GameState extends State {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, handler.getGame().getWidth(), handler.getGame().getHeight() / 10);
 
-			Text.drawStringShadow(g, "Bullets", 5, 5 + fontHeader.getSize(), false, Color.WHITE, fontHeader);
-//			handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 0, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-//			handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 1, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-//			handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 2, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-//			handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 3, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
-//			handler.getWorld().getEntityManager().addEntity(new Bullet(handler,  5 + fontHeader.getSize() + 10 * 4, 5, 0, 0, Assets.yellow, "BULLET", "SYSTEM",0));
+			Text.drawStringShadow(g, "Bullets:", 5, 5 + fontHeader.getSize(), false, Color.WHITE, fontHeader);
+			
+			//g.drawImage(Assets.yellow,  90, 5, 50, 50, null);
+			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 5) g.drawImage(Assets.yellow, 110, 5, 30, 40, null);
+			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 4) g.drawImage(Assets.yellow, 145, 5, 30, 40, null);
+			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 3) g.drawImage(Assets.yellow, 180, 5, 30, 40, null);
+			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 2) g.drawImage(Assets.yellow, 215, 5, 30, 40, null);
+			if(handler.getWorld().getEntityManager().getBulletPlayerCount() < 1) g.drawImage(Assets.yellow, 250, 5, 30, 40, null);
+			
 		}
 
 		//Debug Text

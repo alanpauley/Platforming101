@@ -111,6 +111,10 @@ public class Player extends Creature{
 	if(handler.getPhaseManager().getCurrentPhase() < 7)
 		return;		
 			
+		//if Gun is empty, cannot shoot
+		if(handler.getWorld().getEntityManager().getBulletPlayerCount() >= BULLET_MAX)
+			return;
+	
 		//Generate bullets from player if left mouse is clicked
 		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
 		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click

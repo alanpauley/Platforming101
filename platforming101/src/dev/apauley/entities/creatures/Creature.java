@@ -13,6 +13,9 @@ public abstract class Creature extends Entity {
 	protected float gravityHangtime = handler.getGVar().get_DEFAULT_GRAVITY();
 	protected int gravityHangTimeTick = 0;
 	
+	//Tracks max bullets an entity can fire
+	protected int BULLET_MAX = 5;
+	
 	//Tracks whether player is running/walking or not
 	protected boolean running, walking;
 	

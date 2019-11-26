@@ -35,7 +35,7 @@ public class DebugManager {
 	private int bbox = 5;
 	
 	/*STAT HEADER POSITIONS*/
-	private int headYTop = fontHeader.getSize() - spBf
+	private int headYTop = fontHeader.getSize() - spBf + 90
 			  , headYBottom = fontHeader.getSize() - spBf + 780;
 	
   		
@@ -175,7 +175,7 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(247,95,30,alpha));
-			g.fillRect(x-5, 0, handler.getPhaseManager().getCurrentPhaseNameLength(), 32 + 21 * 5); //getCurrentPhaseNameLength() is used to keep this variable based on name
+			g.fillRect(x-5, headYTop - 25, handler.getPhaseManager().getCurrentPhaseNameLength(), 32 + 21 * 5); //getCurrentPhaseNameLength() is used to keep this variable based on name
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "System", x, headYTop, false, color, fontHeader);
@@ -203,7 +203,7 @@ public class DebugManager {
 			if(enemyCount > 0)
 				height = height + 32 + 21 * enemyCount;
 			
-			g.fillRect(x-5, 0, 198, height);
+			g.fillRect(x-5, headYTop - 25, 198, height);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Objects", x, headYTop, false, color, fontHeader);
@@ -235,7 +235,7 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(245,66,149,alpha));
-			g.fillRect(x-5, 0, 180, 32 + 21 * 10);
+			g.fillRect(x-5, headYTop - 25, 180, 32 + 21 * 10);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Player", x, headYTop, false, color, fontHeader);

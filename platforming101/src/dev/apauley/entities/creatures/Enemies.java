@@ -26,6 +26,8 @@ public class Enemies extends Creature{
 		bounds.width = handler.getGVar().get_DEFAULT_CREATURE_WIDTH() - 2;
 		bounds.height = handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() - 2;
 		
+		BULLET_MAX = 3;
+		
 		this.group = group;
 		
 		//Rename enemy with number appended based on enemyCount
@@ -153,6 +155,10 @@ public class Enemies extends Creature{
 		if(x - handler.getWorld().getEntityManager().getPlayer().getX() < 0 && faceLeft) // If on the left and facing left, exit
 			return;
 		
+		//if Gun is empty, cannot shoot
+		if(handler.getWorld().getEntityManager().getBulletEnemyCount() >= BULLET_MAX * handler.getWorld().getEntityManager().getEnemyCount())
+			return;
+	
 		float xMove = 10f;
 		float yMove = 0f;
 		

@@ -78,8 +78,19 @@ public class GameState extends State {
 				g.drawImage(Assets.greyDark, x2 + (w + 5) * i, y, w, h, null);
 
 			//Yellow Bullets
-			for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX(); i++)
-				if(handler.getWorld().getEntityManager().getBulletPlayerCount() < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX() - i) g.drawImage(Assets.yellow, x2 + (w + 5) * i, y, w, h, null);
+
+			//Old Ammo system
+			if(handler.getPhaseManager().getCurrentPhase() < 19) {
+				for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX(); i++)
+					if(handler.getWorld().getEntityManager().getBulletPlayerCount() < handler.getWorld().getEntityManager().getPlayer().getBULLET_MAX() - i) g.drawImage(Assets.yellow, x2 + (w + 5) * i, y, w, h, null);
+			}
+			
+			//New Ammo system
+			if(handler.getPhaseManager().getCurrentPhase() >= 19 && handler.getWorld().getEntityManager().getPlayer().getAmmo() >= 0) {
+				for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getAmmo(); i++)
+					g.drawImage(Assets.yellow, x2 + (w + 5) * i, y, w, h, null);
+			}
+			
 		}			
 
 		//Block to hide player health tracking if not above x phase
@@ -108,6 +119,19 @@ public class GameState extends State {
 
 		//Debug Text
 		handler.getWorld().getDebugManager().render(g);
+
+		//Display gun needs to be reloaded if on correct phase and timer > 0
+		if(handler.getPhaseManager().getCurrentPhase() > 18 && handler.getWorld().getEntityManager().getPlayer().getEmptyGunTimer() > 0) {
+
+			int x = 130;
+			int y = 45;
+			
+			//Indicate to player that they need to reload
+			Text.drawStringShadow(g, "*RELOAD*", x, y + fontHeader.getSize(), false, Color.WHITE, fontHeader);
+
+		}
+		
+	
 	}
 
 }

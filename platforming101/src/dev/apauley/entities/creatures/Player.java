@@ -1,17 +1,21 @@
 package dev.apauley.entities.creatures;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import com.sun.org.apache.xalan.internal.xsltc.dom.EmptyFilter;
+
 import dev.apauley.entities.Entity;
 import dev.apauley.entities.statics.Tree;
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Animation;
 import dev.apauley.gfx.Assets;
+import dev.apauley.gfx.Text;
 import dev.apauley.inventory.Inventory;
 
 /*
@@ -26,6 +30,12 @@ public class Player extends Creature{
 	
 	//Attack Timer
 	private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+	
+	//Tracks ammo in gun
+	private int ammo = BULLET_MAX;
+	
+	//Indicates gun is empty
+	private int emptyGunTimer_DEFAULT = 25, emptyGunTimer = 0;
 	
 	//Player Inventory
 	private Inventory inventory;
@@ -68,6 +78,10 @@ public class Player extends Creature{
 	public void tick() {
 		super.tick();
 
+		//decrement emptyGunTimer if > 0
+		if(handler.getPhaseManager().getCurrentPhase() > 18 && emptyGunTimer > 0)
+			emptyGunTimer--;
+		
 		if(handler.getPhaseManager().getCurrentPhase() > 20) {
 			if(!active)
 				return;
@@ -112,13 +126,22 @@ public class Player extends Creature{
 	if(handler.getPhaseManager().getCurrentPhase() < 7)
 		return;		
 			
-		//if Gun is empty, cannot shoot
+		//if Gun is empty, cannot shoot (old way)
 		if(handler.getWorld().getEntityManager().getBulletPlayerCount() >= BULLET_MAX)
 			return;
 	
 		//Generate bullets from player if left mouse is clicked
 		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
 		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
+			
+			//if Gun is empty, cannot shoot (new way): Display *RELOAD* to indicate
+			if(handler.getPhaseManager().getCurrentPhase() > 18 && ammo <= 0) {
+				
+				//Set emptyGunTimer to start decrimenting and display for only that long
+				emptyGunTimer = emptyGunTimer_DEFAULT;
+
+				return;
+			}
 			
 			float xMove = 10f;
 			float yMove = 0f;
@@ -143,6 +166,12 @@ public class Player extends Creature{
 				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
 				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
 			}
+			
+			//remove bullet from gun
+			if(handler.getPhaseManager().getCurrentPhase() > 18) {
+				ammo--;
+			}
+
 		}
 	}	
 	
@@ -300,11 +329,17 @@ public class Player extends Creature{
 			gravityHangtime = 0;
 			gravityHangTimeTick = 0;
 		}
+
 		//If Jumping and jump is released, start hangtime and reset jumping
 		if(!handler.getKeyManager().jump && !jumping) {
 			hangtime = true;
 		}
 		
+		//Reload weapon
+		if(handler.getPhaseManager().getCurrentPhase() > 18) {
+			if(handler.getKeyManager().reload && handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
+				ammo = BULLET_MAX;
+		}
 	}
 
 	@Override
@@ -374,6 +409,30 @@ public class Player extends Creature{
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public int getAmmo() {
+		return ammo;
+	}
+
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
+
+	public int getEmptyGunTimer_DEFAULT() {
+		return emptyGunTimer_DEFAULT;
+	}
+
+	public void setEmptyGunTimer_DEFAULT(int emptyGunTimer_DEFAULT) {
+		this.emptyGunTimer_DEFAULT = emptyGunTimer_DEFAULT;
+	}
+
+	public int getEmptyGunTimer() {
+		return emptyGunTimer;
+	}
+
+	public void setEmptyGunTimer(int emptyGunTimer) {
+		this.emptyGunTimer = emptyGunTimer;
 	}
 
 }

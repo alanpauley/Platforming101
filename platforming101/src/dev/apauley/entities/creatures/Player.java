@@ -134,6 +134,10 @@ public class Player extends Creature{
 		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
 		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
 			
+			//if game is paused, don't check further
+			if(handler.getGVar().getGSpeed() == 0)
+				return;
+					
 			//if Gun is empty, cannot shoot (new way): Display *RELOAD* to indicate
 			if(handler.getPhaseManager().getCurrentPhase() > 18 && ammo <= 0) {
 				
@@ -335,8 +339,13 @@ public class Player extends Creature{
 			hangtime = true;
 		}
 		
+		//if game is paused, don't check further (newer implementations)
+		if(handler.getGVar().getGSpeed() == 0)
+			return;
+				
 		//Reload weapon
 		if(handler.getPhaseManager().getCurrentPhase() > 18) {
+			
 			if(handler.getKeyManager().reload && handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
 				ammo = BULLET_MAX;
 		}
@@ -382,10 +391,10 @@ public class Player extends Creature{
 	
 	//Reset Player for phase changes and such
 	public void resetPlayer() {
-		setX(handler.getWorld().getSpawnX());
-		setY(handler.getWorld().getSpawnY());
-		setXMove(0);
-		setYMove(0);
+		x = handler.getWorld().getSpawnX();
+		y = handler.getWorld().getSpawnY();
+		xMove = 0;
+		yMove = 0;
 	}
 	
 

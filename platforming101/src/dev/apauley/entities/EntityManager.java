@@ -1,15 +1,12 @@
 package dev.apauley.entities;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import dev.apauley.entities.creatures.Bullet;
 import dev.apauley.entities.creatures.Player;
 import dev.apauley.general.Handler;
-import dev.apauley.gfx.Assets;
 
 /*
  * Handles Entities
@@ -22,6 +19,10 @@ public class EntityManager {
 	
 	//Counts Enemies
 	private int playerCount = 1, enemyCount, bulletPlayerCount, bulletEnemyCount;
+	
+	//Create a list of speeds so I can reassign to entities when unpausing the game
+	private float[][] entityBackup;
+	private float backUpSpeed;
 	
 	//An ArrayList of Entities that holds all entities. 
 	//- like Entity[] but has no size (can add/subtract at will)
@@ -49,6 +50,7 @@ public class EntityManager {
 		this.player = player;
 		entities = new ArrayList<Entity>();
 		entitiesLimbo = new ArrayList<Entity>();
+		entityBackup = new float[0][0];
 		
 		//Puts player into the array list of entities
 		addEntity(player);
@@ -56,6 +58,10 @@ public class EntityManager {
 	
 	public void tick() {
 		
+		//if game is paused, don't check these collisions
+		if(handler.getGVar().getGSpeed() == 0)
+			return;
+				
 		//Loop through entities to tick them all using an iterator
 		Iterator<Entity> it = entities.iterator();
 		
@@ -65,7 +71,7 @@ public class EntityManager {
 		while(it.hasNext()) {
 			Entity e = it.next(); //The same as saying entities[i] or entities.get(i), but for an iterator
 			e.tick();			
-			e.flash(); //Decrements flash
+			//e.flash(); //Decrements flash
 			//If e is no longer active, remove
 			if(!e.isActive())
 				//it.remove() will safely and properly remove entity from the list, opposed to e.remove() which would cause issues just yanking it out midway, skipping over entities. 
@@ -93,6 +99,51 @@ public class EntityManager {
 		player.postRender(g);
 	}
 	
+	//stop Speed (essentially pausing the game)
+	public void speedStop() {
+
+		int eSize = entities.size();
+		entityBackup = new float[eSize][3];
+
+		//[MANY] Failed attempts to copy arrayList without copying reference.
+		//Couldn't instantiate Entity because abstract and all sorts of other issues
+			//create backup
+			//entityBackup = new ArrayList<Entity>(entities);	
+		
+		for(int i = 0; i < entities.size(); i++) { 			
+			entityBackup[i][0] = entities.get(i).speed;
+			entityBackup[i][1] = entities.get(i).xMove;
+			entityBackup[i][2] = entities.get(i).yMove;
+		}
+
+		backUpSpeed = handler.getGVar().getGSpeed();
+		handler.getGVar().setGSpeed(0);
+		
+		//Loop through entities to set no speed (paused/no speed)
+		for(Entity e : entities)
+			e.speed = handler.getGVar().getGSpeed();
+		
+	}
+
+	//stop Speed (essentially pausing the game)
+	public void speedResume() {
+
+		handler.getGVar().setGSpeed(backUpSpeed);
+		
+		//if the list sizes are different, exit function
+		if(entities.size() != entityBackup.length)
+			return;
+		
+		//Loop through entities and copy necessary fields
+		for(int i = 0; i < entities.size(); i++) {
+			
+			entities.get(i).setSpeed(entityBackup[i][0]);
+			entities.get(i).setxMove(entityBackup[i][1]);
+			entities.get(i).setyMove(entityBackup[i][2]);
+		}
+
+	}
+
 	//Lower each entity's speed
 	public void speedDown() {
 

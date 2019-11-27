@@ -52,8 +52,8 @@ public class PhaseManager {
 			phases.add("Player health tracked");
 			phases.add("Enemy health tracked");
 			phases.add("Reload implemented");
-			phases.add("Score tracked (kills, time elpased, etc.)");
 			phases.add("Pause button (stop time)");
+			phases.add("Score tracked (kills, time elpased, etc.)");
 			phases.add("Menu screen (utilizes pause button)");
 			phases.add("Slow Time (death scene)");
 			phases.add("Death Screen");
@@ -152,8 +152,8 @@ public class PhaseManager {
 		case 17: currentPhaseNameLength = 317; break;
 		case 18: currentPhaseNameLength = 322; break;
 		case 19: currentPhaseNameLength = 315; break;
-		case 20: currentPhaseNameLength = 480; break;
-		case 21: currentPhaseNameLength = 345; break;
+		case 20: currentPhaseNameLength = 345; break;
+		case 21: currentPhaseNameLength = 480; break;
 		case 22: currentPhaseNameLength = 450; break;
 		case 23: currentPhaseNameLength = 350; break;
 		case 24: currentPhaseNameLength = 248; break;

@@ -19,9 +19,6 @@ public abstract class Creature extends Entity {
 	//Tracks whether player is running/walking or not
 	protected boolean running, walking;
 	
-	//Helper for moving creatures on x and y plane
-	protected float xMove, yMove;	
-	
 	//Tracks whether creature IS jumping (meaning still ascending
 	protected boolean jumping, canJump;
 	
@@ -40,6 +37,10 @@ public abstract class Creature extends Entity {
 	//Gravity on creatures
 	public void gravity() {
 		
+		//if game is paused, don't check these collisions
+		if(handler.getGVar().getGSpeed() == 0)
+			return;
+				
 		//Update JumpTimer
 		jumpTimer += System.currentTimeMillis() - lastJumpTimer;
 		lastJumpTimer = System.currentTimeMillis();
@@ -221,6 +222,7 @@ public abstract class Creature extends Entity {
 	
 	//Things that happen to ALL creatures every tick
 	public void tick() {
+
 		flash();
 	}
 
@@ -234,16 +236,6 @@ public abstract class Creature extends Entity {
 	//Sets creature HP
 	public void setHealth(int health) {
 		this.health = health;
-	}
-
-	//Gets creature xMovement
-	public float getxMove() {
-		return xMove;
-	}
-
-	//Sets creature xMovement
-	public void setXMove(float xMove) {
-		this.xMove = xMove;
 	}
 
 	//Gets creature yMovement

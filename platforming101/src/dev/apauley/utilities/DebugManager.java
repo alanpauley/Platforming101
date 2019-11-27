@@ -224,6 +224,16 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Enemy #: " + handler.getWorld().getEntityManager().getEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "(Player) Bullet #: " + handler.getWorld().getEntityManager().getBulletPlayerCount(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "(Enemy) Bullet #: " + handler.getWorld().getEntityManager().getBulletEnemyCount(), x, getStY(i,"T"), false, color, fontStats); i++;
+			
+			//Temp to track a bullet
+			i++;
+			for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+				if(e.getName().equals("BULLET") && e.getGroup().equals("PLAYER")) {
+					Text.drawStringShadow(g, "Speed: " + e.getSpeed(), x, getStY(i,"T"), false, color, fontStats); i++;
+					Text.drawStringShadow(g, "xMove: " + e.getxMove(), x, getStY(i,"T"), false, color, fontStats); i++;
+					Text.drawStringShadow(g, "yMove: " + e.getyMove(), x, getStY(i,"T"), false, color, fontStats); i++;				
+				}			
+			}
 
 			//if Enemies exist, drawing, otherwise break
 			if(enemyCount > 0) {

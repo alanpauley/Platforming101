@@ -3,6 +3,7 @@ package dev.apauley.states;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import dev.apauley.entities.Entity;
 import dev.apauley.entities.creatures.Bullet;
@@ -22,6 +23,9 @@ public class GameState extends State {
 	
 	//fonts
 	private Font fontHeader = Assets.fontRobotoRegular30;
+	
+	//Tracks whether stats are currently displaying or not
+	private boolean statDisplay;
 
 	//Game Constructor
 	public GameState(Handler handler) {
@@ -47,6 +51,25 @@ public class GameState extends State {
 		//Cycles phases back
 		if(handler.getKeyManager().phaseNext)
 			handler.getPhaseManager().setCurrentPhase(handler.getPhaseManager().getCurrentPhase() + 1);
+
+		//Toggles displaying stats
+		if(handler.getKeyManager().statsToggle && handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+			if(statDisplay) {
+				statDisplay = false;
+
+				//Resumes the game more or less
+				handler.getWorld().getEntityManager().speedResume();
+				
+			}
+			else {
+				statDisplay = true;
+				
+				//Pauses the game more or less
+				handler.getWorld().getEntityManager().speedStop();
+				
+			}
+		}
+		
 	}
 
 	//Draws Level and player to screen
@@ -130,6 +153,19 @@ public class GameState extends State {
 			Text.drawStringShadow(g, "*RELOAD*", x, y + fontHeader.getSize(), false, Color.WHITE, fontHeader);
 
 		}
+		
+		//Displays stats if toggled
+//		if(statDisplay) {
+//
+//			int x = 5;
+//			int y = 5;
+//			
+//			g.setColor(new Color(0,0,0,180));
+//			g.fillRect(x, y, handler.getGame().getWidth() - x * 2, handler.getGame().getHeight() - y * 2);
+//			
+//			Text.drawStringShadow(g, "Enemies Fought: ", x, y + fontHeader.getSize(), false, Color.WHITE, fontHeader);
+//			
+//		}
 		
 	
 	}

@@ -12,7 +12,7 @@ public abstract class Entity {
 
 	//Default Creature Values
 	public int DEFAULT_HEALTH = 10;
-	public int DEFAULT_FLASH = 30;
+	public int DEFAULT_FLASH = 15;
 	public int DEFAULT_FLASH_HEALTH = 100;
 
 	//Main Handler object (can reference game or anything from here)
@@ -130,6 +130,10 @@ public abstract class Entity {
 	//Checks all collisions in game
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
 
+		//if game is paused, don't check these collisions
+		if(handler.getGVar().getGSpeed() == 0)
+			return false;
+		
 		//Phase check block to skip dmg
 		if(handler.getPhaseManager().getCurrentPhase() < 13)
 			return false;

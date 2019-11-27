@@ -23,7 +23,7 @@ public class KeyManager implements KeyListener {
 	public boolean /*DIRECTIONS*/ 
 						up, down, left, right
 				   /*ACTIONS*/
-					  , jump, run, reload
+					  , jump, run, reload, statsToggle
 				   /*ATTACKS WITH ARROW KEYS*/
 					  , aUp, aDown, aLeft, aRight
 				   /*SYSTEM KEYS*/
@@ -71,6 +71,7 @@ public class KeyManager implements KeyListener {
 		jump = keys[KeyEvent.VK_SPACE];
 		run = keys[KeyEvent.VK_SHIFT];
 		reload = keys[KeyEvent.VK_R];
+		statsToggle = keys[KeyEvent.VK_Z];
 		//*ATTACKS*/
 		aUp = keys[KeyEvent.VK_UP];
 		aDown = keys[KeyEvent.VK_DOWN];

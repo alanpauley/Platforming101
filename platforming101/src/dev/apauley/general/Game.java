@@ -11,6 +11,7 @@ import dev.apauley.input.MouseManager;
 import dev.apauley.states.GameState;
 import dev.apauley.states.MenuState;
 import dev.apauley.states.State;
+import dev.apauley.utilities.StatTracker;
 
 /*
  * Main class for game - holds all base code: 
@@ -64,6 +65,9 @@ public class Game implements Runnable {
 	//Used to access Game Camera	
 	private GameCamera gameCamera;
 
+	//Used to access Stat Tracker
+	private StatTracker statTracker;
+	
 	//Used to access Handler
 	private Handler handler;
 	
@@ -101,6 +105,7 @@ public class Game implements Runnable {
 		gameCamera = new GameCamera(handler,0,0);
 		
 		phaseManager = new PhaseManager(handler);
+		statTracker = new StatTracker(handler);
 		
 		gVar = new GVar(handler);
 
@@ -292,6 +297,11 @@ public class Game implements Runnable {
 	//Gets Game Camera
 	public GameCamera getGameCamera() {
 		return gameCamera;
+	}
+	
+	//Gets Stat Tracker
+	public StatTracker getStatTracker() {
+		return statTracker;
 	}
 	
 	//Gets Width of window

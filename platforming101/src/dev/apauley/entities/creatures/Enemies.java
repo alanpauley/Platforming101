@@ -45,6 +45,10 @@ public class Enemies extends Creature{
 	public void tick() {
 		super.tick();
 
+		//if game is paused, don't check these collisions
+		if(handler.getGVar().getGSpeed() == 0)
+			return;
+				
 		if(!active)
 			return;
 		
@@ -149,6 +153,10 @@ public class Enemies extends Creature{
 	//Handles enemy shooting
 	public void enemyShoot() {
 		
+		//if game is paused, don't check these collisions
+		if(handler.getGVar().getGSpeed() == 0)
+			return;
+				
 		//Update AttackTimer
 		attackTimer += System.currentTimeMillis() - lastAttackTimer;
 		lastAttackTimer = System.currentTimeMillis();

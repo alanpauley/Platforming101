@@ -3,6 +3,7 @@ package dev.apauley.entities.creatures;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import dev.apauley.entities.Entity;
 import dev.apauley.general.Handler;
 
 /*
@@ -69,7 +70,7 @@ public class Bullet extends Creature{
 		if(yMove < 0) yMove = -speed;
 		if(yMove == 0) yMove = 0;
 		
-		super.move();		
+		super.move();
 	}
 	
 	@Override

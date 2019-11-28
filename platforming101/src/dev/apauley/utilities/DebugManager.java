@@ -127,7 +127,7 @@ public class DebugManager {
 
 	public void render(Graphics g) {
 		
-		if(handler.getPhaseManager().getCurrentPhase() > 13)
+		if(handler.getPhaseManager().getCurrentPhase() >= 0)
 			headYTop = headYTop + 90;
 
 		//Only Draw if DebugBoundingBox = True

@@ -117,12 +117,32 @@ public class DebugManager {
 		if(handler.getKeyManager().debugTrigger && handler.getKeyManager().keyJustPressed(KeyEvent.VK_5)) 
 			handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Enemies(handler, 400,400, 0f, 0f));
 
-		if(handler.getKeyManager().speedDown && handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
+		//Adjust speed up/down
+		if(handler.getKeyManager().speedDown && handler.getKeyManager().keyJustPressed(KeyEvent.VK_K))
 			handler.getWorld().getEntityManager().speedDown();
-		}
-		if(handler.getKeyManager().speedUp && handler.getKeyManager().keyJustPressed(KeyEvent.VK_L)) {
+		if(handler.getKeyManager().speedUp && handler.getKeyManager().keyJustPressed(KeyEvent.VK_L))
 			handler.getWorld().getEntityManager().speedUp();
-		}
+		
+		//Toggle debugKeys
+		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_1)) 
+			handler.getWorld().getDebugManager().toggleDebugSystem();
+		if(handler.getKeyManager().debugPlayer && handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) 
+			handler.getWorld().getDebugManager().toggleDebugPlayer();
+		if(handler.getKeyManager().debugRandom && handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) 
+			handler.getWorld().getDebugManager().toggleDebugRandom();
+
+		if(handler.getKeyManager().debugBoundingBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_9)) 
+			handler.getWorld().getDebugManager().toggleDebugBoundingBox();
+
+		//Toggle ALL debugs
+		if(handler.getKeyManager().debugAll && handler.getKeyManager().keyJustPressed(KeyEvent.VK_0))
+			handler.getWorld().getDebugManager().toggleAllDebugs();
+		
+		//Temp just for screen capture
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_4)) 
+			handler.getWorld().getDebugManager().setDebugCapture();
+
+
 	}	
 
 	public void render(Graphics g) {
@@ -247,7 +267,7 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(245,66,149,alpha));
-			g.fillRect(x-5, headYTop - 25, 180, 32 + 21 * 11);
+			g.fillRect(x-5, headYTop - 25, 180, 32 + 21 * 10);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Player", x, headYTop, false, color, fontHeader);

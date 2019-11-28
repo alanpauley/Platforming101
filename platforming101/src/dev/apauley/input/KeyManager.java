@@ -23,13 +23,14 @@ public class KeyManager implements KeyListener {
 	public boolean /*DIRECTIONS*/ 
 						up, down, left, right
 				   /*ACTIONS*/
-					  , jump, run, reload, statsToggle
+					  , jump, run, reload
 				   /*ATTACKS WITH ARROW KEYS*/
 					  , aUp, aDown, aLeft, aRight
 				   /*SYSTEM KEYS*/
 					  , phasePrev, phaseNext
 					  , speedDown, speedUp
-					  , debugPlayer, debugSystem, debugRandom, debugTrigger, debugBoundingBox, debugAll;
+					  , debugPlayer, debugSystem, debugRandom, debugTrigger, debugBoundingBox, debugAll
+					  , pauseToggle, statsToggle;
 
 	//Constructor that creates base key array
 	//And other arrays of same length, for controlling key press timing
@@ -71,7 +72,6 @@ public class KeyManager implements KeyListener {
 		jump = keys[KeyEvent.VK_SPACE];
 		run = keys[KeyEvent.VK_SHIFT];
 		reload = keys[KeyEvent.VK_R];
-		statsToggle = keys[KeyEvent.VK_Z];
 		//*ATTACKS*/
 		aUp = keys[KeyEvent.VK_UP];
 		aDown = keys[KeyEvent.VK_DOWN];
@@ -91,6 +91,8 @@ public class KeyManager implements KeyListener {
 		debugBoundingBox = keys[KeyEvent.VK_9];
 		debugAll = keys[KeyEvent.VK_0];
 		
+		pauseToggle = keys[KeyEvent.VK_P];
+		statsToggle = keys[KeyEvent.VK_O];
 	}
 	
 	//Checks whether a key was just pressed

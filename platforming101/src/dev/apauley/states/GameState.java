@@ -24,8 +24,8 @@ public class GameState extends State {
 	//fonts
 	private Font fontHeader = Assets.fontRobotoRegular30;
 	
-	//Tracks whether stats are currently displaying or not
-	private boolean statDisplay;
+	//Tracks whether game is paused or stats are currently displaying or not
+	private boolean paused, statDisplay;
 
 	//Game Constructor
 	public GameState(Handler handler) {
@@ -52,23 +52,12 @@ public class GameState extends State {
 		if(handler.getKeyManager().phaseNext)
 			handler.getPhaseManager().setCurrentPhase(handler.getPhaseManager().getCurrentPhase() + 1);
 
+		//Toggles pausing game
+		if(handler.getKeyManager().pauseToggle && handler.getKeyManager().keyJustPressed(KeyEvent.VK_P) && handler.getPhaseManager().getCurrentPhase() > 19)
+			togglePaused();
 		//Toggles displaying stats
-		if(handler.getKeyManager().statsToggle && handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
-			if(statDisplay) {
-				statDisplay = false;
-
-				//Resumes the game more or less
-				handler.getWorld().getEntityManager().speedResume();
-				
-			}
-			else {
-				statDisplay = true;
-				
-				//Pauses the game more or less
-				handler.getWorld().getEntityManager().speedStop();
-				
-			}
-		}
+		if(handler.getKeyManager().statsToggle && handler.getKeyManager().keyJustPressed(KeyEvent.VK_O) && handler.getPhaseManager().getCurrentPhase() > 20)
+			toggleStatDisplay();
 		
 	}
 
@@ -154,10 +143,67 @@ public class GameState extends State {
 
 		}
 		
-		//Displays stats if toggled
+		//Displays paused message if game is paused (and stats not displayed
+		if(paused && handler.getPhaseManager().getCurrentPhase() > 19 && !statDisplay)
+			Text.drawStringShadow(g, "- PAUSED -", handler.getGame().getWidth() / 2, handler.getGame().getHeight() / 2 - fontHeader.getSize() / 2, true, Color.WHITE, fontHeader);
+
+		//Displays stats if toggled on
 		if(statDisplay && handler.getPhaseManager().getCurrentPhase() > 20)
-			handler.getGame().getStatTracker().render(g);		
+			handler.getGame().getStatTracker().render(g);
 	
 	}
+	
+	/*************** GETTERS and SETTERS ***************/
 
+	public boolean isPaused() {
+		return paused;
+	}
+
+	//Pauses and unpauses game
+	public void setPaused(boolean tf) {
+			if(tf) {
+				paused = true;
+				
+				//Pauses the game more or less
+				handler.getWorld().getEntityManager().speedStop();
+			} else {
+				paused = false;
+				statDisplay = false; //Hide this if displayed (don't need to check)
+
+				//Resumes the game
+				handler.getWorld().getEntityManager().speedResume();
+			}		
+	}
+
+	public void togglePaused() {
+		if(paused)
+			setPaused(false);
+		else
+			setPaused(true);
+	}
+
+	public boolean isStatDisplay() {
+		return statDisplay;
+	}
+
+	public void setStatDisplay(boolean tf) {
+		if(tf) {
+			
+			//If game is NOT paused, pause it
+			//if you just pause it again, will cause issues copying incorrect speeds
+			if(!paused)
+				setPaused(true);
+			statDisplay = true;
+		} else {
+			statDisplay = false;
+		}		
+	}
+
+	public void toggleStatDisplay() {
+		if(statDisplay)
+			setStatDisplay(false);
+		else
+			setStatDisplay(true);
+	}
+	
 }

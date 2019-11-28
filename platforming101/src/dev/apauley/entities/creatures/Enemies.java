@@ -213,12 +213,13 @@ public class Enemies extends Creature{
 			return;
 		
 		float x2 = x - handler.getGameCamera().getxOffset() + 2;
-		float y = this.y - handler.getGameCamera().getyOffset() - 10;
+		float yInt = 20;
+		float y = this.y - handler.getGameCamera().getyOffset() - yInt;
 		int w = 4;
 		int h = 8;
 
 		g.setColor(Color.BLACK);
-		g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() - 12), w * 14 + 6, 12);
+		g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() - yInt - 2), w * 14 + 6, 12);
 		for(int i = 0; i < DEFAULT_HEALTH; i++)
 			g.drawImage(Assets.greyDark, (int) (x2 + (w + 2) * i), (int) (y), w, h, null);
 		for(int i = 0; i < DEFAULT_HEALTH; i++)

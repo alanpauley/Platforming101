@@ -83,109 +83,168 @@ public class StatTracker {
 	}
 	
 	public void render(Graphics g) {
-		int x = 20; //Padding/intent from edge of screen
+		int x = 20; //Padding/indent from edge of screen
 		int y = 25;
 		int z = 3; //Border size
 		
-		int t = 5; //Text Offset
-		int i = 1; //Each new line multiplier
-		int j = 2; //New line spacing
-		
-		Color border = new Color(50,50,50,230);
-		Color mainFill = new Color(0,0,0,200);
+		//Color border = new Color(50,50,50,230);
+		//Color mainFill = new Color(0,0,0,200);
+		Color border = new Color(0,255,0,255); //Temp test green
+		Color mainFill = new Color(255,0,0,255); //Temp test red
 		Color headerFill = new Color(0,0,0,255);
 		Color bodyFill = new Color(255,255,255,255);
 		Color headerText = new Color(255,255,255,255);
 		Color bodyText = new Color(0,0,0,255);
-		
+
+//BOTH SIDES/NEUTRAL (B)
+	//B0:BORDER
 		g.setColor(border);
 		g.fillRect(x, y, handler.getGame().getWidth() - x * 2, handler.getGame().getHeight() - y * 2);
 		g.setColor(mainFill);
 		g.fillRect(x + z, y + z, handler.getGame().getWidth() - (x + z) * 2, handler.getGame().getHeight() - (y + z) * 2);
 		
-		g.setColor(headerFill);
-		g.fillRect(x + t, y, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Enemies", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
-		g.setColor(bodyFill);
-		g.fillRect(x + t, y + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Enemies Seen: " + enemiesSeen, x + t, y + (fontBody.getSize() + t * j) * i , false, bodyText, fontBody); i++;
-			Text.drawString(g, "Enemies Fought: " + enemiesFought, x + t, y + (fontBody.getSize() + t + j) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Enemies Avoided: " + enemiesAvoided, x + t, y + (fontBody.getSize() + t + j) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Enemies Killed: " + enemiesKilled, x + t, y + (fontBody.getSize() + t + j) * i, false, bodyText, fontBody); i++;
-
-		g.setColor(headerFill);
-		g.fillRect(x + t, y + 100*2, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Shots", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
-		g.setColor(bodyFill);
-		g.fillRect(x + t, y + 100*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Shots Fired (Player): " + bulletsFiredPlayer, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Shots Fired (Enemies): " + bulletsFiredEnemies, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-
-		g.setColor(headerFill);
-		g.fillRect(x + t, y + 200*2, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Action Count", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
-		g.setColor(bodyFill);
-		g.fillRect(x + t, y + 200*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Jumped: " + jumpCountPlayer, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Ran: " + runCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Reloaded: " + reloadCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Faced (Up): " + faceTopCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Faced (Down): " + faceBottomCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Faced (Left): " + faceLeftCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Faced (Right): " + faceRightCountPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Paused: " + pauseCount, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Check Inventory: " + checkInventoryCount, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Start Game: " + startGameCount, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Continue Game: " + continueGameCount, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-
-		g.setColor(headerFill);
-		g.fillRect(x + t, y + 300*2, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Travel Distance", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
-		g.setColor(bodyFill);
-		g.fillRect(x + t, y + 300*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Walked: " + playerWalkDistance, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Ran: " + playerRunDistance, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Jumped (x): " + jumpDistanceX, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Jumped (y): " + jumpDistanceY, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Fell (x): " + fallDistanceX, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Fell (y): " + fallDistanceY, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Average Speed: " + avgSpeed, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-	
-		x = 400; //Padding/intent from edge of screen
-		i = 1; //Each new line multiplier
+//LEFT SIDE (L)
+		x = 25; //Padding/indent from edge of screen
+		y = 30;
 		
+		int x2 = x + 5; //Debug Purposes
+		int xIdntHead = x + 5;
+		int xIdntBody = x + 20;
+		int yHead = y + fontHeader.getSize();
+		int yBody = yHead + 6;
+		int headHeight = fontHeader.getSize() + 10;
+		int bodyHeight = fontBody.getSize() + 5;
+		int bodyFillHeight = bodyHeight - 1;
+		int bodyFillAdd = 2;
+		int width = 250;
+		int sHeight = 20; //new Section spacer height
+		
+		int hCnt = 0; //Header Counts
+		int sCnt = 0; //new Section Counts
+		int iCnt = 0; //Each new line multiplier
+		
+	//L1:ENEMIES
 		g.setColor(headerFill);
-		g.fillRect(x + t, y, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Damage", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
+		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
+			Text.drawStringShadow(g, "Enemies", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
 		g.setColor(bodyFill);
-		g.fillRect(x + t, y + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Times Hit (Player): " + hitCountPlayer, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Times Hit (Enemies): " + hitCountEnemies, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Health Lost (Player): " + healthLostPlayer, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Health Lost (Enemies): " + healthLostEnemies, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Death Count: " + deathCount, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
+		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, bodyFillHeight * 4 + bodyFillAdd * 4);
+		iCnt++;
+			Text.drawString(g, "Enemies Seen: " + enemiesSeen, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Fought: " + enemiesFought, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Avoided: " + enemiesAvoided, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Killed: " + enemiesKilled, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+		sCnt++;
+
+	//L2:SHOTS
+		iCnt--;
+		g.setColor(headerFill);
+		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
+			Text.drawStringShadow(g, "Enemies", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
+		g.setColor(bodyFill);
+		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, bodyFillHeight * 4 + bodyFillAdd * 4);
+			Text.drawString(g, "Enemies Seen: " + enemiesSeen, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Fought: " + enemiesFought, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Avoided: " + enemiesAvoided, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Killed: " + enemiesKilled, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+		sCnt++;
 
 		g.setColor(headerFill);
-		g.fillRect(x + t, y + 100*2, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Time Spent", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
+		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
+			Text.drawStringShadow(g, "Enemies", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
 		g.setColor(bodyFill);
-		g.fillRect(x + t, y + 100*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Grounded: " + timeGrounded, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Airborne: " + timeAirbourne, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Walking: " + timeWalking, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Running: " + timeRunning, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Facing (Up): " + timeFacingUp, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Facing (Down): " + timeFacingDown, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Facing (Left): " + timeFacingLeft, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Facing (Right): " + timeFacingRight, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
-		
-		g.setColor(headerFill);
-		g.fillRect(x + t, y + 200*2, 250, fontHeader.getSize());
-			Text.drawStringShadow(g, "Time Played", x + t, y + (fontHeader.getSize() + t) * i, false, headerText, fontHeader); i++;
-		g.setColor(bodyFill);
-		g.fillRect(x + t, y + 200*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
-			Text.drawString(g, "Total Time: " + totalTimePlayed, x + t, y + (fontBody.getSize() + t + j * 4) * i, false, bodyText, fontBody); i++;
-			Text.drawString(g, "Game: " + gameTimePlayed, x + t, y + (fontBody.getSize() + t + j + 4) * i, false, bodyText, fontBody); i++;
+		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, bodyFillHeight * 4 + bodyFillAdd * 4);
+		iCnt--;
+			Text.drawString(g, "Enemies Seen: " + enemiesSeen, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Fought: " + enemiesFought, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Avoided: " + enemiesAvoided, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Enemies Killed: " + enemiesKilled, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+		sCnt++;
+
+//	//L2:SHOTS
+//		iCnt--;
+//		g.setColor(headerFill);
+//		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
+//			Text.drawStringShadow(g, "Shots", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, bodyFillHeight * 2 + bodyFillAdd * 2);
+//			Text.drawString(g, "Shots Fired (Player): " + bulletsFiredPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Shots Fired (Enemies): " + bulletsFiredEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//		sCnt++;
+
+	//L3:ACTION COUNT
+//		g.setColor(headerFill);
+//		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
+//			Text.drawStringShadow(g, "Action Count", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, bodyFillHeight * 11 + bodyFillAdd * 11);
+//		iCnt--;
+//			Text.drawString(g, "Jumped: " + jumpCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Ran: " + runCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Reloaded: " + reloadCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Faced (Up): " + faceTopCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Faced (Down): " + faceBottomCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Faced (Left): " + faceLeftCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Faced (Right): " + faceRightCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Paused: " + pauseCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Check Inventory: " + checkInventoryCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Start Game: " + startGameCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Continue: " + continueGameCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//		sCnt++;
+
+//	//L4:ACTION COUNT
+//		g.setColor(headerFill);
+//		g.fillRect(x + t, y + 300*2, 250, fontHeader.getSize());
+//			Text.drawStringShadow(g, "Travel Distance", x + t, y + (fontHeader.getSize() + t) * iCnt, false, headerText, fontHeader); iCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x + t, y + 300*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
+//			Text.drawString(g, "Walked: " + playerWalkDistance, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Ran: " + playerRunDistance, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Jumped (x): " + jumpDistanceX, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Jumped (y): " + jumpDistanceY, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Fell (x): " + fallDistanceX, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Fell (y): " + fallDistanceY, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Average Speed: " + avgSpeed, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//	
+////RIGHT SIDE (R)
+//		x = 400; //Padding/intent from edge of screen
+//		iCnt = 1; //Each new line multiplier
+//		
+//	//R1:DAMAGE
+//		g.setColor(headerFill);
+//		g.fillRect(x + t, y, 250, fontHeader.getSize());
+//			Text.drawStringShadow(g, "Damage", x + t, y + (fontHeader.getSize() + t) * iCnt, false, headerText, fontHeader); iCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x + t, y + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
+//			Text.drawString(g, "Times Hit (Player): " + hitCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Times Hit (Enemies): " + hitCountEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Health Lost (Player): " + healthLostPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Health Lost (Enemies): " + healthLostEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Death Count: " + deathCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//
+//	//R2:TIME SPENT
+//		g.setColor(headerFill);
+//		g.fillRect(x + t, y + 100*2, 250, fontHeader.getSize());
+//			Text.drawStringShadow(g, "Time Spent", x + t, y + (fontHeader.getSize() + t) * iCnt, false, headerText, fontHeader); iCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x + t, y + 100*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
+//			Text.drawString(g, "Grounded: " + timeGrounded, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Airborne: " + timeAirbourne, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Walking: " + timeWalking, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Running: " + timeRunning, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Facing (Up): " + timeFacingUp, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Facing (Down): " + timeFacingDown, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Facing (Left): " + timeFacingLeft, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Facing (Right): " + timeFacingRight, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//		
+//	//R3:TIME PLAYED
+//		g.setColor(headerFill);
+//		g.fillRect(x + t, y + 200*2, 250, fontHeader.getSize());
+//			Text.drawStringShadow(g, "Time Played", x + t, y + (fontHeader.getSize() + t) * iCnt, false, headerText, fontHeader); iCnt++;
+//		g.setColor(bodyFill);
+//		g.fillRect(x + t, y + 200*2 + (fontBody.getSize() + t * j) + 10, 250, fontHeader.getSize() * 2);
+//			Text.drawString(g, "Total Time: " + totalTimePlayed, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
+//			Text.drawString(g, "Game: " + gameTimePlayed, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, bodyText, fontBody); iCnt++;
 	
 	}
 

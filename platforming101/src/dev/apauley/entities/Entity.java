@@ -283,7 +283,7 @@ public abstract class Entity {
 		}
 		if(group.equals("ENEMY")) {
 			if(name.equals("ENEMY"))
-				handler.getWorld().getEntityManager().setEnemyCount(handler.getWorld().getEntityManager().getEnemyCount() - 1);
+				handler.getWorld().getEntityManager().decreaseEnemyCount(1);
 			if(name.equals("BULLET")) {
 				handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() - 1);
 			}

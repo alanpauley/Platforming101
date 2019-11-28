@@ -38,7 +38,7 @@ public class Enemies extends Creature{
 		fullName = name + id;			
 
 		//Increment enemy count
-		handler.getWorld().getEntityManager().setEnemyCount(handler.getWorld().getEntityManager().getEnemyCount() + 1);
+		handler.getWorld().getEntityManager().increaseEnemyCount(1);
 	}
 	
 	@Override

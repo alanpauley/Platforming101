@@ -36,7 +36,7 @@ public class GameState extends State {
 		//Creates world (generic start)
 		world = new World(handler);
 		handler.setWorld(world);
-		handler.getPhaseManager().setCurrentPhase(20);
+		handler.getPhaseManager().setCurrentPhase(21);
 	}
 	
 	//Updates World
@@ -155,18 +155,8 @@ public class GameState extends State {
 		}
 		
 		//Displays stats if toggled
-//		if(statDisplay) {
-//
-//			int x = 5;
-//			int y = 5;
-//			
-//			g.setColor(new Color(0,0,0,180));
-//			g.fillRect(x, y, handler.getGame().getWidth() - x * 2, handler.getGame().getHeight() - y * 2);
-//			
-//			Text.drawStringShadow(g, "Enemies Fought: ", x, y + fontHeader.getSize(), false, Color.WHITE, fontHeader);
-//			
-//		}
-		
+		if(statDisplay && handler.getPhaseManager().getCurrentPhase() > 20)
+			handler.getGame().getStatTracker().render(g);		
 	
 	}
 

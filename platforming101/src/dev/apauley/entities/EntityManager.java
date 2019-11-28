@@ -260,6 +260,16 @@ public class EntityManager {
 		this.enemyCount = enemyCount;
 	}
 
+	public void increaseEnemyCount(int add) {
+		enemyCount += add;
+		handler.getGame().getStatTracker().increaseEnemiesSeen(add);
+	}
+
+	public void decreaseEnemyCount(int sub) {
+		enemyCount -= sub;
+		handler.getGame().getStatTracker().increaseEnemiesKilled(sub);
+	}
+
 	public int getPlayerCount() {
 		return playerCount;
 	}

@@ -102,18 +102,18 @@ public class Player extends Creature{
 		//Sets position using movement
 		move();
 		
+		//Attack
+		checkAttacks();
+		
+		//Shoot
+		shoot();
+		
 		//only allow camera to follow player (and subsequent code) on Phase > x
 		if(handler.getPhaseManager().getCurrentPhase() < 9)
 			return;		
 		
 		//Centers camera on player
 		handler.getGameCamera().centerOnEntity(this);
-		
-		//Attack
-		checkAttacks();
-		
-		//Shoot
-		shoot();
 		
 		//Inventory
 		inventory.tick();
@@ -133,7 +133,6 @@ public class Player extends Creature{
 		//Generate bullets from player if left mouse is clicked
 		//if(handler.getMouseManager().isLeftPressed() && handler.getWorld().getEntityManager().getEntities().size() < 30) { //Used to only allow unlimited bullets per click
 		if(handler.getMouseManager().keyJustPressed(MouseEvent.BUTTON1)) { //Used to only allow one bullet per click
-			
 			//if game is paused, don't check further
 			if(handler.getGVar().getGSpeed() == 0)
 				return;
@@ -288,7 +287,7 @@ public class Player extends Creature{
 			return;
 		
 		//adjusts speeds based on whether player is running/walking or not (can only be adjusted when on the ground)
-		if(collisionWithTileBottom) {
+		if(collisionWithTileBottom && handler.getPhaseManager().getCurrentPhase() > 7) {
 			if(handler.getKeyManager().run && !running)
 				run();
 			else if(!handler.getKeyManager().run && !walking)

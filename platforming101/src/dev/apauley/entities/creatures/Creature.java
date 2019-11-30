@@ -143,8 +143,25 @@ public abstract class Creature extends Entity {
 			/*Check the tile upper right is moving in to, and lower right is moving in to
 			 * If both tiles are NOT solid (thus ! in front of collision method), then go ahead and move!
 			 */
-			if(!collisionWithTileRight)
+			if(!collisionWithTileRight) {
 				x += xMove;
+
+				if(name.equals("PLAYER")) {
+					
+					handler.getGame().getStatTracker().setAvgSpeedNumerator(handler.getGame().getStatTracker().getAvgSpeedNumerator() + Math.abs(speed));
+					handler.getGame().getStatTracker().setAvgSpeedDenomenator(handler.getGame().getStatTracker().getAvgSpeedDenomenator() + 1);
+					handler.getGame().getStatTracker().setAvgSpeed(handler.getGame().getStatTracker().getAvgSpeedNumerator() / handler.getGame().getStatTracker().getAvgSpeedDenomenator());
+					
+					if(walking)
+						handler.getGame().getStatTracker().setPlayerWalkDistance(handler.getGame().getStatTracker().getPlayerWalkDistance() + Math.abs(xMove));
+					if(running)
+						handler.getGame().getStatTracker().setPlayerRunDistance(handler.getGame().getStatTracker().getPlayerRunDistance() + Math.abs(xMove));
+					if(jumping || hangtime)
+						handler.getGame().getStatTracker().setJumpDistanceX(handler.getGame().getStatTracker().getJumpDistanceX() + Math.abs(xMove));
+					if(!jumping && !hangtime && !canJump)
+						handler.getGame().getStatTracker().setFallDistanceX(handler.getGame().getStatTracker().getFallDistanceX() + Math.abs(xMove));
+				}
+			}
 			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries
@@ -159,8 +176,25 @@ public abstract class Creature extends Entity {
 			int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
 			
 			//Same check
-			if(!collisionWithTileLeft)
+			if(!collisionWithTileLeft) {
 				x += xMove;
+
+				if(name.equals("PLAYER")) {
+					
+					handler.getGame().getStatTracker().setAvgSpeedNumerator(handler.getGame().getStatTracker().getAvgSpeedNumerator() + Math.abs(speed));
+					handler.getGame().getStatTracker().setAvgSpeedDenomenator(handler.getGame().getStatTracker().getAvgSpeedDenomenator() + 1);
+					handler.getGame().getStatTracker().setAvgSpeed(handler.getGame().getStatTracker().getAvgSpeedNumerator() / handler.getGame().getStatTracker().getAvgSpeedDenomenator());
+
+					if(walking)
+						handler.getGame().getStatTracker().setPlayerWalkDistance(handler.getGame().getStatTracker().getPlayerWalkDistance() + Math.abs(xMove));
+					if(running)
+						handler.getGame().getStatTracker().setPlayerRunDistance(handler.getGame().getStatTracker().getPlayerRunDistance() + Math.abs(xMove));
+					if(jumping || hangtime)
+						handler.getGame().getStatTracker().setJumpDistanceX(handler.getGame().getStatTracker().getJumpDistanceX() + Math.abs(xMove));
+					if(!jumping && !hangtime && !canJump)
+						handler.getGame().getStatTracker().setFallDistanceX(handler.getGame().getStatTracker().getFallDistanceX() + Math.abs(xMove));
+				}
+			}
 			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We weirdly don't have to add a 1-pixel gap for "sliding" to not get stuck along the boundaries. Don't ask me why...
@@ -176,8 +210,16 @@ public abstract class Creature extends Entity {
 			
 			int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
 
-			if(!collisionWithTileTop)
+			if(!collisionWithTileTop) {
 				y += yMove;
+				
+				if(name.equals("PLAYER")) {
+					if(jumping || hangtime)
+						handler.getGame().getStatTracker().setJumpDistanceY(handler.getGame().getStatTracker().getJumpDistanceY() + Math.abs(yMove));
+					if(!jumping && !hangtime && !canJump)
+						handler.getGame().getStatTracker().setFallDistanceY(handler.getGame().getStatTracker().getFallDistanceY() + Math.abs(yMove));
+					}
+			}
 			else
 				//move player as close to the tile as possible without being inside of it
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
@@ -187,8 +229,16 @@ public abstract class Creature extends Entity {
 			
 			int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 			
-			if(!collisionWithTileBottom)
+			if(!collisionWithTileBottom) {
 				y += yMove;
+
+				if(name.equals("PLAYER")) {
+					if(jumping || hangtime)
+						handler.getGame().getStatTracker().setJumpDistanceY(handler.getGame().getStatTracker().getJumpDistanceY() + Math.abs(yMove));
+					if(!jumping && !hangtime && !canJump)
+						handler.getGame().getStatTracker().setFallDistanceY(handler.getGame().getStatTracker().getFallDistanceY() + Math.abs(yMove));
+				}
+			}
 			else
 				//move player as close to the tile as possible without being inside of it
 				//Note: We add a 1-pixel gap which allows the player to "slide" and not get stuck along the boundaries

@@ -3,6 +3,7 @@ package dev.apauley.utilities;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 
 import dev.apauley.general.Handler;
 import dev.apauley.gfx.Assets;
@@ -20,6 +21,9 @@ public class StatTracker {
 	private Font fontHeader = Assets.fontRobotoRegular30
 			   , fontBody = Assets.fontRobotoRegular20;
 
+	//Used to force 2 digit floats
+	DecimalFormat df;
+	
 	//Tracks enemies counts
 	//Future Idea: convert to map or whatever so can track how many per type in an array/map
 	private int enemiesSeen = 0
@@ -51,7 +55,9 @@ public class StatTracker {
 				, jumpDistanceY = 0
 				, fallDistanceX = 0
 				, fallDistanceY = 0
-				, avgSpeed = 0;
+				, avgSpeed = 0
+				  , avgSpeedNumerator = 0 //Helpers to get the average
+				  , avgSpeedDenomenator = 0; //Helpers to get the average
 	
 	//Tracks player stats
 	//Future HealthGained
@@ -80,6 +86,10 @@ public class StatTracker {
 	
 	public StatTracker(Handler handler) {
 		this.handler = handler;
+		
+		//format 2 decimal digit floats
+		df  = new DecimalFormat();
+		df.setMaximumFractionDigits(2);		
 	}
 	
 	public void render(Graphics g) {
@@ -173,7 +183,7 @@ public class StatTracker {
 		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
 			Text.drawStringShadow(g, "Action Count", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
 		g.setColor(bodyFill);
-		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 11 + bodyFillAdd * 11);
+		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 9 + bodyFillAdd * 9);
 		iCnt--;iCnt--;
 			Text.drawString(g, "Jumped: " + jumpCountPlayer, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Ran: " + runCountPlayer, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
@@ -183,9 +193,9 @@ public class StatTracker {
 			Text.drawString(g, "Faced (Left): " + faceLeftCountPlayer, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Faced (Right): " + faceRightCountPlayer, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Paused: " + pauseCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Check Inventory: " + checkInventoryCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			//Text.drawString(g, "Check Inventory: " + checkInventoryCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Start Game: " + startGameCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Continue: " + continueGameCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			//Text.drawString(g, "Continue: " + continueGameCount, xIdntBody, tAdd + (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 		sCnt++;
 	
 ////RIGHT SIDE (R)
@@ -209,13 +219,13 @@ public class StatTracker {
 		g.setColor(bodyFill);
 		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 7 + bodyFillAdd * 7);
 		iCnt++;
-			Text.drawString(g, "Walked: " + playerWalkDistance, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Ran: " + playerRunDistance, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Jumped (x): " + jumpDistanceX, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Jumped (y): " + jumpDistanceY, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Fell (x): " + fallDistanceX, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Fell (y): " + fallDistanceY, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Average Speed: " + avgSpeed, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Walked: " + df.format(playerWalkDistance), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Ran: " + df.format(playerRunDistance), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Jumped (x): " + df.format(jumpDistanceX), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Jumped (y): " + df.format(jumpDistanceY), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Fell (x): " + df.format(fallDistanceX), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Fell (y): " + df.format(fallDistanceY), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Average Speed: " + df.format(avgSpeed), xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 		sCnt++;
 
 	//R2:TIME SPENT
@@ -410,12 +420,12 @@ public class StatTracker {
 		this.continueGameCount = continueGameCount;
 	}
 
-	public float getPlayerRunDisance() {
+	public float getPlayerRunDistance() {
 		return playerRunDistance;
 	}
 
-	public void setPlayerRunDisance(float playerRunDisance) {
-		this.playerRunDistance = playerRunDisance;
+	public void setPlayerRunDistance(float playerRunDistance) {
+		this.playerRunDistance = playerRunDistance;
 	}
 
 	public float getPlayerWalkDistance() {
@@ -584,6 +594,22 @@ public class StatTracker {
 
 	public void setGameTimePlayed(float gameTimePlayed) {
 		this.gameTimePlayed = gameTimePlayed;
+	}
+
+	public float getAvgSpeedNumerator() {
+		return avgSpeedNumerator;
+	}
+
+	public float getAvgSpeedDenomenator() {
+		return avgSpeedDenomenator;
+	}
+
+	public void setAvgSpeedNumerator(float avgSpeedNumerator) {
+		this.avgSpeedNumerator = avgSpeedNumerator;
+	}
+
+	public void setAvgSpeedDenomenator(float avgSpeedDenomenator) {
+		this.avgSpeedDenomenator = avgSpeedDenomenator;
 	}
 
 }

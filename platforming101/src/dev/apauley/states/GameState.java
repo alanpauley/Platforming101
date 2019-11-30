@@ -37,6 +37,7 @@ public class GameState extends State {
 		world = new World(handler);
 		handler.setWorld(world);
 		handler.getPhaseManager().setCurrentPhase(21);
+		handler.getGame().getStatTracker().setStartGameCount(handler.getGame().getStatTracker().getStartGameCount() + 1);
 	}
 	
 	//Updates World
@@ -143,7 +144,7 @@ public class GameState extends State {
 
 		}
 		
-		//Displays paused message if game is paused (and stats not displayed
+		//Displays paused message if game is paused (and stats not displayed)
 		if(paused && handler.getPhaseManager().getCurrentPhase() > 19 && !statDisplay)
 			Text.drawStringShadow(g, "- PAUSED -", handler.getGame().getWidth() / 2, handler.getGame().getHeight() / 2 - fontHeader.getSize() / 2, true, Color.WHITE, fontHeader);
 

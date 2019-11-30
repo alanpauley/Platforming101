@@ -33,12 +33,14 @@ public class Bullet extends Creature{
 			
 			//Increment player bullet count
 			handler.getWorld().getEntityManager().setBulletPlayerCount(handler.getWorld().getEntityManager().getBulletPlayerCount() + 1);
+			handler.getGame().getStatTracker().setBulletsFiredPlayer(handler.getGame().getStatTracker().getBulletsFiredPlayer() + 1);
 		}
 		if(group.equals("ENEMY")) {
 			id = handler.getWorld().getEntityManager().getBulletEnemyCount();
 
 			//Increment enemy bullet count
 			handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() + 1);
+			handler.getGame().getStatTracker().setBulletsFiredEnemies(handler.getGame().getStatTracker().getBulletsFiredEnemies() + 1);
 			
 		}
 		

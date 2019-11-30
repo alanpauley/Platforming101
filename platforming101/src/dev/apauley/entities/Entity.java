@@ -67,6 +67,9 @@ public abstract class Entity {
 	//Contains entity id (1,2,3) used to append per group (ie: PLAYER1, ENEMY1, ENEMY1BULLET2, etc.)
 	protected int id;
 	
+	//Tracks various enemy stats/situations
+	protected boolean fought;
+	
 	//Constructor to set Defaults
 	public Entity(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name, String group) {
 		this.handler = handler;
@@ -99,9 +102,26 @@ public abstract class Entity {
 	//subtract health from entity and flash them
 	public void hurt(int amt) {
 
+		//If hurt (for first time), assume fought and set to true; 
+		if(!fought && name.equals("ENEMY")){
+			fought = true;
+			handler.getGame().getStatTracker().increaseEnemiesFought(1);
+		}
+
 		//If flashing, take no damage
 		if(flash > 0)
 			return;
+		
+		//if player, increment dmg taken and times hit
+		if(name.equals("PLAYER")) {
+			handler.getGame().getStatTracker().setHitCountPlayer(handler.getGame().getStatTracker().getHitCountPlayer() + 1);
+			handler.getGame().getStatTracker().setHealthLostPlayer(handler.getGame().getStatTracker().getHealthLostPlayer() + amt);
+		
+		//if player, increment dmg taken and times hit
+		} else if(name.equals("ENEMY")) {
+			handler.getGame().getStatTracker().setHitCountEnemies(handler.getGame().getStatTracker().getHitCountEnemies() + 1);
+			handler.getGame().getStatTracker().setHealthLostEnemies(handler.getGame().getStatTracker().getHealthLostEnemies() + amt);
+		}
 		
 		health -= amt;
 		
@@ -283,7 +303,7 @@ public abstract class Entity {
 		}
 		if(group.equals("ENEMY")) {
 			if(name.equals("ENEMY"))
-				handler.getWorld().getEntityManager().decreaseEnemyCount(1);
+				handler.getWorld().getEntityManager().decreaseEnemyCount(this, 1);
 			if(name.equals("BULLET")) {
 				handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() - 1);
 			}
@@ -362,6 +382,11 @@ public abstract class Entity {
 
 	//Sets whether player is facing up
 	public void setFaceTop(boolean faceTop) {
+		
+		//Only increment if not previously facing top
+		if(!this.faceTop && faceTop && name.equals("PLAYER"))
+			handler.getGame().getStatTracker().setFaceTopCountPlayer(handler.getGame().getStatTracker().getFaceTopCountPlayer() + 1);
+
 		this.faceTop = faceTop;
 	}
 
@@ -372,7 +397,28 @@ public abstract class Entity {
 
 	//Sets whether player is facing down
 	public void setFaceBottom(boolean faceBottom) {
+		
+		//Only increment if not previously facing bottom
+		if(!this.faceBottom && faceBottom && name.equals("PLAYER"))
+			handler.getGame().getStatTracker().setFaceBottomCountPlayer(handler.getGame().getStatTracker().getFaceBottomCountPlayer() + 1);
+
 		this.faceBottom = faceBottom;
+	}
+
+
+	//Checks whether player is facing left
+	public boolean isFaceLeft() {
+		return faceLeft;
+	}
+
+	//Sets whether player is facing left
+	public void setFaceLeft(boolean faceLeft) {
+		
+		//Only increment if not previously facing left
+		if(!this.faceLeft && faceLeft && name.equals("PLAYER"))
+			handler.getGame().getStatTracker().setFaceLeftCountPlayer(handler.getGame().getStatTracker().getFaceLeftCountPlayer() + 1);
+
+		this.faceLeft = faceLeft;
 	}
 
 	//Checks whether player is facing right
@@ -382,19 +428,12 @@ public abstract class Entity {
 
 	//Sets whether player is facing right
 	public void setFaceRight(boolean faceRight) {
+		
+		//Only increment if not previously facing right
+		if(!this.faceRight && faceRight && name.equals("PLAYER"))
+			handler.getGame().getStatTracker().setFaceRightCountPlayer(handler.getGame().getStatTracker().getFaceRightCountPlayer() + 1);
 		this.faceRight = faceRight;
 	}
-
-	//Checks whether player is facing left
-	public boolean isFaceLeft() {
-		return faceLeft;
-	}
-
-	//Sets whether player is facing left
-	public void setFaceLeft(boolean faceLeft) {
-		this.faceLeft = faceLeft;
-	}
-
 	public String getGroup() {
 		return group;
 	}
@@ -434,4 +473,13 @@ public abstract class Entity {
 	public void setJumpCooldown(long jumpCooldown) {
 		this.jumpCooldown = jumpCooldown;
 	}
+
+	public boolean isFought() {
+		return fought;
+	}
+
+	public void setFought(boolean fought) {
+		this.fought = fought;
+	}
+	
 }

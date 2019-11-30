@@ -249,6 +249,7 @@ public class Player extends Creature{
 	@Override	
 	public void die() {
 		System.out.println("You Lose");
+		handler.getGame().getStatTracker().setDeathCount(handler.getGame().getStatTracker().getDeathCount() + 1);
 		setActive(false);
 	}
 		
@@ -269,10 +270,13 @@ public class Player extends Creature{
 		
 		//adjusts speeds based on whether player is running/walking or not (can only be adjusted when on the ground)
 		if(collisionWithTileBottom && handler.getPhaseManager().getCurrentPhase() > 7) {
-			if(handler.getKeyManager().run && !running)
+			if(handler.getKeyManager().run && !running) {
 				run();
-			else if(!handler.getKeyManager().run && !walking)
+				handler.getGame().getStatTracker().setRunCountPlayer(handler.getGame().getStatTracker().getRunCountPlayer() + 1);
+			}
+			else if(!handler.getKeyManager().run && !walking) {
 				walk();
+			}
 		}
 		
 		//Handles player Movement
@@ -312,6 +316,7 @@ public class Player extends Creature{
 			jumpTimer = 0;
 			gravityHangtime = 0;
 			gravityHangTimeTick = 0;
+			handler.getGame().getStatTracker().setJumpCountPlayer(handler.getGame().getStatTracker().getJumpCountPlayer() + 1);
 		}
 
 		//If Jumping and jump is released, start hangtime and reset jumping
@@ -326,8 +331,14 @@ public class Player extends Creature{
 		//Reload weapon
 		if(handler.getPhaseManager().getCurrentPhase() > 18) {
 			
-			if(handler.getKeyManager().reload && handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
+			if(handler.getKeyManager().reload && handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+
+				//Only increment reload if ammo <> BULLET_MAX
+				if(ammo != BULLET_MAX)
+					handler.getGame().getStatTracker().setReloadCountPlayer(handler.getGame().getStatTracker().getReloadCountPlayer() + 1);
+
 				ammo = BULLET_MAX;
+			}
 		}
 	}
 

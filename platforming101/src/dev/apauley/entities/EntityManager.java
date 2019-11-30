@@ -99,9 +99,12 @@ public class EntityManager {
 		player.postRender(g);
 	}
 	
-	//stop Speed (essentially pausing the game)
+	//stop Speed (pausing the game)
 	public void speedStop() {
 
+		//Increment count
+		handler.getGame().getStatTracker().setPauseCount(handler.getGame().getStatTracker().getPauseCount() + 1);
+		
 		int eSize = entities.size();
 		entityBackup = new float[eSize][3];
 
@@ -265,9 +268,13 @@ public class EntityManager {
 		handler.getGame().getStatTracker().increaseEnemiesSeen(add);
 	}
 
-	public void decreaseEnemyCount(int sub) {
+	public void decreaseEnemyCount(Entity e, int sub) {
 		enemyCount -= sub;
-		handler.getGame().getStatTracker().increaseEnemiesKilled(sub);
+		
+		if(e.fought)
+			handler.getGame().getStatTracker().increaseEnemiesKilled(sub);
+		else
+			handler.getGame().getStatTracker().increaseEnemiesAvoided(sub);;
 	}
 
 	public int getPlayerCount() {

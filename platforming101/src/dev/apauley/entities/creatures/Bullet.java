@@ -14,7 +14,9 @@ public class Bullet extends Creature{
 
 	public Image bullet;
 	
-	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet, String name, String group, int originID) {
+	public Entity linkedEntity;
+	
+	public Bullet(Handler handler, float x, float y, float xMove, float yMove, Image bullet, String name, String group, Entity linkedEntity) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH() / 4, handler.getGVar().get_DEFAULT_CREATURE_HEIGHT() / 4, xMove, yMove, "BULLET", "ENEMY");
 		this.bullet = bullet;
 		//Boundary box for player
@@ -26,6 +28,7 @@ public class Bullet extends Creature{
 		this.name = name;
 		this.group = group;
 		this.speed = speed * 2;
+		this.linkedEntity = linkedEntity;
 		
 		//Rename bullet with number appended based on bulletCount
 		if(group.equals("PLAYER")) {
@@ -45,7 +48,7 @@ public class Bullet extends Creature{
 		}
 		
 		//Rename enemy with number appended based on enemyCount
-		fullName = group + originID + name + id;
+		fullName = group + linkedEntity.getId() + name + id;
 	
 	}
 	
@@ -83,6 +86,7 @@ public class Bullet extends Creature{
 	@Override
 	public void die() {
 		setActive(false);
+		linkedEntity.setBulletsFired(linkedEntity.getBulletsFired() - 1);
 	}
 
 }

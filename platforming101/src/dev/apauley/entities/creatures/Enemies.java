@@ -15,9 +15,6 @@ public class Enemies extends Creature{
 	//Waits til player is loaded before finishing initialization
 	protected boolean initialized;
 	
-	//Attack Timer
-	private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
-	
 	public Enemies(Handler handler, float x, float y, float xMove, float yMove) {
 		super(handler, x, y, handler.getGVar().get_DEFAULT_CREATURE_WIDTH(), handler.getGVar().get_DEFAULT_CREATURE_HEIGHT(), xMove, yMove, "ENEMY", "ENEMY");
 		
@@ -39,6 +36,10 @@ public class Enemies extends Creature{
 
 		//Increment enemy count
 		handler.getWorld().getEntityManager().increaseEnemyCount(1);
+		
+		//Set up attackCooldowns
+		attackCooldown = (long) (handler.getGVar().getCooldownDefault() * speed);
+		attackTimer = attackCooldown;
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class Enemies extends Creature{
 		}
 		
 		//if enemy's x/y distance away from player is too great, remove enemy
-		if(Math.abs(x - handler.getWorld().getEntityManager().getPlayer().getX()) > 2000 || Math.abs(y - handler.getWorld().getEntityManager().getPlayer().getY()) > 2000)
+		if(Math.abs(x - handler.getWorld().getEntityManager().getPlayer().getX()) > handler.getGVar().getMaxDistance() || Math.abs(y - handler.getWorld().getEntityManager().getPlayer().getY()) > handler.getGVar().getMaxDistance())
 			setActive(false);
 		
 		//Block for phase to fall through ground
@@ -172,7 +173,7 @@ public class Enemies extends Creature{
 			return;
 		
 		//if Gun is empty, cannot shoot
-		if(handler.getWorld().getEntityManager().getBulletEnemyCount() >= BULLET_MAX * handler.getWorld().getEntityManager().getEnemyCount())
+		if(bulletsFired >= BULLET_MAX)
 			return;
 	
 		float xMove = 10f;
@@ -191,16 +192,18 @@ public class Enemies extends Creature{
 			if(faceRight) {
 				xMove = 10f;
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x + width + 10
-						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", "ENEMY", id));
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", group, this));
 			} 
-			if(faceLeft) {
+			else if(faceLeft) {
 				xMove = -10f;
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, x - Assets.obj1.getWidth()
-						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", "ENEMY", id));
+						  , y + height / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.purplePink, "BULLET", group, this));
 			}			
 
 			//Reset attackTimer
 			attackTimer = 0;		
+			bulletsFired++;
+			System.out.println(bulletsFired);
 
 		}
 	}

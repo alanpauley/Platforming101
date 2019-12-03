@@ -28,9 +28,6 @@ public class Player extends Creature{
 	private Animation animJump, animCrouch, animRight, animLeft;
 	private int animSpeed = 500;
 	
-	//Attack Timer
-	private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
-	
 	//Tracks ammo in gun
 	private int ammo = BULLET_MAX;
 	
@@ -70,6 +67,10 @@ public class Player extends Creature{
 //		animRight 	= new Animation(animSpeed, Assets.player_right);
 //		animLeft 	= new Animation(animSpeed, Assets.player_left);
 		
+		//Set up attackCooldowns
+		attackCooldown = (long) (handler.getGVar().getCooldownDefault() * speed * 2);
+		attackTimer = attackCooldown;
+
 		//Inventory
 		inventory = new Inventory(handler);
 	}
@@ -127,7 +128,7 @@ public class Player extends Creature{
 		return;		
 			
 		//if Gun is empty, cannot shoot (old way)
-		if(handler.getWorld().getEntityManager().getBulletPlayerCount() >= BULLET_MAX)
+		if(bulletsFired >= BULLET_MAX)
 			return;
 	
 		//Generate bullets from player if left mouse is clicked
@@ -158,20 +159,21 @@ public class Player extends Creature{
 			//if mouse.X > player.X, put on right of player
 			if(handler.getMouseManager().getMouseX() + handler.getGameCamera().getxOffset() > handler.getWorld().getEntityManager().getPlayer().getX()) {
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() + handler.getWorld().getEntityManager().getPlayer().getWidth()
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.yellow, "BULLET", "PLAYER", id));
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, xMove, yMove, Assets.yellow, "BULLET", group, this));
 				handler.getWorld().getEntityManager().getPlayer().setFaceRight(true);
 				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(false);
 				
 			//otherwise, put on left of player
 			} else {
 				handler.getWorld().getEntityManager().getEntitiesLimbo().add(new Bullet(handler, handler.getWorld().getEntityManager().getPlayer().getX() - Assets.obj1.getWidth()/2 //Not sure why * 2 tbh
-																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove, Assets.yellow, "BULLET", "PLAYER", id));
+																				  , handler.getWorld().getEntityManager().getPlayer().getY() + handler.getWorld().getEntityManager().getPlayer().getHeight() / 2 - Assets.obj1.getHeight()/3, -xMove, yMove, Assets.yellow, "BULLET", group, this));
 				handler.getWorld().getEntityManager().getPlayer().setFaceLeft(true);
 				handler.getWorld().getEntityManager().getPlayer().setFaceRight(false);
 			}
 			
 			//remove bullet from gun
 			if(handler.getPhaseManager().getCurrentPhase() > 18) {
+				bulletsFired++;
 				ammo--;
 			}
 
@@ -251,6 +253,9 @@ public class Player extends Creature{
 		System.out.println("You Lose");
 		handler.getGame().getStatTracker().setDeathCount(handler.getGame().getStatTracker().getDeathCount() + 1);
 		setActive(false);
+		
+		//Moving player far away so nothing tries to shoot a ghost of where it once was.
+		y += handler.getGVar().getMaxDistance() * 9/10;
 	}
 		
 	//Takes user input and performs various actions
@@ -337,7 +342,8 @@ public class Player extends Creature{
 				if(ammo != BULLET_MAX)
 					handler.getGame().getStatTracker().setReloadCountPlayer(handler.getGame().getStatTracker().getReloadCountPlayer() + 1);
 
-				ammo = BULLET_MAX;
+				bulletsFired = 0;
+				ammo = BULLET_MAX;				
 			}
 		}
 	}

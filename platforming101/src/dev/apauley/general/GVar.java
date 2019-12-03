@@ -16,13 +16,19 @@ public class GVar {
 	private final float DEFAULT_GRAVITY = 9.8f;
 	
 	//Refactored speed to account for different sizes
-	private final float DEFAULT_SPEED = 3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
+	private final float DEFAULT_SPEED = 0.2f //3.0f + (DEFAULT_CREATURE_WIDTH / 64 * 1.25f) 
 							, DEFAULT_RUN = DEFAULT_SPEED * 1.5f
 							, MAX_SPEED = 20f
 							, MIN_SPEED = 0; 
 
 	//Tracks current Global Speed for ALL entities
 	private float gSpeed;
+	
+	//Tracks the multiplier for cooldowns
+	private int cooldownDefault = 10000;
+
+	//How far the enemies and player can travel from each other before despawning (also the offset for player when dead to avoid being shot but not so far the enemies disappear)
+	private int maxDistance = 2000;
 	
 	public GVar(Handler handler) {
 		gSpeed = DEFAULT_SPEED;
@@ -66,6 +72,22 @@ public class GVar {
 
 	public float getMinSpeed() {
 		return MIN_SPEED;
+	}
+
+	public int getMaxDistance() {
+		return maxDistance;
+	}
+
+	public void setMaxDistance(int maxDistance) {
+		this.maxDistance = maxDistance;
+	}
+
+	public int getCooldownDefault() {
+		return cooldownDefault;
+	}
+
+	public void setCooldownDefault(int cooldownDefault) {
+		this.cooldownDefault = cooldownDefault;
 	}
 	
 }

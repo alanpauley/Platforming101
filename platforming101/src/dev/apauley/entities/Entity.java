@@ -31,8 +31,14 @@ public abstract class Entity {
 	//Tracks how much speed creature has
 	protected float speed;
 	
+	//Attack Timer
+	protected long lastAttackTimer, attackCooldown, attackTimer;
+	
 	//Jump Timer
 	protected long lastJumpTimer, jumpCooldown = 250, jumpTimer = jumpCooldown;
+	
+	//Tracks how many bullets entity has fired
+	protected int bulletsFired = 0;
 	
 	//Collision with Tile Booleans
 	protected boolean collisionWithTileTop, collisionWithTileBottom, collisionWithTileLeft, collisionWithTileRight;
@@ -504,4 +510,25 @@ public abstract class Entity {
 		this.fought = fought;
 	}
 	
+	public long getAttackCooldown() {
+		return attackCooldown;
+	}
+
+	public void setAttackCooldown(long attackCooldown) {
+		this.attackCooldown = attackCooldown;
+	}
+	
+	public void updateAttackCooldown() {
+		if(group.equals("ENEMY"))
+			attackCooldown = (long) (handler.getGVar().getCooldownDefault() * speed);
+		//attackTimer = (long) (attackTimer * speed); //Not sure how to do this one properly
+	}
+
+	public int getBulletsFired() {
+		return bulletsFired;
+	}
+
+	public void setBulletsFired(int bulletsFired) {
+		this.bulletsFired = bulletsFired;
+	}
 }

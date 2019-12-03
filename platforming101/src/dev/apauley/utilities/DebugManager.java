@@ -122,7 +122,14 @@ public class DebugManager {
 			handler.getWorld().getEntityManager().speedDown();
 		if(handler.getKeyManager().speedUp && handler.getKeyManager().keyJustPressed(KeyEvent.VK_L))
 			handler.getWorld().getEntityManager().speedUp();
-		
+
+		//Adjust timers based on new speed
+		if((handler.getKeyManager().speedDown && handler.getKeyManager().keyJustPressed(KeyEvent.VK_K))
+	    || (handler.getKeyManager().speedUp && handler.getKeyManager().keyJustPressed(KeyEvent.VK_L))) {
+			for(Entity e : handler.getWorld().getEntityManager().getEntities())
+				e.updateAttackCooldown();
+		}
+					
 		//Toggle debugKeys
 		if(handler.getKeyManager().debugSystem && handler.getKeyManager().keyJustPressed(KeyEvent.VK_1)) 
 			handler.getWorld().getDebugManager().toggleDebugSystem();

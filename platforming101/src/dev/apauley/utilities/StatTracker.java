@@ -34,7 +34,9 @@ public class StatTracker {
 	//Tracks how many bullets fired
 	//Future Idea: convert to map or whatever so can track how many per type in an array/map
 	private int bulletsFiredPlayer = 0
-			  , bulletsFiredEnemies = 0;
+			  , bulletsFiredEnemies = 0
+			  , bulletsHitPlayer = 0
+			  , bulletsHitEnemies = 0;
 
 	//Tracks how many times done each action below
 	private int jumpCountPlayer = 0
@@ -127,7 +129,7 @@ public class StatTracker {
 		int bodyHeight = fontBody.getSize() + 5;
 		int bodyFillHeight = bodyHeight - 1;
 		int bodyFillAdd = 2;
-		int width = 270;
+		int width = 320;
 		int sHeight = 20; //new Section spacer height
 		
 		int hCnt = 0; //Header Counts
@@ -153,9 +155,11 @@ public class StatTracker {
 		g.fillRect(x, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width, headHeight);
 			Text.drawStringShadow(g, "Shots", xIdntHead, yHead + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), false, headerText, fontHeader); hCnt++;
 		g.setColor(bodyFill);
-		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 2 + bodyFillAdd * 2);
+		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 4 + bodyFillAdd * 4);
 			Text.drawString(g, "Shots Fired (Player): " + bulletsFiredPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Shots Hit (Player): " + bulletsHitPlayer + " (" + df.format(getAccuracy(bulletsHitPlayer,bulletsFiredPlayer)) + "%)", xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Shots Fired (Enemies): " + bulletsFiredEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Shots Hit (Enemies): " + bulletsHitEnemies + " (" + df.format(getAccuracy(bulletsHitEnemies,bulletsFiredEnemies)) + "%)", xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 		sCnt++;
 
 	//L3:DAMAGE
@@ -168,8 +172,8 @@ public class StatTracker {
 		g.fillRect(x2, y + (headHeight * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt), width - x3, bodyFillHeight * 5 + bodyFillAdd * 5 - tAdd);
 		iCnt--;
 			Text.drawString(g, "Times Hit (Player): " + hitCountPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
-			Text.drawString(g, "Times Hit (Enemies): " + hitCountEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Health Lost (Player): " + healthLostPlayer, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
+			Text.drawString(g, "Times Hit (Enemies): " + hitCountEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Health Lost (Enemies): " + healthLostEnemies, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 			Text.drawString(g, "Death Count: " + deathCount, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 		sCnt++;
@@ -256,6 +260,15 @@ public class StatTracker {
 			Text.drawString(g, "Game: " + gameTimePlayed, xIdntBody, (yBody * hCnt) + (bodyHeight * iCnt) + (sHeight * sCnt) - (1 * sCnt), false, bodyText, fontBody); iCnt++;
 		sCnt++;
 	
+	}
+	
+	//get shot percentage
+	public float getAccuracy(float num, float denom) {
+		
+		if(denom == 0)
+			return 0;
+		
+		return (num / denom) * 100;
 	}
 
 	/*************** GETTERS and SETTERS ***************/	
@@ -610,6 +623,22 @@ public class StatTracker {
 
 	public void setAvgSpeedDenomenator(float avgSpeedDenomenator) {
 		this.avgSpeedDenomenator = avgSpeedDenomenator;
+	}
+
+	public int getBulletsHitPlayer() {
+		return bulletsHitPlayer;
+	}
+
+	public int getBulletsHitEnemies() {
+		return bulletsHitEnemies;
+	}
+
+	public void setBulletsHitPlayer(int bulletsHitPlayer) {
+		this.bulletsHitPlayer = bulletsHitPlayer;
+	}
+
+	public void setBulletsHitEnemies(int bulletsHitEnemies) {
+		this.bulletsHitEnemies = bulletsHitEnemies;
 	}
 
 }

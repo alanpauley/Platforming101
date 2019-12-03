@@ -235,7 +235,7 @@ public class Player extends Creature{
 			
 			//If entity's collision bounds intersects with attack rectangle register a hit against entity
 			if(e.getCollisionBounds(0, 0).intersects(ar)) {
-				e.hurt(1);
+				e.hurt(1, this);
 
 				//Reset attackTimer
 				attackTimer = 0;		

@@ -84,4 +84,5 @@ public class Bullet extends Creature{
 	public void die() {
 		setActive(false);
 	}
+
 }

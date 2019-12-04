@@ -108,6 +108,10 @@ public abstract class Entity {
 	//subtract health from entity and flash them
 	public void hurt(int amt, Entity e) {
 
+		//If other entity is a bullet, kill it 
+		if(e.name.equals("BULLET"))
+			e.die();
+		
 		int knockback = 40;
 		
 		//If hurt (for first time), assume fought and set to true; 

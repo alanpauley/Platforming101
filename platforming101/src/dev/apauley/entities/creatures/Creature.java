@@ -29,8 +29,10 @@ public abstract class Creature extends Entity {
 	public Creature(Handler handler, float x, float y, int width, int height, float xMove, float yMove, String name, String group) {
 		super(handler, x,y, width, height, xMove, yMove, name, group);
 		speed = handler.getGVar().getGSpeed();
+		gravity = handler.getGVar().getGGravity();
 		this.xMove = xMove;
 		this.yMove = yMove;
+		jumpTimer = jumpCooldown;
 
 	}
 
@@ -44,7 +46,7 @@ public abstract class Creature extends Entity {
 		//Update JumpTimer
 		jumpTimer += System.currentTimeMillis() - lastJumpTimer;
 		lastJumpTimer = System.currentTimeMillis();
-		
+
 		//check if can ready to fall yet yet
 		if(jumpTimer < jumpCooldown)
 			return;
@@ -53,24 +55,41 @@ public abstract class Creature extends Entity {
 		canJump = false;
 		
 		//Level off Gravity
-		if(gravityHangtime < handler.getGVar().get_DEFAULT_GRAVITY()) {
-			gravityHangtime += 0.4f;
-			
-			//At middle point, level off player to imitate "hangtime"
-			if(gravityHangtime >= handler.getGVar().get_DEFAULT_GRAVITY() / 2 - 2f && gravityHangtime <= handler.getGVar().get_DEFAULT_GRAVITY() / 2 + 2f) {
-				gravityHangTimeTick++;
-				yMove += gravityHangtime - 0.4f * gravityHangTimeTick;
-
-			//Otherwise apply full gravityHangtime amount
-			} else {
-				yMove += gravityHangtime;
-			}
+//		if(gravityHangtime < handler.getGVar().getGGravity()) {
+//			gravityHangtime += (0.1f * speed);
+//			
+//			//At middle point, level off player to imitate "hangtime"
+//			if(gravityHangtime >= handler.getGVar().getGGravity() / 2 - (0.5f * speed) && gravityHangtime <= handler.getGVar().getGGravity() / 2 + (0.5f * speed)) {
+//				gravityHangTimeTick++;
+//				yMove += gravityHangtime - (0.1f * speed) * gravityHangTimeTick;
+//				System.out.println(fullName + ": gravityHangtime: " + gravityHangtime);
+//				System.out.println(fullName + ": gGravity: " + handler.getGVar().getGGravity());
+//				System.out.println(fullName + ": Math: " + (gravityHangtime - (0.1f * speed) * gravityHangTimeTick));
+//				System.out.println(fullName + ": yMove: " + yMove);
+//
+//			//Otherwise apply full gravityHangtime amount
+//			} else {
+//				yMove += gravityHangtime;
+//				System.out.println("--------------------We made it!!--------------------");
+//				System.out.println(fullName + ": gravityHangtime: " + gravityHangtime);
+//				System.out.println(fullName + ": gGravity: " + handler.getGVar().getGGravity());
+//				System.out.println(fullName + ": Math: " + (gravityHangtime - (0.1f * speed) * gravityHangTimeTick));
+//				System.out.println(fullName + ": yMove: " + yMove);
+//			}
+//		
+//		//Finally end hangtime to apply full gravity to player
+//		} else {
+//			hangtime = false;
+//			System.out.println("--------------------Now We here!!--------------------");
+//			System.out.println(fullName + ": gravityHangtime: " + gravityHangtime);
+//			System.out.println(fullName + ": gGravity: " + handler.getGVar().getGGravity());
+//			System.out.println(fullName + ": Math: " + (gravityHangtime - (0.1f * speed) * gravityHangTimeTick));
+//			System.out.println(fullName + ": yMove: " + yMove);
+//		}
 		
-		//Finally end hangtime to apply full gravity to player
-		} else {
-			hangtime = false;
-		}
-
+		//Temp code because of the above (need player to fall)
+		hangtime = false;
+		
 		//only allow gravity on Phase >= 3
 		if(handler.getPhaseManager().getCurrentPhase() < 3) {
 			yMove = 0;
@@ -79,7 +98,12 @@ public abstract class Creature extends Entity {
 
 		//if player is jumping and not in hangtime, apply gravity
 		if(yMove <= 0 && !hangtime) {
-			yMove += handler.getGVar().get_DEFAULT_GRAVITY();
+			yMove = handler.getGVar().getGGravity();
+//			System.out.println("--------------------Final destination?--------------------");
+//			System.out.println(fullName + ": gravityHangtime: " + gravityHangtime);
+//			System.out.println(fullName + ": gGravity: " + handler.getGVar().getGGravity());
+//			System.out.println(fullName + ": Math: " + (gravityHangtime - (0.1f * speed) * gravityHangTimeTick));
+//			System.out.println(fullName + ": yMove: " + yMove);
 		}
 	}
 	
@@ -120,6 +144,16 @@ public abstract class Creature extends Entity {
 			collisionWithTileBottom = true;
 			canJump = true;
 		}
+
+		//Make sure xMove and yMove are not greater than tile size (so it doesn't overshoot)
+		if(xMove > Tile.TILEWIDTH)
+			xMove = Tile.TILEWIDTH / 2;
+		if(xMove < -Tile.TILEWIDTH)
+			xMove = -Tile.TILEWIDTH / 2;
+		if(yMove > Tile.TILEHEIGHT)
+			yMove = Tile.TILEHEIGHT / 2;
+		if(yMove < -Tile.TILEHEIGHT)
+			yMove = -Tile.TILEHEIGHT / 2;
 		
 		//If no collision, movement is allowed, otherwise stop
 		if(!checkEntityCollisions(xMove, 0f))

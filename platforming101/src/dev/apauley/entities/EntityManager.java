@@ -151,14 +151,20 @@ public class EntityManager {
 	public void speedDown() {
 
 		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() - 1f);
+		handler.getGVar().setGGravity(handler.getGVar().getGSpeed());
 
 		//Don't let speed go below MIN_SPEED
 		if(handler.getGVar().getGSpeed() <= handler.getGVar().getMinSpeed())
 			handler.getGVar().setGSpeed(handler.getGVar().getMinSpeed());
 
+		//Don't let gravity go below MIN_SPEED (not a typo, using min speed for both) 
+		if(handler.getGVar().getGGravity() <= handler.getGVar().getMinSpeed())
+			handler.getGVar().setGGravity(handler.getGVar().getMinSpeed());
+
 		//Loop through entities
 		for(Entity e : entities) { 
 			e.speed = handler.getGVar().getGSpeed();
+			e.gravity = handler.getGVar().getGGravity();
 		}
 		
 	}
@@ -167,15 +173,21 @@ public class EntityManager {
 	public void speedUp() {
 
 		handler.getGVar().setGSpeed(handler.getGVar().getGSpeed() + 1f);
+		handler.getGVar().setGGravity(handler.getGVar().getGSpeed());
 
 		//Don't let speed go above MAX_SPEED
 		if(handler.getGVar().getGSpeed() >= handler.getGVar().getMaxSpeed())
 			handler.getGVar().setGSpeed(handler.getGVar().getMaxSpeed());
 
+		//Don't let speed go above MAX_SPEED (not a typo, using max speed for both)
+		if(handler.getGVar().getGGravity() >= handler.getGVar().getMaxSpeed())
+			handler.getGVar().setGGravity(handler.getGVar().getMaxSpeed());
+
 		//Loop through entities
 		for(Entity e : entities) { 
 			e.speed = handler.getGVar().getGSpeed();
 			e.setJumpCooldown((long) (e.speed * 50));
+			e.gravity = handler.getGVar().getGGravity();
 		}
 		
 	}

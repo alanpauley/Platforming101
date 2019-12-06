@@ -70,7 +70,7 @@ public class Enemies extends Creature{
 		
 		//if enemy's x/y distance away from player is too great, remove enemy
 		if(Math.abs(x - handler.getWorld().getEntityManager().getPlayer().getX()) > handler.getGVar().getMaxDistance() || Math.abs(y - handler.getWorld().getEntityManager().getPlayer().getY()) > handler.getGVar().getMaxDistance())
-			setActive(false);
+			die();
 		
 		//Block for phase to fall through ground
 		if(handler.getPhaseManager().getCurrentPhase() < 11) {
@@ -163,7 +163,7 @@ public class Enemies extends Creature{
 		lastAttackTimer = System.currentTimeMillis();
 		
 		//check if can attack yet
-		if(attackTimer < attackCooldown)
+		if(attackTimer < attackCooldown / speed)
 			return;
 		
 		//Check if enemy is facing player

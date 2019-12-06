@@ -59,7 +59,7 @@ public class GameState extends State {
 		//Toggles displaying stats
 		if(handler.getKeyManager().statsToggle && handler.getKeyManager().keyJustPressed(KeyEvent.VK_O) && handler.getPhaseManager().getCurrentPhase() > 20)
 			toggleStatDisplay();
-		
+
 	}
 
 	//Draws Level and player to screen

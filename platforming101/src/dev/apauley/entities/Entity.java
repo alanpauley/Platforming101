@@ -28,8 +28,8 @@ public abstract class Entity {
 	//Size of entity
 	protected int width, height;
 	
-	//Tracks how much speed creature has
-	protected float speed;
+	//Tracks how much speed and gravity creature has
+	protected float speed, gravity;
 	
 	//Attack Timer
 	protected long lastAttackTimer, attackCooldown, attackTimer;
@@ -320,10 +320,9 @@ public abstract class Entity {
 
 	//Sets whether entity is active or not
 	public void setActive(boolean active) {
-		this.active = active;
 
-		//If player is active, exit procedure
-		if(active)
+		//If entity is active OR it's already been set to false (which happens at the end - this prevents it from triggering twice), exit procedure
+		if(active || !this.active)
 			return;
 		
 		//Decrement counts accordingly:
@@ -341,6 +340,7 @@ public abstract class Entity {
 			}
 		}
 
+		this.active = active;
 	}
 
 	public Rectangle getBounds() {
@@ -498,6 +498,14 @@ public abstract class Entity {
 		this.speed = speed;
 	}
 
+	public float getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(float gravity) {
+		this.gravity = gravity;
+	}
+
 	public long getJumpCooldown() {
 		return jumpCooldown;
 	}
@@ -528,11 +536,32 @@ public abstract class Entity {
 		//attackTimer = (long) (attackTimer * speed); //Not sure how to do this one properly
 	}
 
+	public long getLastAttackTimer() {
+		return lastAttackTimer;
+	}
+
+	public void setLastAttackTimer(long lastAttackTimer) {
+		this.lastAttackTimer = lastAttackTimer;
+	}
+
+	public long getAttackTimer() {
+		return attackTimer;
+	}
+
+	public void setAttackTimer(long attackTimer) {
+		this.attackTimer = attackTimer;
+	}
+
 	public int getBulletsFired() {
 		return bulletsFired;
 	}
 
 	public void setBulletsFired(int bulletsFired) {
+		
+		//Cannot go below 0,
+		if(bulletsFired < 0)
+			bulletsFired = 0;
+
 		this.bulletsFired = bulletsFired;
 	}
 }

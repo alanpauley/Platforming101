@@ -260,6 +260,11 @@ public class DebugManager {
 					if(e.getName().equals("ENEMY")) {
 						//tbh, no idea why this math works, feels like 1 * z should not... Havne't researched function like I should. Putting off for now.
 						Text.drawStringShadow(g, "Enemy" + e.getId() + ": HP: " + e.getHealth(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++; 
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": Gravity: " + e.getGravity(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++;
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": Shots Fired: " + e.getBulletsFired(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++;
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": Attack Cooldown: " + e.getAttackCooldown(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++;
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": Attack Timer: " + e.getAttackTimer(), x, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++;
+						Text.drawStringShadow(g, "Enemy" + e.getId() + ": Attack Last Timer: " + e.getLastAttackTimer(), x - 50, getStY(i,"T") + 32 + 1 * z, false, color, fontStats); i++;
 						z++;
 					}
 			}
@@ -274,7 +279,7 @@ public class DebugManager {
 
 			//Draw Transparent BG Rectangle
 			g.setColor(new Color(245,66,149,alpha));
-			g.fillRect(x-5, headYTop - 25, 180, 32 + 21 * 10);
+			g.fillRect(x-5, headYTop - 25, 180, 32 + 21 * 11);
 
 			//Draw Text to screen
 			Text.drawStringShadow(g, "Player", x, headYTop, false, color, fontHeader);
@@ -288,6 +293,7 @@ public class DebugManager {
 			Text.drawStringShadow(g, "Hangtime: " + handler.getWorld().getEntityManager().getPlayer().isHangtime(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "Can Jump: " + handler.getWorld().getEntityManager().getPlayer().isCanJump(), x, getStY(i,"T"), false, color, fontStats); i++;
 			Text.drawStringShadow(g, "HP: " + handler.getWorld().getEntityManager().getPlayer().getHealth(), x, getStY(i,"T"), false, color, fontStats); i++;
+			Text.drawStringShadow(g, "Gravity: " + handler.getWorld().getEntityManager().getPlayer().getGravity(), x, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "emptyGunTimer: " + handler.getWorld().getEntityManager().getPlayer().getEmptyGunTimer(), x - 50, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "EX-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(handler.getWorld().getEntityManager().getPlayer().getxMove(), 0), x, getStY(i,"T"), false, color, fontStats); i++;
 //			Text.drawStringShadow(g, "EY-Collision: " + handler.getWorld().getEntityManager().getPlayer().checkEntityCollisions(0, handler.getWorld().getEntityManager().getPlayer().getyMove()), x, getStY(i,"T"), false, color, fontStats); i++;

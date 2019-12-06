@@ -164,8 +164,8 @@ public class World {
 		//Load entities specific to Phase
 		if(handler.getPhaseManager().getCurrentPhase() > 9) {
 			//Adds entities to the Entity list
-			entityManager.addEntity(new Enemies(handler, 200,400, 0f, 0f));
-			entityManager.addEntity(new Enemies(handler, 600,400, 0f, 0f));
+			//entityManager.addEntity(new Enemies(handler, 200,400, 0f, 0f));
+			//entityManager.addEntity(new Enemies(handler, 600,400, 0f, 0f));
 			entityManager.addEntity(new Enemies(handler, 900,400, 0f, 0f));
 		}
 

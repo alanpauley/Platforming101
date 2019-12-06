@@ -123,10 +123,10 @@ public class Player extends Creature{
 	//When player shoots,bullets are created
 	public void shoot() {
 	
-	//only allow attacks on Phase > x
-	if(handler.getPhaseManager().getCurrentPhase() < 7)
-		return;		
-			
+		//only allow attacks on Phase > x
+		if(handler.getPhaseManager().getCurrentPhase() < 7)
+			return;		
+				
 		//if Gun is empty, cannot shoot (old way)
 		if(bulletsFired >= BULLET_MAX)
 			return;

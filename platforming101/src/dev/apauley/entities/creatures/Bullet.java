@@ -44,12 +44,14 @@ public class Bullet extends Creature{
 			//Increment enemy bullet count
 			handler.getWorld().getEntityManager().setBulletEnemyCount(handler.getWorld().getEntityManager().getBulletEnemyCount() + 1);
 			handler.getGame().getStatTracker().setBulletsFiredEnemies(handler.getGame().getStatTracker().getBulletsFiredEnemies() + 1);
-			
 		}
-		
+				
 		//Rename enemy with number appended based on enemyCount
 		fullName = group + linkedEntity.getId() + name + id;
 	
+		System.out.println(linkedEntity.getFullName() + ": xMove: " + xMove + " | yMove: " + yMove + " | speed: " + speed);
+
+		
 	}
 	
 	@Override
@@ -66,7 +68,6 @@ public class Bullet extends Creature{
 	
 	@Override
 	public void move() {
-		
 		//Set speed
 		if(xMove > 0) xMove = speed;
 		if(xMove < 0) xMove = -speed;
@@ -85,6 +86,11 @@ public class Bullet extends Creature{
 
 	@Override
 	public void die() {
+		
+		//If already dead, exit
+		if(!active)
+			return;
+		
 		setActive(false);
 		linkedEntity.setBulletsFired(linkedEntity.getBulletsFired() - 1);
 	}
